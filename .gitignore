@@ -1,0 +1,33 @@
+# ===== Claude Code設定（非公開） =====
+.claude/
+
+# ===== 開発ツール（Webサイト本体には不要） =====
+node_modules/
+package.json
+package-lock.json
+optimize-images.js
+optimize-webp.js
+remove-bg.js
+crop_tool.html
+
+# ===== 一時ファイル =====
+*.tmp
+*.reopt
+tmp_*
+*.b64
+
+# ===== 元画像バックアップ（.webpに変換済み） =====
+# ※ index.htmlが参照するのは .webp のみ。容量削減のため除外。
+*.png
+*.jpg
+*.jpeg
+
+# ===== 開発ドキュメント =====
+PROJECT_CONTEXT.md
+
+# ===== OS生成ファイル =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+**/.claude/

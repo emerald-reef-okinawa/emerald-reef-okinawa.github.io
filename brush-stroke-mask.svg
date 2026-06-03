@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="none">
+  <defs>
+    <filter id="brush" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="turbulence" baseFrequency="0.038 0.052" numOctaves="5" seed="9" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="24" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="4"/>
+    </filter>
+  </defs>
+  <path fill="black" filter="url(#brush)"
+    d="M38,28 C55,10 88,4 124,8 C158,12 184,30 191,58
+       C198,86 192,120 181,150 C170,180 150,197 118,199
+       C86,201 56,190 34,174 C12,158 2,132 3,104
+       C4,76 14,54 22,42 C28,34 30,40 38,28 Z"/>
+</svg>

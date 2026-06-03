@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ホームページ（多言語対応） -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://emeraldreefokinawa.com/"/>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://emeraldreefokinawa.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN"    href="https://emeraldreefokinawa.com/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://emeraldreefokinawa.com/?lang=ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emeraldreefokinawa.com/"/>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- シュノーケルツアー -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#snorkeling</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- スキンダイビングツアー -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#skindiving</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 青の洞窟ツアー -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#bluecave</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 選ばれる理由 -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#about</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- よくある質問 -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#faq</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- お問い合わせ -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#contact</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ブログ一覧 -->
+  <url>
+    <loc>https://emeraldreefokinawa.com/#blog</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
