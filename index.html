@@ -1334,7 +1334,7 @@
     }
     .ft-logo { margin-bottom: 14px; }
     .ft-logo img { height: 54px; width: auto; }
-    .ft-logo-txt { font-size: 1rem; font-weight: 700; letter-spacing: .14em; color: var(--g-light); }
+    .ft-logo-txt { font-size: 1rem; font-weight: 700; letter-spacing: .14em; color: var(--g-light); font-family: 'Cinzel', serif; }
     .ft-links { display: flex; gap: 20px; justify-content: center; margin: 16px 0; flex-wrap: wrap; }
     .ft-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .8rem; cursor: pointer; transition: color .2s; }
     .ft-links a:hover { color: var(--g-light); }
@@ -1718,13 +1718,10 @@
       .a-img { width: 110px; height: 110px; }
       .a-hint { display: none; }
       .ft-grid {
-        display: flex; flex-direction: row;
-        overflow-x: auto; gap: 14px; padding-bottom: 14px;
-        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 14px; padding-bottom: 0;
       }
-      .ft-grid::-webkit-scrollbar { display: none; }
-      .ft-item { min-width: 160px; flex-shrink: 0; scroll-snap-align: start; }
+      .ft-item { min-width: unset; flex-shrink: unset; scroll-snap-align: unset; }
       .pom-hero { flex-direction: column; gap: 32px; margin-bottom: 36px; }
       .pom-photo { width: 100%; max-width: 360px; margin: 0 auto; }
       .pom-hero-text .s-label,
@@ -2216,9 +2213,9 @@
     }
     @media(max-width:700px){
       .oki-map-layout { grid-template-columns: 1fr; }
-      .oki-map-col { flex-direction: row; align-items: flex-start; gap: 16px; }
-      .oki-map-col .oki-map-img { max-width: 150px; }
-      .oki-legend { margin-top: 0; }
+      .oki-map-col { flex-direction: column; align-items: center; gap: 14px; }
+      .oki-map-col .oki-map-img { max-width: 280px; width: 80%; }
+      .oki-legend { margin-top: 0; width: 100%; }
     }
 
     /* ================================================================
@@ -2785,19 +2782,19 @@
     /* ===== 予約ボタン（右下・コーラルレッド） ===== */
     #bk-pulse-btn {
       position:fixed; right:24px; bottom:24px; width:72px; height:72px; z-index:400;
-      background:linear-gradient(135deg, #FF8A7A, var(--coral));
+      background:linear-gradient(135deg, #FF5722, #FF8C00);
       border-radius:50%; cursor:pointer; border:none; font-family:inherit;
       display:flex; flex-direction:column; align-items:center; justify-content:center;
-      box-shadow:0 4px 24px rgba(255,107,107,.5);
+      box-shadow:0 4px 20px rgba(255,87,34,.65), 0 0 0 3px rgba(255,140,0,.25);
       opacity:0; transform:scale(0);
       transition:opacity .3s ease, transform .35s cubic-bezier(.34,1.56,.64,1);
     }
     #bk-pulse-btn.bpb-vis { opacity:1; transform:scale(1); animation:bpbBreath 2.4s ease-in-out infinite; }
     @keyframes bpbBreath {
-      0%,100% { box-shadow:0 4px 24px rgba(255,107,107,.5); transform:scale(1); }
-      50%      { box-shadow:0 4px 24px rgba(255,107,107,.5),0 0 0 12px rgba(255,107,107,.13); transform:scale(1.08); }
+      0%,100% { box-shadow:0 4px 20px rgba(255,87,34,.65), 0 0 0 3px rgba(255,140,0,.25); transform:scale(1); }
+      50%      { box-shadow:0 6px 28px rgba(255,87,34,.8), 0 0 0 10px rgba(255,87,34,.15); transform:scale(1.08); }
     }
-    #bk-pulse-btn:hover { opacity:.9; }
+    #bk-pulse-btn:hover { opacity:.92; filter:brightness(1.08); }
     @media(max-width:600px){ #bk-pulse-btn { right:14px; bottom:16px; width:62px; height:62px; } }
     .bpb-icon { font-size:1.4rem; line-height:1; }
     .bpb-txt  { color:#fff; font-size:.6rem; font-weight:800; line-height:1.3; text-align:center; margin-top:3px; }
@@ -4947,7 +4944,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -4966,7 +4963,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -4985,7 +4982,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5004,7 +5001,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5023,7 +5020,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5041,7 +5038,7 @@
   <div class="blog-toc"></div>
   <div class="blog-det-body"></div>
   <footer style="background:var(--navy);">
-    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;">EMERALD REEF OKINAWA</div>
+    <div class="ft-logo-txt" style="color:var(--g-light);font-weight:700;letter-spacing:.14em;margin-bottom:12px;font-family:'Cinzel',serif;">EMERALD REEF OKINAWA</div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="showView('view-blog-list')" data-i18n="blog_list_ttl">ブログ一覧</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -6812,7 +6809,7 @@
      CMS — DATA
      ================================================================ */
   const CMS_PW_KEY='ero_pw', CMS_BLOG_KEY='ero_blog', CMS_FAQ_KEY='ero_faq';
-  const CMS_DEFAULT_PW='emerald2026';
+  const CMS_DEFAULT_PW='Xw7#Lq3mNp';
   const BLOG_CATS_I18N={
     ja:{snorkeling:'🌊 シュノーケル',skindiving:'🤿 スキンダイビング',news:'📰 お知らせ',guide:'🗺️ ガイド情報',family:'👨‍👩‍👧 ファミリー',spot:'📍 スポット情報',beginner:'🔰 初心者ガイド','marine-life':'🐠 海の生き物',season:'🌤️ 季節・天候',gear:'🎽 装備・持ち物',safety:'🛡️ 安全・マナー',tourism:'🗾 観光情報'},
     en:{snorkeling:'🌊 Snorkeling',skindiving:'🤿 Skin Diving',news:'📰 News',guide:'🗺️ Guide',family:'👨‍👩‍👧 Family',spot:'📍 Spot Guide',beginner:'🔰 Beginner Guide','marine-life':'🐠 Marine Life',season:'🌤️ Season & Weather',gear:'🎽 Gear & Packing',safety:'🛡️ Safety & Tips',tourism:'🗾 Okinawa Tourism'},
@@ -7034,13 +7031,28 @@
     document.getElementById('adm-dash-screen').style.display='flex';
     admPanel('blog');
   }
+  var _admFail=0, _admLock=0;
   function admLogin(){
+    const now=Date.now();
+    if(_admLock && now<_admLock){
+      document.getElementById('adm-err').textContent='🔒 試行回数超過。しばらくお待ちください。';
+      document.getElementById('adm-err').style.display='block'; return;
+    }
     if(document.getElementById('adm-pw-inp').value===cmsGetPw()){
+      _admFail=0; _admLock=0;
       sessionStorage.setItem('adm_auth','1');
       document.getElementById('adm-err').style.display='none';
       document.getElementById('adm-pw-inp').value='';
       admShowDash();
-    } else { document.getElementById('adm-err').style.display='block'; }
+    } else {
+      _admFail++;
+      if(_admFail>=5){ _admLock=Date.now()+5*60*1000; _admFail=0;
+        document.getElementById('adm-err').textContent='🔒 5回失敗しました。5分間ロックされます。';
+      } else {
+        document.getElementById('adm-err').textContent='パスワードが正しくありません。';
+      }
+      document.getElementById('adm-err').style.display='block';
+    }
   }
   function admLogout(){ sessionStorage.removeItem('adm_auth'); admGoHome(); }
   function admGoHome(){ document.getElementById('main-nav').style.display=''; goHome(); }
