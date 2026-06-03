@@ -1728,13 +1728,10 @@
       .pom-hero-text .s-title,
       .pom-hero-text .s-sub { text-align: center; }
       .pom-grid {
-        display: flex; flex-direction: row;
-        overflow-x: auto; gap: 14px; padding-bottom: 14px;
-        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 14px; padding-bottom: 0;
       }
-      .pom-grid::-webkit-scrollbar { display: none; }
-      .pom-card { min-width: 220px; flex-shrink: 0; scroll-snap-align: start; }
+      .pom-card { min-width: unset; flex-shrink: unset; scroll-snap-align: unset; padding: 20px 16px; }
     }
 
     /* ================================================================
@@ -2731,10 +2728,28 @@
     .gear-section { padding:60px 24px; background:var(--g-pale); }
     .gear-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:700px; margin:0 auto; }
 .gear-shower-note {
-      display:flex; align-items:center; gap:10px;
-      background:rgba(0,168,150,.1); border:1px solid rgba(0,168,150,.35);
-      border-radius:12px; padding:13px 20px; margin-top:18px; max-width:700px; margin-left:auto; margin-right:auto;
-      font-size:.88rem; font-weight:700; color:var(--g-dark); line-height:1.6;
+      display:flex; align-items:stretch;
+      border:1px solid rgba(0,168,150,.3); border-radius:12px; overflow:hidden;
+      margin-top:18px; max-width:700px; margin-left:auto; margin-right:auto;
+      font-size:.87rem;
+    }
+    .gsn-left {
+      background:linear-gradient(135deg,rgba(0,168,150,.2),rgba(0,168,150,.1));
+      border-right:2px solid rgba(0,168,150,.25);
+      padding:14px 18px; min-width:120px; max-width:150px;
+      font-weight:700; color:var(--g-dark); line-height:1.5;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center;
+    }
+    .gsn-right {
+      padding:13px 18px; flex:1;
+      background:rgba(0,168,150,.04);
+      color:var(--text); line-height:1.75;
+      display:flex; align-items:center;
+    }
+    @media(max-width:560px){
+      .gear-shower-note { flex-direction:column; }
+      .gsn-left { max-width:none; border-right:none; border-bottom:2px solid rgba(0,168,150,.25); justify-content:flex-start; text-align:left; }
     }
     .gear-card { background:#fff; border-radius:20px; padding:28px 24px; box-shadow:0 2px 16px rgba(0,100,90,.09); border:1px solid rgba(0,168,150,.12); }
     .gear-icon { font-size:2rem; margin-bottom:10px; }
@@ -2780,6 +2795,26 @@
     .pc-age-note { display:flex; align-items:center; gap:8px; font-size:.83rem; font-weight:700; color:var(--navy); background:var(--g-pale); border-radius:10px; padding:9px 14px; margin-top:14px; border:1px solid rgba(0,168,150,.2); }
 
     /* ===== 予約ボタン（右下・コーラルレッド） ===== */
+    /* === Mobile floating LINE/WhatsApp === */
+    #mob-ct-float { display:none; }
+    @media(max-width:600px){
+      #mob-ct-float {
+        position:fixed; left:12px; bottom:22px; z-index:399;
+        display:flex; flex-direction:column; gap:10px;
+      }
+      .mob-cf-btn {
+        width:50px; height:50px; border-radius:50%;
+        display:flex; align-items:center; justify-content:center;
+        text-decoration:none;
+        box-shadow:0 2px 14px rgba(0,0,0,.22);
+        opacity:0.72; transition:opacity .2s, transform .15s;
+      }
+      .mob-cf-btn:active { opacity:1; transform:scale(.93); }
+      .mob-cf-line { background:#06C755; }
+      .mob-cf-wa   { background:#25D366; }
+      .mob-cf-btn svg { width:26px; height:26px; }
+    }
+
     #bk-pulse-btn {
       position:fixed; right:24px; bottom:24px; width:72px; height:72px; z-index:400;
       background:linear-gradient(135deg, #FF5722, #FF8C00);
@@ -4040,6 +4075,9 @@
                 </div>
                 <div class="vprc">+¥2,000</div>
               </div>
+              <div style="margin-top:20px;">
+                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
+              </div>
             </div>
           </div>
           <div>
@@ -4342,6 +4380,9 @@
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影した動画データも追加提供できます</p>
                 </div>
                 <div class="vprc">+¥2,000</div>
+              </div>
+              <div style="margin-top:20px;">
+                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
               </div>
             </div>
           </div>
@@ -4666,6 +4707,9 @@
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影した動画データも追加提供できます</p>
                 </div>
                 <div class="vprc">+¥2,000</div>
+              </div>
+              <div style="margin-top:20px;">
+                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
               </div>
             </div>
           </div>
@@ -5518,7 +5562,7 @@
       /* INCLUDES FEEDING */
       inc_h_feed:'餌付け体験', inc_p_feed:'熱帯魚への餌付けで魚たちが目の前に集まってくる感動体験',
       inc_h_shower:'プライベート温水シャワー・更衣スペース', inc_p_shower:'温水シャワーと専用更衣テントをご用意しています',
-      gear_shower:'🚿 <strong>温水シャワー・更衣スペースあり</strong> — プライベートな温水シャワーと専用更衣テントをご用意。公共施設の混雑なし、快適にお着替えいただけます。',
+      gear_shower:'<span class="gsn-left">🚿 温水シャワー・更衣スペースあり</span><span class="gsn-right">プライベートな温水シャワーと専用更衣テントをご用意。公共施設の混雑なし、快適にお着替えいただけます。</span>',
       sn_badge:'POPULAR', sn_name:'シュノーケル', sn_en:'Snorkeling',
       sn_orig:'通常 ¥9,500〜 / 人', pp_per:'〜 / 人',
       sn_save:'1名 ¥10,000 ｜ 2名 ¥6,000/人 ｜ 3名〜 ¥5,500/人',
@@ -5740,7 +5784,7 @@
       /* INCLUDES FEEDING */
       inc_h_feed:'Fish Feeding Experience', inc_p_feed:'Feed tropical fish and watch them gather right before your eyes',
       inc_h_shower:'Private Hot Shower &amp; Changing Space', inc_p_shower:'Hot shower and private changing tent provided',
-      gear_shower:'🚿 <strong>Hot shower &amp; changing space available</strong> — Private hot shower and dedicated changing tent on-site. No crowded public facilities.',
+      gear_shower:'<span class="gsn-left">🚿 Hot Shower &amp; Changing Space</span><span class="gsn-right">Private hot shower and dedicated changing tent on-site. No crowded public facilities — freshen up in your own private space.</span>',
       about_lbl:'WHY CHOOSE US', about_ttl:'Why Choose Emerald Reef', about_sub:'We turn your precious time into the best ocean memories.',
       ac1_h:'Private Charter', ac1_p:'Your group only — no strangers. Enjoy the ocean entirely at your own pace.',
       ac2_h:'Hotel Transfers', ac2_p:'Free round-trip pickup from your accommodation. No driving, no stress.',
@@ -5952,7 +5996,7 @@
       ac7_h:'温水淋浴・更衣帐篷', ac7_p:'提供私人温水淋浴和专用更衣帐篷。无需担心公共设施拥挤，在私人空间舒适换衣。',
       inc_h_feed:'喂鱼体验', inc_p_feed:'亲手喂食热带鱼，感受鱼儿们聚集眼前的感动瞬间',
       inc_h_shower:'私人温水淋浴・更衣空间', inc_p_shower:'提供温水淋浴和专用更衣帐篷',
-      gear_shower:'🚿 <strong>温水淋浴・更衣空间完备</strong> — 提供私人温水淋浴和专用更衣帐篷，无需担心公共设施拥挤，轻松换衣。',
+      gear_shower:'<span class="gsn-left">🚿 温水淋浴・更衣空间完备</span><span class="gsn-right">提供私人温水淋浴和专用更衣帐篷，无需担心公共设施拥挤，轻松换衣。</span>',
       sn_f5:'🐟 含喂鱼体验', bc_f5:'🐟 含喂鱼体验',
       about_lbl:'为什么选择我们', about_ttl:'选择翡翠礁的理由', about_sub:'将您宝贵的时光化为最美好的海洋回忆。',
       ac1_h:'全程包车', ac1_p:'仅限您的团队，无需与陌生人同行，按自己的节奏尽情享受。',
@@ -6163,7 +6207,7 @@
       ac7_h:'온수 샤워・탈의 텐트', ac7_p:'프라이빗 온수 샤워와 전용 탈의 텐트를 준비했습니다. 공공 시설 혼잡 없이 편하게 갈아입으실 수 있습니다.',
       inc_h_feed:'먹이 체험', inc_p_feed:'열대어에게 먹이를 주면 물고기들이 눈앞에 모여드는 감동 체험',
       inc_h_shower:'프라이빗 온수 샤워・탈의 공간', inc_p_shower:'온수 샤워와 전용 탈의 텐트를 준비했습니다',
-      gear_shower:'🚿 <strong>온수 샤워・탈의 공간 완비</strong> — 프라이빗 온수 샤워와 전용 탈의 텐트 준비. 공공 시설 혼잡 없이 쾌적하게 갈아입으실 수 있습니다.',
+      gear_shower:'<span class="gsn-left">🚿 온수 샤워・탈의 공간 완비</span><span class="gsn-right">프라이빗 온수 샤워와 전용 탈의 텐트 준비. 공공 시설 혼잡 없이 쾌적하게 갈아입으실 수 있습니다.</span>',
       sn_f5:'🐟 열대어 먹이 체험 포함', bc_f5:'🐟 열대어 먹이 체험 포함',
       about_lbl:'선택받는 이유', about_ttl:'에메랄드 리프를 선택하는 이유', about_sub:'소중한 시간을 최고의 바다 추억으로 바꿔드립니다.',
       ac1_h:'완전 전세', ac1_p:'여러분 그룹만의 전용 투어. 다른 참가자 신경 없이 자신의 페이스로 즐기세요.',
@@ -8116,6 +8160,16 @@
   <span class="bpb-icon">📅</span>
   <span class="bpb-txt" data-i18n="bk_btn_txt">予約<br>はこちら</span>
 </button>
+
+<!-- Mobile floating LINE/WhatsApp -->
+<div id="mob-ct-float">
+  <a class="mob-cf-btn mob-cf-line" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" aria-label="LINEで問い合わせ">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6C13.51 6 5 13.49 5 22.63c0 6.35 4.01 11.9 10.04 15.11-.43 1.59-1.38 5.43-1.58 6.27-.25 1.04.38 1.03.8.75l7.87-5.26c.91.13 1.84.2 2.78.2C35.5 39.7 43 32.21 43 23.07 43 13.49 34.49 6 24 6z" fill="white"/><text x="24" y="29" text-anchor="middle" fill="#06C755" font-size="14" font-weight="bold" font-family="Arial,sans-serif">LINE</text></svg>
+  </a>
+  <a class="mob-cf-btn mob-cf-wa" href="https://wa.me/817085168826?text=EMERALD%20REEF%20OKINAWA%20の体験について問い合わせしたいです" target="_blank" rel="noopener" aria-label="WhatsAppで問い合わせ">
+    <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.605.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.199.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  </a>
+</div>
 
 </body>
 </html>
