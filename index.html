@@ -2101,7 +2101,10 @@
       33%     { transform: scaleX(1.015) scaleY(1.06); }
       66%     { transform: scaleX(.988) scaleY(.96); }
     }
-    .wave svg { animation: wave-sway 9s ease-in-out infinite; transform-origin: center bottom; }
+    .wave svg { animation: wave-sway 9s ease-in-out infinite; transform-origin: center bottom;
+      /* 横にずれても端が見えないよう少し広げる */
+      width: calc(100% + 40px); margin-left: -20px;
+    }
 
     /* ================================================================
        SCROLL PROGRESS BAR
@@ -2957,10 +2960,12 @@
        WAVE TRANSITION BUBBLES
        ================================================================ */
     .wave { position: relative; }
+    /* wave-swayアニメーション: 両端の隙間が見えないよう translateX の範囲は ±10px に絞り、
+       SVG は calc(100%+40px) で広げ中央に配置（上の .wave svg 定義と合わせて適用） */
     .wave svg { animation: wave-sway 10s ease-in-out infinite; }
     @keyframes wave-sway {
       0%,100% { transform: translateX(0); }
-      50%      { transform: translateX(-18px); }
+      50%      { transform: translateX(-10px); }
     }
     .wave-bubs {
       position: absolute; left: 0; right: 0; bottom: 0;
@@ -5440,15 +5445,16 @@
           clearDateError(inp); clearFieldError(inp);
           container.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
           cell.classList.add('cal-selected');
-          /* 日付選択後、予約フォームの名前欄へスクロール */
+          /* 日付選択後、予約フォームの名前欄へスクロール（ラベルが隠れないよう.fgから計算） */
           setTimeout(function() {
             var bkLayout2 = container.closest('.bk-layout');
             if (!bkLayout2) return;
             var nameInp = bkLayout2.querySelector('input[name="お名前"]');
             if (!nameInp) return;
+            var nameGroup = nameInp.closest('.fg') || nameInp;
             var nav2 = document.getElementById('main-nav');
             var navH2 = nav2 ? nav2.offsetHeight : 64;
-            window.scrollTo({ top: nameInp.getBoundingClientRect().top + window.pageYOffset - navH2 - 16, behavior: 'smooth' });
+            window.scrollTo({ top: nameGroup.getBoundingClientRect().top + window.pageYOffset - navH2 - 24, behavior: 'smooth' });
           }, 150);
         });
       });
