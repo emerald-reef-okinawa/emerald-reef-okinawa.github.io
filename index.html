@@ -318,20 +318,13 @@
     }
     .wave svg { display: block; width: 100%; }
 
-    /* ===== Diagonal bottom edge (::after方式 — 内容と干渉しない) ===== */
-    .diag-btm {
+    /* ===== Diagonal overlap (次セクションが乗り上げ方式) ===== */
+    .diag-top {
+      clip-path: polygon(0 100px, 100% 0, 100% 100%, 0 100%);
+      margin-top: -100px;
+      padding-top: 130px !important;
+      padding-bottom: 200px !important; /* 乗り上げ100px + バッファ100px */
       position: relative;
-      padding-bottom: 100px !important; /* コンテンツが斜めゾーンに入らないようにする */
-    }
-    .diag-btm::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 80px;
-      background: var(--nb, #fff);
-      clip-path: polygon(0 100%, 100% 0, 100% 100%);
-      pointer-events: none;
-      z-index: 5;
     }
 
     /* ================================================================
@@ -341,7 +334,7 @@
       position: relative; min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 180px 24px 60px; overflow: hidden;
+      text-align: center; padding: 180px 24px 200px; overflow: hidden;
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
@@ -850,7 +843,7 @@
     /* ================================================================
        TARGET chips
        ================================================================ */
-    #target { background: var(--bg); }
+    #target { background: var(--bg); padding-bottom: 200px; }
     .tgt-photo-row {
       display: grid;
       grid-template-columns: 1fr 2.4fr 1fr;
@@ -960,7 +953,7 @@
     /* ================================================================
        CONTACT FORM + CALENDAR LAYOUT
        ================================================================ */
-    #contact { background: var(--bg); }
+    #contact { background: var(--bg); padding-bottom: 200px; }
 
     /* 2カラム: カレンダー | フォーム */
     .contact-layout {
@@ -3189,7 +3182,7 @@
 <div id="view-main" class="view">
 
   <!-- Hero -->
-  <section class="hero diag-btm" style="--nb:#ffffff;">
+  <section class="hero">
     <div class="hero-caustic"></div>
     <div class="hero-particles">
       <div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div>
@@ -3229,7 +3222,7 @@
 
 
   <!-- About -->
-  <section id="about" class="diag-btm" style="--nb:#FFF8F0;">
+  <section id="about" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
@@ -3327,7 +3320,7 @@
 
 
   <!-- Services -->
-  <section id="services" class="diag-btm" style="--nb:#ffffff;">
+  <section id="services" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="sv_lbl">OUR SERVICES</p>
       <h2 class="s-title fi" data-i18n="sv_ttl">体験メニュー</h2>
@@ -3466,7 +3459,7 @@
 
 
   <!-- Features -->
-  <section id="features" class="diag-btm" style="--nb:#e4f9f5;">
+  <section id="features" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="ft_lbl">DETAILS</p>
       <h2 class="s-title fi" data-i18n="ft_ttl">サービス詳細</h2>
@@ -3484,7 +3477,7 @@
 
 
   <!-- Timeline -->
-  <section id="timeline" class="diag-btm" style="--nb:#e6faf6;">
+  <section id="timeline" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
       <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
@@ -3549,7 +3542,7 @@
 
 
   <!-- Peace of Mind -->
-  <section id="peace-of-mind">
+  <section id="peace-of-mind" class="diag-top">
     <div class="container">
       <div class="pom-hero">
         <div class="pom-hero-text">
@@ -3593,7 +3586,7 @@
   </section>
 
   <!-- Target -->
-  <section id="target" class="diag-btm" style="--nb:#ffffff;">
+  <section id="target" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="tgt_lbl">WHO WE WELCOME</p>
       <h2 class="s-title fi" data-i18n="tgt_ttl">こんな方におすすめ</h2>
@@ -3626,7 +3619,7 @@
 
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
-  <section id="reviews" class="coral-accent diag-btm" style="--nb:#FFF8F0;">
+  <section id="reviews" class="coral-accent diag-top">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="rev_lbl">REVIEWS</p>
       <h2 class="s-title fi" data-i18n="rev_ttl">お客様の声</h2>
@@ -3689,7 +3682,7 @@
 
 
   <!-- Blog -->
-  <section id="blog" class="coral-accent">
+  <section id="blog" class="coral-accent diag-top">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="blog_lbl">BLOG</p>
       <h2 class="s-title fi" data-i18n="blog_ttl">ブログ</h2>
@@ -3892,7 +3885,7 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="diag-btm" style="--nb:#003D35;">
+  <section id="contact" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="ct_lbl">CONTACT</p>
       <h2 class="s-title fi" data-i18n="ct_ttl">お問い合わせ</h2>
