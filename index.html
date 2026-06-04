@@ -318,20 +318,12 @@
     }
     .wave svg { display: block; width: 100%; }
 
-    /* ===== Diagonal separator ===== */
-    .diag-sep {
+    /* ===== Diagonal top edge (section乗り上げ方式) ===== */
+    .diag-top {
+      clip-path: polygon(0 100px, 100% 0, 100% 100%, 0 100%);
+      margin-top: -100px;
+      padding-top: 130px !important;
       position: relative;
-      height: 72px;
-      background: var(--ct, transparent);
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .diag-sep::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--cb, #fff);
-      clip-path: polygon(0 100%, 100% 0, 100% 100%);
     }
 
     /* ================================================================
@@ -3037,9 +3029,8 @@
       /* Nav */
       #main-nav { background: rgba(6,14,26,.97) !important; border-bottom-color: rgba(72,202,228,.12) !important; }
 
-      /* Wave / Diagonal sep – 暗背景では非表示 */
+      /* Wave – 暗背景では非表示 */
       .wave { opacity: 0; height: 0; overflow: hidden; }
-      .diag-sep { height: 0; overflow: hidden; }
 
       /* About */
       #about { background: var(--bg); }
@@ -3228,11 +3219,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: ヒーロー→選ばれる理由 -->
-  <div class="diag-sep" style="--ct:#003d35;--cb:#ffffff;" data-dark="1"></div>
 
   <!-- About -->
-  <section id="about">
+  <section id="about" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
@@ -3328,11 +3317,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: 選ばれる理由→体験メニュー -->
-  <div class="diag-sep" style="--ct:#e0f5f3;--cb:#FFF8F0;"></div>
 
   <!-- Services -->
-  <section id="services">
+  <section id="services" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="sv_lbl">OUR SERVICES</p>
       <h2 class="s-title fi" data-i18n="sv_ttl">体験メニュー</h2>
@@ -3469,11 +3456,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: 体験メニュー→サービス詳細 -->
-  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
 
   <!-- Features -->
-  <section id="features">
+  <section id="features" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="ft_lbl">DETAILS</p>
       <h2 class="s-title fi" data-i18n="ft_ttl">サービス詳細</h2>
@@ -3489,11 +3474,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: サービス詳細→当日の流れ -->
-  <div class="diag-sep" style="--ct:#ffffff;--cb:#e4f9f5;"></div>
 
   <!-- Timeline -->
-  <section id="timeline">
+  <section id="timeline" class="diag-top">
     <div class="container">
       <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
       <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
@@ -3556,11 +3539,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: 当日の流れ→安心ポイント -->
-  <div class="diag-sep" style="--ct:#e4f9f5;--cb:#e6faf6;"></div>
 
   <!-- Peace of Mind -->
-  <section id="peace-of-mind">
+  <section id="peace-of-mind" class="diag-top">
     <div class="container">
       <div class="pom-hero">
         <div class="pom-hero-text">
@@ -3635,11 +3616,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: こんな方に→口コミ -->
-  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
-  <section id="reviews" class="coral-accent">
+  <section id="reviews" class="coral-accent diag-top">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="rev_lbl">REVIEWS</p>
       <h2 class="s-title fi" data-i18n="rev_ttl">お客様の声</h2>
@@ -3700,11 +3679,9 @@
     </div>
   </section>
 
-  <!-- 泡区切り: 口コミ→ブログ -->
-  <div class="diag-sep" style="--ct:#E0FAF6;--cb:#FFF8F0;"></div>
 
   <!-- Blog -->
-  <section id="blog" class="coral-accent">
+  <section id="blog" class="coral-accent diag-top">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="blog_lbl">BLOG</p>
       <h2 class="s-title fi" data-i18n="blog_ttl">ブログ</h2>
@@ -3962,10 +3939,8 @@
     </div>
   </section>
 
-  <!-- 泡区切り: お問合せ→フッター -->
-  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#003D35;" data-dark="1"></div>
 
-  <footer>
+  <footer class="diag-top">
     <div class="ft-logo">
       <img src="logo.webp" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
       <div class="ft-logo-txt">EMERALD REEF OKINAWA</div>
