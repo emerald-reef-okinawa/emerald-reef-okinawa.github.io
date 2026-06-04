@@ -323,6 +323,7 @@
       clip-path: polygon(0 100px, 100% 0, 100% 100%, 0 100%);
       margin-top: -100px;
       padding-top: 130px !important;
+      padding-bottom: 120px !important;  /* 次のdiag-topセクション(100px)が乗り上げても内容が隠れないようにする */
       position: relative;
     }
 
@@ -333,7 +334,7 @@
       position: relative; min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 180px 24px 60px; overflow: hidden;
+      text-align: center; padding: 180px 24px 160px; overflow: hidden; /* 底160px: 60px + 100px for diag overlap */
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
@@ -842,7 +843,7 @@
     /* ================================================================
        TARGET chips
        ================================================================ */
-    #target { background: var(--bg); }
+    #target { background: var(--bg); padding-bottom: 120px; }
     .tgt-photo-row {
       display: grid;
       grid-template-columns: 1fr 2.4fr 1fr;
@@ -952,7 +953,7 @@
     /* ================================================================
        CONTACT FORM + CALENDAR LAYOUT
        ================================================================ */
-    #contact { background: var(--bg); }
+    #contact { background: var(--bg); padding-bottom: 120px; }
 
     /* 2カラム: カレンダー | フォーム */
     .contact-layout {
