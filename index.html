@@ -310,7 +310,14 @@
     }
 
     /* ===== Wave divider ===== */
-    .wave { width: 100%; overflow: hidden; line-height: 0; margin-bottom: -1px; }
+    .wave {
+      width: 100%; overflow: hidden; line-height: 0;
+      margin-bottom: -1px;
+      margin-top: -38px;        /* 上のセクションに38px重なる */
+      position: relative;
+      z-index: 5;
+      pointer-events: none;     /* 重なっても操作を妨げない */
+    }
     .wave svg { display: block; width: 100%; }
 
     /* ================================================================
@@ -3208,7 +3215,7 @@
 
   <!-- 波: ヒーロー→選ばれる理由（セクション間） -->
   <div class="wave" style="background:#003d35;">
-    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,60 L0,60Z" fill="#ffffff"/></svg>
+    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C360,52 720,10 1080,52 C1260,52 1380,14 1440,38 L1440,60 L0,60Z" fill="#ffffff"/></svg>
   </div>
 
   <!-- About -->
@@ -3310,7 +3317,7 @@
 
   <!-- 波: 選ばれる理由→体験メニュー（セクション間） -->
   <div class="wave" style="background:#e0f5f3;">
-    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C360,20 720,4 1080,20 C1260,20 1380,4 1440,0 L1440,60 L0,60Z" fill="#FFF8F0"/></svg>
+    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C360,52 720,10 1080,52 C1260,52 1380,14 1440,38 L1440,60 L0,60Z" fill="#FFF8F0"/></svg>
   </div>
 
   <!-- Services -->
@@ -3453,7 +3460,7 @@
 
   <!-- 波: 体験メニュー→サービス詳細（セクション間） -->
   <div class="wave" style="background:var(--bg);">
-    <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,56 L0,56Z" fill="#ffffff"/></svg>
+    <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none"><path d="M0,36 C360,50 720,8 1080,50 C1260,50 1380,12 1440,36 L1440,56 L0,56Z" fill="#ffffff"/></svg>
   </div>
 
   <!-- Features -->
@@ -3476,7 +3483,7 @@
   <!-- Wave: Features → Timeline -->
   <div class="wave" style="background:#ffffff;">
     <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none">
-      <path d="M0,0 C360,18 720,4 1080,18 C1260,18 1380,4 1440,0 L1440,56 L0,56Z" fill="#e4f9f5"/>
+      <path d="M0,36 C360,50 720,8 1080,50 C1260,50 1380,12 1440,36 L1440,56 L0,56Z" fill="#e4f9f5"/>
     </svg>
   </div>
 
@@ -3547,7 +3554,7 @@
   <!-- Wave: Timeline → Peace of Mind -->
   <div class="wave" style="background:#e4f9f5;">
     <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none">
-      <path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,56 L0,56Z" fill="#e6faf6"/>
+      <path d="M0,36 C360,50 720,8 1080,50 C1260,50 1380,12 1440,36 L1440,56 L0,56Z" fill="#e6faf6"/>
     </svg>
   </div>
 
@@ -3630,7 +3637,7 @@
   <!-- Wave: Target → Reviews -->
   <div class="wave" style="background:#FFF8F0;">
     <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none">
-      <path d="M0,0 C320,18 640,4 960,18 C1120,4 1300,18 1440,0 L1440,56 L0,56Z" fill="#ffffff"/>
+      <path d="M0,36 C360,50 720,8 1080,50 C1260,50 1380,12 1440,36 L1440,56 L0,56Z" fill="#ffffff"/>
     </svg>
   </div>
 
@@ -3699,7 +3706,7 @@
   <!-- Wave: Reviews → Blog -->
   <div class="wave" style="background:#E0FAF6;">
     <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none">
-      <path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,56 L0,56Z" fill="#FFF8F0"/>
+      <path d="M0,36 C360,50 720,8 1080,50 C1260,50 1380,12 1440,36 L1440,56 L0,56Z" fill="#FFF8F0"/>
     </svg>
   </div>
 
@@ -3965,7 +3972,7 @@
   <!-- Wave -->
   <div class="wave" style="background:var(--bg);">
     <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none">
-      <path d="M0,0 C480,22 960,4 1440,0 L1440,60 L0,60Z" fill="#003D35"/>
+      <path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/>
     </svg>
   </div>
 
@@ -4344,7 +4351,7 @@
 
   <div id="det-faq-snorkeling"></div>
 
-  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C480,22 960,4 1440,0 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
+  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
     <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
@@ -4651,7 +4658,7 @@
 
   <div id="det-faq-skindiving"></div>
 
-  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C480,22 960,4 1440,0 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
+  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
     <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
@@ -4967,7 +4974,7 @@
 
   <div id="det-faq-bluecave"></div>
 
-  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C480,22 960,4 1440,0 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
+  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
     <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
