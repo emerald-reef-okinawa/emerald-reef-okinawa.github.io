@@ -413,6 +413,7 @@
         url('https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&w=1600&q=80') center/cover no-repeat;
     }
     /* ---- About: フリップカード ---- */
+    .about-scroll-hint { display: none; } /* デスクトップでは非表示 */
     .about-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -1717,16 +1718,32 @@
       .a-flip { min-width: 200px; flex-shrink: 0; scroll-snap-align: start; height: 270px; }
       .a-img { width: 110px; height: 110px; }
       .a-hint { display: none; }
+      .about-scroll-hint {
+        display: flex; align-items: center; justify-content: flex-end;
+        gap: 5px; font-size: .76rem; font-weight: 600; color: var(--g-mid);
+        letter-spacing: .04em; margin-bottom: 6px;
+      }
+      .about-scroll-hint::after {
+        content: ''; display: inline-block; width: 22px; height: 2px;
+        background: var(--g-mid); border-radius: 2px;
+      }
       .ft-grid {
         display: grid; grid-template-columns: 1fr 1fr;
         gap: 14px; padding-bottom: 0;
       }
       .ft-item { min-width: unset; flex-shrink: unset; scroll-snap-align: unset; }
-      .pom-hero { flex-direction: column; gap: 32px; margin-bottom: 36px; }
-      .pom-photo { width: 100%; max-width: 360px; margin: 0 auto; }
-      .pom-hero-text .s-label,
-      .pom-hero-text .s-title,
-      .pom-hero-text .s-sub { text-align: center; }
+      /* スマホ: タイトル直下に写真を表示するためにグリッド+display:contentsで並び替え */
+      .pom-hero {
+        display: grid;
+        grid-template-areas: "label" "title" "photo" "sub" "list";
+        gap: 0; margin-bottom: 36px;
+      }
+      .pom-hero-text { display: contents; }
+      .pom-hero-text .s-label { grid-area: label; text-align: center; margin-left: 0; max-width: none; }
+      .pom-hero-text .s-title { grid-area: title; text-align: center; margin-left: 0; max-width: none; align-self: auto; }
+      .pom-hero-text .s-sub   { grid-area: sub; text-align: center; margin-left: 0; max-width: none; padding-top: 12px; margin-top: 0; }
+      .pom-hero-text .pom-list { grid-area: list; }
+      .pom-photo { grid-area: photo; width: 100%; max-width: 360px; margin: 16px auto; }
       .pom-grid {
         display: grid; grid-template-columns: 1fr 1fr;
         gap: 14px; padding-bottom: 0;
@@ -2799,9 +2816,11 @@
     #mob-ct-float { display:none; }
     @media(max-width:600px){
       #mob-ct-float {
-        position:fixed; left:12px; bottom:22px; z-index:399;
+        position:fixed; right:14px; bottom:22px; z-index:399;
         display:flex; flex-direction:column; gap:10px;
       }
+      /* 予約パルスボタンが表示されているときは上にずらす */
+      body.detail-vis #mob-ct-float { bottom:92px; }
       .mob-cf-btn {
         width:50px; height:50px; border-radius:50%;
         display:flex; align-items:center; justify-content:center;
@@ -2833,6 +2852,23 @@
     @media(max-width:600px){ #bk-pulse-btn { right:14px; bottom:16px; width:62px; height:62px; } }
     .bpb-icon { font-size:1.4rem; line-height:1; }
     .bpb-txt  { color:#fff; font-size:.6rem; font-weight:800; line-height:1.3; text-align:center; margin-top:3px; }
+
+    /* === 料金プラン内 予約ボタン === */
+    .det-book-btn {
+      width:100%; font-size:1.05rem; font-weight:800; padding:16px 20px;
+      background:linear-gradient(135deg,#FF5722,#FF8C00);
+      color:#fff; border:none; border-radius:14px; cursor:pointer;
+      box-shadow:0 6px 22px rgba(255,87,34,.38), 0 2px 6px rgba(0,0,0,.12);
+      letter-spacing:.06em; font-family:inherit; margin-top:20px;
+      transition:transform .2s ease, box-shadow .2s ease;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .det-book-btn::before { content:'📅'; font-size:1.1rem; }
+    .det-book-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 10px 32px rgba(255,87,34,.52), 0 3px 8px rgba(0,0,0,.14);
+    }
+    .det-book-btn:active { transform:translateY(1px); box-shadow:0 4px 14px rgba(255,87,34,.32); }
 
     /* --- Mini FAQ --- */
     .mini-faq-section { padding:52px 24px; background:#fff; border-top:1px solid rgba(0,168,150,.1); }
@@ -3168,6 +3204,7 @@
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
       <p class="s-sub fi" data-i18n="about_sub">あなたの大切な時間を、最高の海の思い出に変えます。</p>
+      <div class="about-scroll-hint">Swipe to see more →</div>
       <div class="about-grid">
 
         <div class="a-flip fi d1">
@@ -4076,7 +4113,7 @@
                 <div class="vprc">+¥2,000</div>
               </div>
               <div style="margin-top:20px;">
-                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
+                <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
               </div>
             </div>
           </div>
@@ -4382,7 +4419,7 @@
                 <div class="vprc">+¥2,000</div>
               </div>
               <div style="margin-top:20px;">
-                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
+                <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
               </div>
             </div>
           </div>
@@ -4709,7 +4746,7 @@
                 <div class="vprc">+¥2,000</div>
               </div>
               <div style="margin-top:20px;">
-                <button onclick="scrollToBkForm()" class="btn btn-primary" style="width:100%;font-size:1rem;padding:14px;" data-i18n="det_book_now">今すぐ予約する</button>
+                <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
               </div>
             </div>
           </div>
@@ -5403,6 +5440,16 @@
           clearDateError(inp); clearFieldError(inp);
           container.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
           cell.classList.add('cal-selected');
+          /* 日付選択後、予約フォームの名前欄へスクロール */
+          setTimeout(function() {
+            var bkLayout2 = container.closest('.bk-layout');
+            if (!bkLayout2) return;
+            var nameInp = bkLayout2.querySelector('input[name="お名前"]');
+            if (!nameInp) return;
+            var nav2 = document.getElementById('main-nav');
+            var navH2 = nav2 ? nav2.offsetHeight : 64;
+            window.scrollTo({ top: nameInp.getBoundingClientRect().top + window.pageYOffset - navH2 - 16, behavior: 'smooth' });
+          }, 150);
         });
       });
     }
@@ -6476,7 +6523,13 @@
      ================================================================ */
   let _curView = 'view-main';
 
+  function _closeNav() {
+    var nl = document.getElementById('nav-links');
+    if (nl) nl.classList.remove('open');
+  }
+
   function _applyView(id, afterCb) {
+    _closeNav(); // ページ遷移時はハンバーガーメニューを閉じる
     document.querySelectorAll('.view').forEach(v => {
       v.classList.remove('active');
       v.style.display = 'none';
@@ -6491,7 +6544,7 @@
     if (afterCb) setTimeout(afterCb, 80);
   }
 
-  function showView(id, afterCb) {
+  function showView(id, afterCb, _skipHistory) {
     const rpl = document.getElementById('page-ripple');
 
     // 同じページへの遷移：波紋なし
@@ -6500,6 +6553,12 @@
       return;
     }
     _curView = id;
+
+    /* History API: ブラウザの戻るボタンを有効化 */
+    if (!_skipHistory && id !== 'view-admin') {
+      var hashId = id === 'view-main' ? '' : id;
+      history.pushState({ view: id }, '', hashId ? ('#' + hashId) : window.location.pathname);
+    }
 
     if (!rpl) { _applyView(id, afterCb); return; }
 
@@ -6579,10 +6638,12 @@
   function showDetailBanners() {
     var btn = document.getElementById('bk-pulse-btn');
     setTimeout(function(){ if (btn) btn.classList.add('bpb-vis'); }, 400);
+    document.body.classList.add('detail-vis'); // LINE/WAボタンを上にずらす
   }
   function hideDetailBanners() {
     var btn = document.getElementById('bk-pulse-btn');
     if (btn) btn.classList.remove('bpb-vis');
+    document.body.classList.remove('detail-vis');
   }
 
   // 別ページ→ホーム＋スクロール／同ページなら即スクロール
@@ -6704,6 +6765,7 @@
   }
 
   function jumpTo(id) {
+    _closeNav(); // ジャンプ時もメニューを閉じる
     const el = document.getElementById(id);
     if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
   }
@@ -7853,7 +7915,30 @@
     // #admin ハッシュで管理画面を開く
     if(location.hash==='#admin') admEnter();
 
-    _curView = 'view-main'; _applyView('view-main');  // 初回ロード：波紋なしで表示
+    /* 初回ロード: ハッシュにビューIDがあればそのページを開く */
+    var _initHash = location.hash.replace('#', '');
+    var _validViews = ['view-snorkeling','view-skindiving','view-bluecave','view-blog-list',
+      'view-blog-1','view-blog-2','view-blog-3','view-blog-4','view-blog-5','view-blog-6'];
+    if (_initHash && _validViews.indexOf(_initHash) !== -1) {
+      _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-bluecave'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
+    } else {
+      _curView = 'view-main'; _applyView('view-main');  // 初回ロード：波紋なしで表示
+    }
+
+    /* ブラウザの戻る/進むボタン対応 */
+    window.addEventListener('popstate', function(e) {
+      var targetView = (e.state && e.state.view) ? e.state.view : 'view-main';
+      hideDetailBanners();
+      _curView = targetView;
+      _applyView(targetView, function(){
+        if (targetView.startsWith('view-blog-') && targetView !== 'view-blog-list') {
+          var n = parseInt(targetView.replace('view-blog-',''));
+          if (!isNaN(n)) showBlog(n);
+        } else if (['view-snorkeling','view-skindiving','view-bluecave'].indexOf(targetView) !== -1) {
+          renderDetExtras(targetView.replace('view-','')); showDetailBanners();
+        }
+      });
+    });
     setLang(curLang);   // apply saved language on load
     // Apply Instagram config
     INSTAGRAM.posts.forEach((url, i) => {
