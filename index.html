@@ -318,25 +318,20 @@
     }
     .wave svg { display: block; width: 100%; }
 
-    /* ===== Bubble separator ===== */
-    .bsep {
+    /* ===== Diagonal separator ===== */
+    .diag-sep {
       position: relative;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--ct) 50%, var(--cb) 50%);
-      overflow: visible;
+      height: 72px;
+      background: var(--ct, transparent);
+      overflow: hidden;
       pointer-events: none;
-      z-index: 5;
     }
-    .bbl {
+    .diag-sep::after {
+      content: '';
       position: absolute;
-      border-radius: 50%;
-      animation: bbl-up var(--d, 3s) ease-in var(--dl, 0s) infinite;
-    }
-    @keyframes bbl-up {
-      0%   { transform: translateY(0) translateX(0);           opacity: 0; }
-      12%  { opacity: var(--op, .75); }
-      80%  { opacity: calc(var(--op, .75) * .45); }
-      100% { transform: translateY(-90px) translateX(var(--dx,8px)); opacity: 0; }
+      inset: 0;
+      background: var(--cb, #fff);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
     }
 
     /* ================================================================
@@ -3042,9 +3037,9 @@
       /* Nav */
       #main-nav { background: rgba(6,14,26,.97) !important; border-bottom-color: rgba(72,202,228,.12) !important; }
 
-      /* Wave / Bubble sep – 暗背景では不要なので非表示 */
+      /* Wave / Diagonal sep – 暗背景では非表示 */
       .wave { opacity: 0; height: 0; overflow: hidden; }
-      .bsep { opacity: 0; height: 0; overflow: hidden; }
+      .diag-sep { height: 0; overflow: hidden; }
 
       /* About */
       #about { background: var(--bg); }
@@ -3234,7 +3229,7 @@
   </section>
 
   <!-- 泡区切り: ヒーロー→選ばれる理由 -->
-  <div class="bsep" style="--ct:#003d35;--cb:#ffffff;" data-dark="1"></div>
+  <div class="diag-sep" style="--ct:#003d35;--cb:#ffffff;" data-dark="1"></div>
 
   <!-- About -->
   <section id="about">
@@ -3334,7 +3329,7 @@
   </section>
 
   <!-- 泡区切り: 選ばれる理由→体験メニュー -->
-  <div class="bsep" style="--ct:#e0f5f3;--cb:#FFF8F0;"></div>
+  <div class="diag-sep" style="--ct:#e0f5f3;--cb:#FFF8F0;"></div>
 
   <!-- Services -->
   <section id="services">
@@ -3475,7 +3470,7 @@
   </section>
 
   <!-- 泡区切り: 体験メニュー→サービス詳細 -->
-  <div class="bsep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
+  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
 
   <!-- Features -->
   <section id="features">
@@ -3495,7 +3490,7 @@
   </section>
 
   <!-- 泡区切り: サービス詳細→当日の流れ -->
-  <div class="bsep" style="--ct:#ffffff;--cb:#e4f9f5;"></div>
+  <div class="diag-sep" style="--ct:#ffffff;--cb:#e4f9f5;"></div>
 
   <!-- Timeline -->
   <section id="timeline">
@@ -3562,7 +3557,7 @@
   </section>
 
   <!-- 泡区切り: 当日の流れ→安心ポイント -->
-  <div class="bsep" style="--ct:#e4f9f5;--cb:#e6faf6;"></div>
+  <div class="diag-sep" style="--ct:#e4f9f5;--cb:#e6faf6;"></div>
 
   <!-- Peace of Mind -->
   <section id="peace-of-mind">
@@ -3641,7 +3636,7 @@
   </section>
 
   <!-- 泡区切り: こんな方に→口コミ -->
-  <div class="bsep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
+  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#ffffff;"></div>
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
   <section id="reviews" class="coral-accent">
@@ -3706,7 +3701,7 @@
   </section>
 
   <!-- 泡区切り: 口コミ→ブログ -->
-  <div class="bsep" style="--ct:#E0FAF6;--cb:#FFF8F0;"></div>
+  <div class="diag-sep" style="--ct:#E0FAF6;--cb:#FFF8F0;"></div>
 
   <!-- Blog -->
   <section id="blog" class="coral-accent">
@@ -3968,7 +3963,7 @@
   </section>
 
   <!-- 泡区切り: お問合せ→フッター -->
-  <div class="bsep" style="--ct:#FFF8F0;--cb:#003D35;" data-dark="1"></div>
+  <div class="diag-sep" style="--ct:#FFF8F0;--cb:#003D35;" data-dark="1"></div>
 
   <footer>
     <div class="ft-logo">
@@ -6902,43 +6897,6 @@
     }
   }
   setTimeout(hideLoader, 1400); // fallback: always hide after 1.4s
-
-  /* ---- Bubble separator: 泡を生成 ---- */
-  document.querySelectorAll('.bsep').forEach(function(sep) {
-    const isDark = sep.dataset.dark === '1';
-    const count = 16;
-    for (let i = 0; i < count; i++) {
-      const b = document.createElement('div');
-      b.className = 'bbl';
-      const sz  = 4 + Math.random() * 18;
-      const x   = Math.random() * 96;
-      const d   = 2.2 + Math.random() * 3.8;
-      const dl  = -(Math.random() * 5.5);
-      const dx  = (Math.random() - 0.5) * 55;
-      const bot = 18 + Math.random() * 28;
-      const op  = 0.45 + Math.random() * 0.45;
-      // 3D 球体ハイライト
-      const hl  = 0.55 + Math.random() * 0.35;
-      const bg  = isDark
-        ? 'radial-gradient(circle at 32% 28%, rgba(255,255,255,' + hl + ') 0%, rgba(255,255,255,' + (op * 0.25) + ') 100%)'
-        : 'radial-gradient(circle at 32% 28%, rgba(0,200,185,'   + (hl * 0.65) + ') 0%, rgba(0,180,168,' + (op * 0.2) + ') 100%)';
-      const brd = isDark
-        ? 'rgba(255,255,255,' + (op + 0.1) + ')'
-        : 'rgba(0,180,168,'   + (op + 0.08) + ')';
-      b.style.cssText =
-        'width:'  + sz  + 'px;' +
-        'height:' + sz  + 'px;' +
-        'left:'   + x   + '%;'  +
-        'bottom:' + bot + 'px;' +
-        'background:' + bg  + ';' +
-        'border:1px solid ' + brd + ';' +
-        '--d:'  + d.toFixed(2)  + 's;' +
-        '--dl:' + dl.toFixed(2) + 's;' +
-        '--dx:' + dx.toFixed(1) + 'px;' +
-        '--op:' + op.toFixed(2) + ';';
-      sep.appendChild(b);
-    }
-  });
 
   /* ---- About フリップカード：タップでトグル（スマホ対応） ---- */
   document.querySelectorAll('.a-flip').forEach(card => {
