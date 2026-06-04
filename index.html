@@ -407,7 +407,19 @@
     /* ================================================================
        ABOUT CARDS
        ================================================================ */
+    /* ===== セクション底辺波デコレーション（セクション内に絶対配置） ===== */
+    .section-wave-btm {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 62px; overflow: hidden; line-height: 0;
+      z-index: 5; pointer-events: none;
+    }
+    .section-wave-btm svg {
+      display: block; width: calc(100% + 40px); margin-left: -20px;
+      animation: wave-sway 10s ease-in-out infinite;
+    }
+
     #about {
+      position: relative; /* 底辺波の基準点 */
       background:
         linear-gradient(rgba(255,255,255,.82), rgba(224,245,243,.88)),
         url('https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&w=1600&q=80') center/cover no-repeat;
@@ -532,7 +544,7 @@
     /* ================================================================
        SERVICES OVERVIEW
        ================================================================ */
-    #services { background: var(--bg); padding: 80px 0 0; }
+    #services { background: var(--bg); padding: 80px 0 0; position: relative; /* 底辺波の基準点 */ }
     #services .container { max-width: 1200px; }
     /* ---- 縦一列・交互レイアウト ---- */
     .sv-list { display: flex; flex-direction: column; margin-top: 44px; gap: 28px; padding: 0 24px 48px; }
@@ -2101,7 +2113,7 @@
       33%     { transform: scaleX(1.015) scaleY(1.06); }
       66%     { transform: scaleX(.988) scaleY(.96); }
     }
-    .wave svg { animation: wave-sway 9s ease-in-out infinite; transform-origin: center bottom;
+    .wave svg, .section-wave-btm svg { animation: wave-sway 9s ease-in-out infinite; transform-origin: center bottom;
       /* 横にずれても端が見えないよう少し広げる */
       width: calc(100% + 40px); margin-left: -20px;
     }
@@ -3194,14 +3206,11 @@
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
       </svg>
     </div>
+    <!-- 波: ヒーロー底辺（セクション内部に配置→背景画像が上半分に透けて自然な境界） -->
+    <div class="section-wave-btm">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z" fill="#ffffff"/></svg>
+    </div>
   </section>
-
-  <!-- Wave -->
-  <div class="wave" style="background:#007A6E;">
-    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none">
-      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z" fill="#ffffff"/>
-    </svg>
-  </div>
 
   <!-- About -->
   <section id="about">
@@ -3297,15 +3306,12 @@
         </div>
 
       </div>
+    <!-- 波: 選ばれる理由→体験メニュー（セクション内部に配置） -->
+    <div class="section-wave-btm">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,20 C360,60 720,0 1080,40 C1260,58 1380,10 1440,20 L1440,60 L0,60Z" fill="#FFF8F0"/></svg>
+    </div>
     </div>
   </section>
-
-  <!-- Wave -->
-  <div class="wave" style="background:#ffffff;">
-    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none">
-      <path d="M0,20 C360,60 720,0 1080,40 C1260,58 1380,10 1440,20 L1440,60 L0,60Z" fill="#FFF8F0"/>
-    </svg>
-  </div>
 
   <!-- Services -->
   <section id="services">
@@ -3442,15 +3448,12 @@
         <div class="sv-row-cs-over"><span class="sv-row-cs-badge">🏄 COMING SOON</span></div>
       </div>
 
+    <!-- 波: 体験メニュー→サービス詳細（セクション内部に配置） -->
+    <div class="section-wave-btm">
+      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,28 C180,56 360,0 540,28 C720,56 900,0 1080,28 C1260,56 1380,14 1440,28 L1440,56 L0,56Z" fill="#ffffff"/></svg>
+    </div>
     </div>
   </section>
-
-  <!-- Wave: Services → Features -->
-  <div class="wave" style="background:var(--bg);">
-    <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none">
-      <path d="M0,28 C180,56 360,0 540,28 C720,56 900,0 1080,28 C1260,56 1380,14 1440,28 L1440,56 L0,56Z" fill="#ffffff"/>
-    </svg>
-  </div>
 
   <!-- Features -->
   <section id="features">
