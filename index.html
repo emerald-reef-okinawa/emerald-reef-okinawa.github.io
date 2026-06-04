@@ -318,29 +318,25 @@
     }
     .wave svg { display: block; width: 100%; }
 
-    /* ===== Wave overlap (次セクション乗り上げ + 波モーション) ===== */
-    .diag-top {
-      margin-top: -100px;
-      padding-top: 0 !important;        /* wave-crest が先頭に来るため */
-      padding-bottom: 200px !important; /* 乗り上げ100px + バッファ100px */
+    /* ===== Wave bottom (セクション底部に次セクション色の波) ===== */
+    .has-wave-btm {
       position: relative;
+      padding-bottom: 100px !important; /* 波ゾーン(80px) + バッファ */
     }
-    .wave-crest {
-      width: 100%; overflow: hidden; line-height: 0;
-      pointer-events: none;
-      margin-bottom: 60px;
+    .wave-btm {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 80px; overflow: hidden; line-height: 0;
+      pointer-events: none; z-index: 5;
     }
-    .wave-crest svg {
-      display: block; height: 100px;
+    .wave-btm svg {
+      display: block; height: 80px;
       width: calc(100% + 80px); margin-left: -40px;
       animation: wave-drift 8s ease-in-out infinite;
     }
-    /* 上層(前セクション色) */
-    .wave-crest .wc-p { fill: var(--wp, #003d35); }
-    /* 下層(現セクション色) — 背景色と一致させることで隙間をなくす */
-    .wave-crest .wc-c { fill: var(--wc, #ffffff); }
     @keyframes wave-drift {
       0%,100% { transform: translateX(0); }
+      50%     { transform: translateX(-40px); }
+    }
       50%     { transform: translateX(-40px); }
     }
 
@@ -3047,10 +3043,10 @@
       /* Nav */
       #main-nav { background: rgba(6,14,26,.97) !important; border-bottom-color: rgba(72,202,228,.12) !important; }
 
-      /* Wave / wave-crest – 暗背景では非表示 */
+      /* Wave bottom – 暗背景では非表示 */
       .wave { opacity: 0; height: 0; overflow: hidden; }
-      .diag-top { margin-top: 0; padding-top: 88px !important; padding-bottom: 88px !important; }
-      .wave-crest { display: none; }
+      .wave-btm { display: none; }
+      .has-wave-btm { padding-bottom: 88px !important; }
 
       /* About */
       #about { background: var(--bg); }
@@ -3201,7 +3197,7 @@
 <div id="view-main" class="view">
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero has-wave-btm">
     <div class="hero-caustic"></div>
     <div class="hero-particles">
       <div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div>
@@ -3237,14 +3233,15 @@
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
       </svg>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#ffffff"/></svg>
+    </div>
   </section>
 
 
   <!-- About -->
-  <section id="about" class="diag-top">
-    <div class="wave-crest" style="--wp:#003d35;--wc:#ffffff;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="about" class="has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
@@ -3338,14 +3335,15 @@
 
       </div>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#FFF8F0"/></svg>
+    </div>
   </section>
 
 
   <!-- Services -->
-  <section id="services" class="diag-top">
-    <div class="wave-crest" style="--wp:#e0f5f3;--wc:#FFF8F0;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="services" class="has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="sv_lbl">OUR SERVICES</p>
       <h2 class="s-title fi" data-i18n="sv_ttl">体験メニュー</h2>
@@ -3480,14 +3478,15 @@
       </div>
 
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#ffffff"/></svg>
+    </div>
   </section>
 
 
   <!-- Features -->
-  <section id="features" class="diag-top">
-    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#ffffff;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="features" class="has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="ft_lbl">DETAILS</p>
       <h2 class="s-title fi" data-i18n="ft_ttl">サービス詳細</h2>
@@ -3501,14 +3500,15 @@
         <div class="ft-item fi d2"><div class="ft-icon">⛑️</div><h4 data-i18n="ft6_h">安全装備完備</h4><p data-i18n="ft6_p">ライフジャケット・全機材レンタル込み。</p></div>
       </div>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#e4f9f5"/></svg>
+    </div>
   </section>
 
 
   <!-- Timeline -->
-  <section id="timeline" class="diag-top">
-    <div class="wave-crest" style="--wp:#ffffff;--wc:#e4f9f5;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="timeline" class="has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
       <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
@@ -3569,14 +3569,15 @@
 
       </div>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#e6faf6"/></svg>
+    </div>
   </section>
 
 
   <!-- Peace of Mind -->
-  <section id="peace-of-mind" class="diag-top">
-    <div class="wave-crest" style="--wp:#e4f9f5;--wc:#e6faf6;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="peace-of-mind" class="has-wave-btm">
+    
     <div class="container">
       <div class="pom-hero">
         <div class="pom-hero-text">
@@ -3620,10 +3621,8 @@
   </section>
 
   <!-- Target -->
-  <section id="target" class="diag-top">
-    <div class="wave-crest" style="--wp:#e6faf6;--wc:#FFF8F0;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="target">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="tgt_lbl">WHO WE WELCOME</p>
       <h2 class="s-title fi" data-i18n="tgt_ttl">こんな方におすすめ</h2>
@@ -3652,14 +3651,15 @@
         </div>
       </div>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#ffffff"/></svg>
+    </div>
   </section>
 
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
-  <section id="reviews" class="coral-accent diag-top">
-    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#ffffff;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="reviews" class="coral-accent has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="rev_lbl">REVIEWS</p>
       <h2 class="s-title fi" data-i18n="rev_ttl">お客様の声</h2>
@@ -3718,14 +3718,15 @@
         </div>
       </div>
     </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#FFF8F0"/></svg>
+    </div>
   </section>
 
 
   <!-- Blog -->
-  <section id="blog" class="coral-accent diag-top">
-    <div class="wave-crest" style="--wp:#ffffff;--wc:#FFF8F0;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="blog" class="coral-accent has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="blog_lbl">BLOG</p>
       <h2 class="s-title fi" data-i18n="blog_ttl">ブログ</h2>
@@ -3928,10 +3929,8 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="diag-top">
-    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#FFF8F0;">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
-    </div>
+  <section id="contact" class="has-wave-btm">
+    
     <div class="container">
       <p class="s-label fi" data-i18n="ct_lbl">CONTACT</p>
       <h2 class="s-title fi" data-i18n="ct_ttl">お問い合わせ</h2>
@@ -3983,6 +3982,9 @@
           </form>
         </div>
       </div>
+    </div>
+    <div class="wave-btm">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,5 480,65 720,25 C960,5 1200,60 1440,30 L1440,80 L0,80 Z" fill="#003D35"/></svg>
     </div>
   </section>
 
