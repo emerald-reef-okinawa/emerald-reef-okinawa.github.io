@@ -328,13 +328,17 @@
     .wave-crest {
       width: 100%; overflow: hidden; line-height: 0;
       pointer-events: none;
-      margin-bottom: 60px; /* 波とコンテンツの間隔 */
+      margin-bottom: 60px;
     }
     .wave-crest svg {
       display: block; height: 100px;
       width: calc(100% + 80px); margin-left: -40px;
       animation: wave-drift 8s ease-in-out infinite;
     }
+    /* 上層(前セクション色) */
+    .wave-crest .wc-p { fill: var(--wp, #003d35); }
+    /* 下層(現セクション色) — 背景色と一致させることで隙間をなくす */
+    .wave-crest .wc-c { fill: var(--wc, #ffffff); }
     @keyframes wave-drift {
       0%,100% { transform: translateX(0); }
       50%     { transform: translateX(-40px); }
@@ -3238,9 +3242,9 @@
 
   <!-- About -->
   <section id="about" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#003d35"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#003d35;--wc:#ffffff;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
@@ -3339,9 +3343,9 @@
 
   <!-- Services -->
   <section id="services" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#e0f5f3"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#e0f5f3;--wc:#FFF8F0;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="sv_lbl">OUR SERVICES</p>
       <h2 class="s-title fi" data-i18n="sv_ttl">体験メニュー</h2>
@@ -3481,9 +3485,9 @@
 
   <!-- Features -->
   <section id="features" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#FFF8F0"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#ffffff;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="ft_lbl">DETAILS</p>
       <h2 class="s-title fi" data-i18n="ft_ttl">サービス詳細</h2>
@@ -3502,9 +3506,9 @@
 
   <!-- Timeline -->
   <section id="timeline" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#ffffff"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#ffffff;--wc:#e4f9f5;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
       <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
@@ -3570,9 +3574,9 @@
 
   <!-- Peace of Mind -->
   <section id="peace-of-mind" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#e4f9f5"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#e4f9f5;--wc:#e6faf6;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <div class="pom-hero">
         <div class="pom-hero-text">
@@ -3617,9 +3621,9 @@
 
   <!-- Target -->
   <section id="target" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#e6faf6"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#e6faf6;--wc:#FFF8F0;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="tgt_lbl">WHO WE WELCOME</p>
       <h2 class="s-title fi" data-i18n="tgt_ttl">こんな方におすすめ</h2>
@@ -3653,9 +3657,9 @@
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
   <section id="reviews" class="coral-accent diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#FFF8F0"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#ffffff;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="rev_lbl">REVIEWS</p>
       <h2 class="s-title fi" data-i18n="rev_ttl">お客様の声</h2>
@@ -3719,9 +3723,9 @@
 
   <!-- Blog -->
   <section id="blog" class="coral-accent diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#ffffff"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#ffffff;--wc:#FFF8F0;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="blog_lbl">BLOG</p>
       <h2 class="s-title fi" data-i18n="blog_ttl">ブログ</h2>
@@ -3925,9 +3929,9 @@
 
   <!-- Contact -->
   <section id="contact" class="diag-top">
-    <div class="wave-crest">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z" fill="#FFF8F0"/></svg>
-    </div>
+    <div class="wave-crest" style="--wp:#FFF8F0;--wc:#FFF8F0;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path class="wc-p" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,0 L0,0 Z"/><path class="wc-c" d="M0,70 C240,20 480,90 720,45 C960,0 1200,80 1440,50 L1440,100 L0,100 Z"/></svg>
+    </div>
     <div class="container">
       <p class="s-label fi" data-i18n="ct_lbl">CONTACT</p>
       <h2 class="s-title fi" data-i18n="ct_ttl">お問い合わせ</h2>
