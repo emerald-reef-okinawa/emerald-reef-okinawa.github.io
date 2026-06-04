@@ -2749,12 +2749,12 @@
     .creatures-section .s-title { text-align:center; font-size:1.4rem; margin-bottom:6px; }
     .creatures-lead { text-align:center; font-size:.9rem; color:var(--text-soft); margin-bottom:28px; }
     .creatures-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:14px; max-width:860px; margin:0 auto; }
-    .creature-card { background:#fff; border-radius:18px; padding:16px 10px 14px; text-align:center; box-shadow:0 2px 14px rgba(0,100,90,.09); border:1px solid rgba(0,168,150,.13); transition:transform .2s,box-shadow .2s; display:flex; flex-direction:column; align-items:center; }
+    .creature-card { background:#fff; border-radius:18px; padding:16px 10px 14px; text-align:center; box-shadow:0 2px 14px rgba(0,100,90,.09); border:1px solid rgba(0,168,150,.13); transition:transform .2s,box-shadow .2s; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
     .creature-card:hover { transform:translateY(-4px); box-shadow:0 8px 28px rgba(0,100,90,.18); }
-    .creature-visual { width:80px; height:80px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
+    .creature-visual { width:80px; height:80px; flex-shrink:0; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
     .creature-emoji { font-size:2.6rem; line-height:1; }
-    .creature-img { max-width:76px; max-height:76px; object-fit:contain; }
-    .creature-name { font-size:.85rem; font-weight:700; font-family:'DotGothic16',sans-serif; color:var(--navy); margin-bottom:7px; line-height:1.3; flex:1; }
+    .creature-img { width:76px; height:76px; object-fit:contain; display:block; }
+    .creature-name { font-size:.85rem; font-weight:700; font-family:'DotGothic16',sans-serif; color:var(--navy); margin-bottom:7px; line-height:1.3; flex:1; width:100%; }
     .creature-rarity { display:inline-block; font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:.03em; }
     .rarity-common { background:#e8f5e9; color:#2e7d32; }
     .rarity-rare { background:#fff3e0; color:#e65100; }
@@ -7501,16 +7501,16 @@
   const DET_CREATURES = {
     snorkeling:[
       /* ultra */
-      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra'},
+      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra',img:'creature-turtle.webp'},
       /* rare */
       {e:'🐠',n:{ja:'クマノミ',en:'Clownfish',zh:'小丑鱼',ko:'흰동가리'},r:'rare',img:'creature-clownfish.webp'},
-      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare'},
-      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare'},
-      {e:'🦐',n:{ja:'エビ',en:'Shrimp',zh:'虾',ko:'새우'},r:'rare'},
-      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare'},
-      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare'},
+      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare',img:'creature-puffer.webp'},
+      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare',img:'creature-starfish.webp'},
+      {e:'🦐',n:{ja:'エビ',en:'Shrimp',zh:'虾',ko:'새우'},r:'rare',img:'creature-shrimp.webp'},
+      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare',img:'creature-seasnake.webp'},
+      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare',img:'creature-squid.webp'},
       /* common */
-      {e:'🐟',n:{ja:'青い熱帯魚',en:'Blue Tropical Fish',zh:'蓝色热带鱼',ko:'파란 열대어'},r:'common'},
+      {e:'🐟',n:{ja:'青い熱帯魚',en:'Blue Tropical Fish',zh:'蓝色热带鱼',ko:'파란 열대어'},r:'common',img:'creature-blue-fish.webp'},
       {e:'🐠',n:{ja:'赤い熱帯魚',en:'Red Tropical Fish',zh:'红色热带鱼',ko:'빨간 열대어'},r:'common',img:'creature-red-fish.webp'},
       {e:'🐡',n:{ja:'黄色い熱帯魚',en:'Yellow Tropical Fish',zh:'黄色热带鱼',ko:'노란 열대어'},r:'common',img:'creature-yellow-fish.webp'},
       {e:'🎏',n:{ja:'しましまの熱帯魚',en:'Striped Tropical Fish',zh:'条纹热带鱼',ko:'줄무늬 열대어'},r:'common',img:'creature-stripe.webp'},
@@ -7518,16 +7518,16 @@
     ],
     skindiving:[
       /* ultra */
-      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra'},
+      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra',img:'creature-turtle.webp'},
       /* rare */
       {e:'🐠',n:{ja:'クマノミ',en:'Clownfish',zh:'小丑鱼',ko:'흰동가리'},r:'rare',img:'creature-clownfish.webp'},
-      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare'},
-      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare'},
-      {e:'🦐',n:{ja:'エビ',en:'Shrimp',zh:'虾',ko:'새우'},r:'rare'},
-      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare'},
-      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare'},
+      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare',img:'creature-puffer.webp'},
+      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare',img:'creature-starfish.webp'},
+      {e:'🦐',n:{ja:'エビ',en:'Shrimp',zh:'虾',ko:'새우'},r:'rare',img:'creature-shrimp.webp'},
+      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare',img:'creature-seasnake.webp'},
+      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare',img:'creature-squid.webp'},
       /* common */
-      {e:'🐟',n:{ja:'青い熱帯魚',en:'Blue Tropical Fish',zh:'蓝色热带鱼',ko:'파란 열대어'},r:'common'},
+      {e:'🐟',n:{ja:'青い熱帯魚',en:'Blue Tropical Fish',zh:'蓝色热带鱼',ko:'파란 열대어'},r:'common',img:'creature-blue-fish.webp'},
       {e:'🐠',n:{ja:'赤い熱帯魚',en:'Red Tropical Fish',zh:'红色热带鱼',ko:'빨간 열대어'},r:'common',img:'creature-red-fish.webp'},
       {e:'🐡',n:{ja:'黄色い熱帯魚',en:'Yellow Tropical Fish',zh:'黄色热带鱼',ko:'노란 열대어'},r:'common',img:'creature-yellow-fish.webp'},
       {e:'🎏',n:{ja:'しましまの熱帯魚',en:'Striped Tropical Fish',zh:'条纹热带鱼',ko:'줄무늬 열대어'},r:'common',img:'creature-stripe.webp'},
@@ -7535,15 +7535,15 @@
     ],
     bluecave:[
       /* ultra */
-      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra'},
+      {e:'🐢',n:{ja:'ウミガメ',en:'Sea Turtle',zh:'海龟',ko:'바다거북'},r:'ultra',img:'creature-turtle.webp'},
       /* rare */
       {e:'🐠',n:{ja:'クマノミ',en:'Clownfish',zh:'小丑鱼',ko:'흰동가리'},r:'rare',img:'creature-clownfish.webp'},
-      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare'},
-      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare'},
-      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare'},
-      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare'},
+      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare',img:'creature-puffer.webp'},
+      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare',img:'creature-starfish.webp'},
+      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare',img:'creature-seasnake.webp'},
+      {e:'🦑',n:{ja:'イカ',en:'Squid',zh:'鱿鱼',ko:'오징어'},r:'rare',img:'creature-squid.webp'},
       /* common */
-      {e:'🐟',n:{ja:'ルリスズメダイ（青い熱帯魚）',en:'Blue Damselfish',zh:'蓝雀鲷（蓝色热带鱼）',ko:'루리스즈메다이（파란 열대어）'},r:'common'},
+      {e:'🐟',n:{ja:'ルリスズメダイ（青い熱帯魚）',en:'Blue Damselfish',zh:'蓝雀鲷（蓝色热带鱼）',ko:'루리스즈메다이（파란 열대어）'},r:'common',img:'creature-blue-fish.webp'},
       {e:'🐠',n:{ja:'赤い熱帯魚',en:'Red Tropical Fish',zh:'红色热带鱼',ko:'빨간 열대어'},r:'common',img:'creature-red-fish.webp'},
       {e:'🐡',n:{ja:'黄色い熱帯魚',en:'Yellow Tropical Fish',zh:'黄色热带鱼',ko:'노란 열대어'},r:'common',img:'creature-yellow-fish.webp'},
       {e:'🎏',n:{ja:'しましまの熱帯魚',en:'Striped Tropical Fish',zh:'条纹热带鱼',ko:'줄무늬 열대어'},r:'common',img:'creature-stripe.webp'},
