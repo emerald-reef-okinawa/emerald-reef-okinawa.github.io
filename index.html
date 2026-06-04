@@ -318,13 +318,20 @@
     }
     .wave svg { display: block; width: 100%; }
 
-    /* ===== Diagonal top edge (section乗り上げ方式) ===== */
-    .diag-top {
-      clip-path: polygon(0 100px, 100% 0, 100% 100%, 0 100%);
-      margin-top: -100px;
-      padding-top: 130px !important;
-      padding-bottom: 120px !important;  /* 次のdiag-topセクション(100px)が乗り上げても内容が隠れないようにする */
+    /* ===== Diagonal bottom edge (::after方式 — 内容と干渉しない) ===== */
+    .diag-btm {
       position: relative;
+      padding-bottom: 100px !important; /* コンテンツが斜めゾーンに入らないようにする */
+    }
+    .diag-btm::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: var(--nb, #fff);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+      pointer-events: none;
+      z-index: 5;
     }
 
     /* ================================================================
@@ -334,7 +341,7 @@
       position: relative; min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 180px 24px 160px; overflow: hidden; /* 底160px: 60px + 100px for diag overlap */
+      text-align: center; padding: 180px 24px 60px; overflow: hidden;
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
@@ -408,7 +415,7 @@
       font-size: .42rem; margin-right: 8px; vertical-align: middle;
     }
     .scroll-hint {
-      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2;
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 6;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
       color: rgba(255,255,255,.4); font-size: .7rem; letter-spacing: .15em;
       animation: bounce 2s infinite;
@@ -843,7 +850,7 @@
     /* ================================================================
        TARGET chips
        ================================================================ */
-    #target { background: var(--bg); padding-bottom: 120px; }
+    #target { background: var(--bg); }
     .tgt-photo-row {
       display: grid;
       grid-template-columns: 1fr 2.4fr 1fr;
@@ -953,7 +960,7 @@
     /* ================================================================
        CONTACT FORM + CALENDAR LAYOUT
        ================================================================ */
-    #contact { background: var(--bg); padding-bottom: 120px; }
+    #contact { background: var(--bg); }
 
     /* 2カラム: カレンダー | フォーム */
     .contact-layout {
@@ -3182,7 +3189,7 @@
 <div id="view-main" class="view">
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero diag-btm" style="--nb:#ffffff;">
     <div class="hero-caustic"></div>
     <div class="hero-particles">
       <div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div>
@@ -3222,7 +3229,7 @@
 
 
   <!-- About -->
-  <section id="about" class="diag-top">
+  <section id="about" class="diag-btm" style="--nb:#FFF8F0;">
     <div class="container">
       <p class="s-label fi" data-i18n="about_lbl">WHY CHOOSE US</p>
       <h2 class="s-title fi" data-i18n="about_ttl">エメラルドリーフが選ばれる理由</h2>
@@ -3320,7 +3327,7 @@
 
 
   <!-- Services -->
-  <section id="services" class="diag-top">
+  <section id="services" class="diag-btm" style="--nb:#ffffff;">
     <div class="container">
       <p class="s-label fi" data-i18n="sv_lbl">OUR SERVICES</p>
       <h2 class="s-title fi" data-i18n="sv_ttl">体験メニュー</h2>
@@ -3459,7 +3466,7 @@
 
 
   <!-- Features -->
-  <section id="features" class="diag-top">
+  <section id="features" class="diag-btm" style="--nb:#e4f9f5;">
     <div class="container">
       <p class="s-label fi" data-i18n="ft_lbl">DETAILS</p>
       <h2 class="s-title fi" data-i18n="ft_ttl">サービス詳細</h2>
@@ -3477,7 +3484,7 @@
 
 
   <!-- Timeline -->
-  <section id="timeline" class="diag-top">
+  <section id="timeline" class="diag-btm" style="--nb:#e6faf6;">
     <div class="container">
       <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
       <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
@@ -3542,7 +3549,7 @@
 
 
   <!-- Peace of Mind -->
-  <section id="peace-of-mind" class="diag-top">
+  <section id="peace-of-mind">
     <div class="container">
       <div class="pom-hero">
         <div class="pom-hero-text">
@@ -3586,7 +3593,7 @@
   </section>
 
   <!-- Target -->
-  <section id="target">
+  <section id="target" class="diag-btm" style="--nb:#ffffff;">
     <div class="container">
       <p class="s-label fi" data-i18n="tgt_lbl">WHO WE WELCOME</p>
       <h2 class="s-title fi" data-i18n="tgt_ttl">こんな方におすすめ</h2>
@@ -3619,7 +3626,7 @@
 
 
   <!-- Reviews: お客様の声 (Coming Soon) -->
-  <section id="reviews" class="coral-accent diag-top">
+  <section id="reviews" class="coral-accent diag-btm" style="--nb:#FFF8F0;">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="rev_lbl">REVIEWS</p>
       <h2 class="s-title fi" data-i18n="rev_ttl">お客様の声</h2>
@@ -3682,7 +3689,7 @@
 
 
   <!-- Blog -->
-  <section id="blog" class="coral-accent diag-top">
+  <section id="blog" class="coral-accent">
     <div class="container">
       <p class="s-label fi lbl-coral" data-i18n="blog_lbl">BLOG</p>
       <h2 class="s-title fi" data-i18n="blog_ttl">ブログ</h2>
@@ -3885,7 +3892,7 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact">
+  <section id="contact" class="diag-btm" style="--nb:#003D35;">
     <div class="container">
       <p class="s-label fi" data-i18n="ct_lbl">CONTACT</p>
       <h2 class="s-title fi" data-i18n="ct_ttl">お問い合わせ</h2>
@@ -3941,7 +3948,7 @@
   </section>
 
 
-  <footer class="diag-top">
+  <footer>
     <div class="ft-logo">
       <img src="logo.webp" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
       <div class="ft-logo-txt">EMERALD REEF OKINAWA</div>
