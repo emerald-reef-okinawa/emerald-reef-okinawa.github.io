@@ -327,7 +327,7 @@
       background:
         linear-gradient(to bottom,
           rgba(0,15,10,.62) 0%, rgba(0,20,14,.34) 28%,
-          rgba(0,20,14,.32) 58%, rgba(0,10,8,.58) 100%),
+          rgba(0,20,14,.32) 55%, rgba(0,61,53,.80) 82%, rgba(0,61,53,1) 100%),
         url('https://images.unsplash.com/photo-1720699339159-f9f04bed4e87?auto=format&w=1600&q=80') center/cover no-repeat;
       z-index: 0;
     }
@@ -419,9 +419,9 @@
     }
 
     #about {
-      position: relative; /* 底辺波の基準点 */
+      position: relative;
       background:
-        linear-gradient(rgba(255,255,255,.82), rgba(224,245,243,.88)),
+        linear-gradient(rgba(255,255,255,.82) 0%, rgba(224,245,243,.88) 70%, rgba(224,245,243,1) 100%),
         url('https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&w=1600&q=80') center/cover no-repeat;
     }
     /* ---- About: フリップカード ---- */
@@ -3204,11 +3204,12 @@
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
       </svg>
     </div>
-    <!-- 波: ヒーロー底辺（セクション内部に配置→背景画像が上半分に透けて自然な境界） -->
-    <div class="section-wave-btm">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,60 L0,60Z" fill="#ffffff"/></svg>
-    </div>
   </section>
+
+  <!-- 波: ヒーロー→選ばれる理由（セクション間） -->
+  <div class="wave" style="background:#003d35;">
+    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,60 L0,60Z" fill="#ffffff"/></svg>
+  </div>
 
   <!-- About -->
   <section id="about">
@@ -3304,12 +3305,13 @@
         </div>
 
       </div>
-    <!-- 波: 選ばれる理由→体験メニュー（セクション内部に配置） -->
-    <div class="section-wave-btm">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,0 C360,20 720,4 1080,20 C1260,20 1380,4 1440,0 L1440,60 L0,60Z" fill="#FFF8F0"/></svg>
-    </div>
     </div>
   </section>
+
+  <!-- 波: 選ばれる理由→体験メニュー（セクション間） -->
+  <div class="wave" style="background:#e0f5f3;">
+    <svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,0 C360,20 720,4 1080,20 C1260,20 1380,4 1440,0 L1440,60 L0,60Z" fill="#FFF8F0"/></svg>
+  </div>
 
   <!-- Services -->
   <section id="services">
@@ -3446,12 +3448,13 @@
         <div class="sv-row-cs-over"><span class="sv-row-cs-badge">🏄 COMING SOON</span></div>
       </div>
 
-    <!-- 波: 体験メニュー→サービス詳細（セクション内部に配置） -->
-    <div class="section-wave-btm">
-      <svg viewBox="0 0 1440 56" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,56 L0,56Z" fill="#ffffff"/></svg>
-    </div>
     </div>
   </section>
+
+  <!-- 波: 体験メニュー→サービス詳細（セクション間） -->
+  <div class="wave" style="background:var(--bg);">
+    <svg viewBox="0 0 1440 56" style="height:56px;" preserveAspectRatio="none"><path d="M0,0 C240,18 480,4 720,18 C960,4 1200,18 1440,0 L1440,56 L0,56Z" fill="#ffffff"/></svg>
+  </div>
 
   <!-- Features -->
   <section id="features">
