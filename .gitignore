@@ -21,6 +21,11 @@ tmp_*
 *.png
 *.jpg
 *.jpeg
+# ファビコンPNGは例外（本番で直接使用）
+!favicon-32.png
+!favicon-192.png
+!favicon-512.png
+!apple-touch-icon.png
 
 # ===== 開発ドキュメント =====
 PROJECT_CONTEXT.md
