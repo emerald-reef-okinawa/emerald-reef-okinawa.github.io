@@ -268,15 +268,30 @@
       color: #fff !important;
     }
     .nav-links a.nav-book-link {
-      background: var(--coral);
-      color: #fff !important; padding: 5px 16px;
-      border-radius: 4px; font-weight: 700;
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+      color: #fff !important; padding: 7px 20px;
+      border-radius: 24px; font-weight: 700;
       font-family: 'Cinzel', serif;
-      font-size: .72rem; letter-spacing: .16em;
+      font-size: .72rem; letter-spacing: .18em;
       text-transform: uppercase;
-      transition: all .25s ease;
+      box-shadow: 0 3px 14px rgba(201,169,97,.42);
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
     }
-    .nav-links a.nav-book-link:hover { background: #ff5252; color: #fff !important; }
+    .nav-links a.nav-book-link::after {
+      content: ''; position: absolute; top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+      transform: skewX(-20deg);
+      transition: left .6s ease;
+    }
+    .nav-links a.nav-book-link:hover {
+      color: #fff !important;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 22px rgba(201,169,97,.58);
+      filter: brightness(1.07);
+    }
+    .nav-links a.nav-book-link:hover::after { left: 130%; }
     .nav-toggle {
       display: none; background: none; border: none;
       cursor: pointer; flex-direction: column; gap: 5px; padding: 6px;
@@ -313,23 +328,6 @@
       background: linear-gradient(135deg, var(--g-mid), var(--g-main));
       color: #fff; box-shadow: 0 4px 18px rgba(0,168,150,.35);
     }
-    .btn-book, .btn-line {
-      font-family: 'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif;
-      text-transform: none; letter-spacing: .04em; font-weight: 700;
-      border-radius: 30px; font-size: .95rem; padding: 15px 34px;
-    }
-    .btn-book {
-      background: var(--coral); color: #fff;
-      box-shadow: 0 6px 22px rgba(255,107,107,.42);
-    }
-    .btn-book:hover { background: #ff5252; box-shadow: 0 12px 34px rgba(255,107,107,.5); }
-    .btn-book::before { content: '📅'; font-size: 1rem; }
-    .btn-line {
-      background: #06C755; color: #fff;
-      box-shadow: 0 6px 22px rgba(6,199,85,.4);
-    }
-    .btn-line:hover { background: #05b34c; box-shadow: 0 12px 34px rgba(6,199,85,.48); }
-    .btn-line::before { content: '💬'; font-size: 1rem; }
 
     /* ===== Section base ===== */
     section { padding: 88px 24px; }
@@ -3300,8 +3298,8 @@
         完全貸切・完全送迎で、忘れられない海の体験を。
       </p>
       <div class="cta-row">
-        <button class="btn btn-book" onclick="showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
-        <a class="btn btn-line" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
+        <button class="btn btn-primary" onclick="showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
+        <a class="btn btn-outline" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
       </div>
       <div class="hero-badges">
         <span class="hero-badge" data-i18n="hb_sameday">当日予約OK</span>
