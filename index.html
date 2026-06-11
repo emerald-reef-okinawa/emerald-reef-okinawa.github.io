@@ -192,6 +192,8 @@
       --accent:    #00C9A7;
       --coral:     #FF6B6B;
       --turquoise: #48CAE4;
+      --gold:      #C9A961;
+      --gold-deep: #A8893F;
       --sale:      #E53935;
       --white:     #FFFFFF;
       --text:      #1a3530;
@@ -265,6 +267,16 @@
       border-color: #fff;
       color: #fff !important;
     }
+    .nav-links a.nav-book-link {
+      background: var(--coral);
+      color: #fff !important; padding: 5px 16px;
+      border-radius: 4px; font-weight: 700;
+      font-family: 'Cinzel', serif;
+      font-size: .72rem; letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: all .25s ease;
+    }
+    .nav-links a.nav-book-link:hover { background: #ff5252; color: #fff !important; }
     .nav-toggle {
       display: none; background: none; border: none;
       cursor: pointer; flex-direction: column; gap: 5px; padding: 6px;
@@ -301,6 +313,23 @@
       background: linear-gradient(135deg, var(--g-mid), var(--g-main));
       color: #fff; box-shadow: 0 4px 18px rgba(0,168,150,.35);
     }
+    .btn-book, .btn-line {
+      font-family: 'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif;
+      text-transform: none; letter-spacing: .04em; font-weight: 700;
+      border-radius: 30px; font-size: .95rem; padding: 15px 34px;
+    }
+    .btn-book {
+      background: var(--coral); color: #fff;
+      box-shadow: 0 6px 22px rgba(255,107,107,.42);
+    }
+    .btn-book:hover { background: #ff5252; box-shadow: 0 12px 34px rgba(255,107,107,.5); }
+    .btn-book::before { content: '📅'; font-size: 1rem; }
+    .btn-line {
+      background: #06C755; color: #fff;
+      box-shadow: 0 6px 22px rgba(6,199,85,.4);
+    }
+    .btn-line:hover { background: #05b34c; box-shadow: 0 12px 34px rgba(6,199,85,.48); }
+    .btn-line::before { content: '💬'; font-size: 1rem; }
 
     /* ===== Section base ===== */
     section { padding: 88px 24px; }
@@ -601,7 +630,7 @@
       padding: 4px 12px; border-radius: 999px; letter-spacing: .07em;
       text-transform: uppercase;
     }
-    .sv-row-badge.pop { background: var(--g-main); color: #fff; }
+    .sv-row-badge.pop { background: linear-gradient(135deg, var(--gold), var(--gold-deep)); color: #fff; }
     .sv-row-badge.prem { background: linear-gradient(135deg,#005f8a,#0096c7); color: #fff; }
     .sv-row-badge.off { background: var(--sale); color: #fff; }
     .sv-row-badge.soon { background: #888; color: #fff; }
@@ -3089,6 +3118,74 @@
       section { background: var(--bg); }
     }
 
+    /* ===== Booking page (view-booking) ===== */
+    .bkp-wrap { padding: 96px 24px 80px; }
+    .bkp-head { text-align: center; max-width: 720px; margin: 0 auto 40px; }
+    .bkp-compare {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      max-width: 1000px; margin: 0 auto 18px;
+    }
+    .bkp-card {
+      position: relative; background: #fff; border: 1px solid rgba(0,168,150,.14);
+      border-radius: 18px; padding: 26px 20px 22px; text-align: center;
+      box-shadow: 0 10px 36px rgba(0,90,80,.08);
+      transition: transform .25s ease, box-shadow .25s ease;
+      display: flex; flex-direction: column;
+    }
+    .bkp-card:hover { transform: translateY(-5px); box-shadow: 0 18px 50px rgba(0,90,80,.16); }
+    .bkp-card.featured { border: 2px solid var(--gold); box-shadow: 0 14px 44px rgba(201,169,97,.22); }
+    .bkp-pop-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep)); color: #fff;
+      font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+      padding: 5px 16px; border-radius: 20px; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(201,169,97,.4);
+    }
+    .bkp-card-name { font-size: 1.12rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .bkp-card-en { font-size: .68rem; letter-spacing: .14em; color: var(--text-soft); text-transform: uppercase; margin-bottom: 14px; }
+    .bkp-price { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
+    .bkp-price small { font-size: .82rem; font-weight: 600; color: var(--text-soft); }
+    .bkp-orig { font-size: .82rem; color: var(--text-soft); text-decoration: line-through; margin-top: 4px; }
+    .bkp-divline { height: 1px; background: rgba(0,168,150,.13); margin: 16px 0; }
+    .bkp-spec { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; margin: 7px 0; }
+    .bkp-spec .lbl { color: var(--text-soft); }
+    .bkp-spec .val { color: var(--navy); font-weight: 700; }
+    .bkp-stars { letter-spacing: 2px; }
+    .bkp-stars .on { color: var(--gold-deep); }
+    .bkp-stars .off { color: #d9ddd9; }
+    .bkp-rec {
+      background: var(--g-pale); border-radius: 12px; padding: 11px 13px;
+      font-size: .82rem; color: var(--g-dark); line-height: 1.6; margin: 14px 0;
+      text-align: left;
+    }
+    .bkp-rec strong { color: var(--navy); display: block; font-size: .76rem; margin-bottom: 3px; }
+    .bkp-feats { list-style: none; text-align: left; margin: 0 0 18px; }
+    .bkp-feats li { display: flex; align-items: flex-start; gap: 8px; font-size: .82rem; color: var(--text-soft); line-height: 1.5; margin-bottom: 6px; }
+    .bkp-feats .ck { color: var(--g-mid); font-weight: 700; flex-shrink: 0; }
+    .bkp-btns { display: flex; flex-direction: column; gap: 9px; margin-top: auto; }
+    .bkp-detail-btn {
+      background: #fff; color: var(--g-dark); border: 1.5px solid var(--g-mid);
+      border-radius: 30px; padding: 11px; font-size: .88rem; font-weight: 700;
+      cursor: pointer; transition: all .2s ease;
+    }
+    .bkp-detail-btn:hover { background: var(--g-pale); }
+    .bkp-choose-btn {
+      background: var(--g-mid); color: #fff; border: none;
+      border-radius: 30px; padding: 12px; font-size: .9rem; font-weight: 700;
+      cursor: pointer; transition: all .2s ease; box-shadow: 0 5px 18px rgba(0,201,167,.32);
+    }
+    .bkp-choose-btn:hover { background: var(--g-main); transform: translateY(-1px); }
+    .bkp-card.featured .bkp-choose-btn { background: linear-gradient(135deg, var(--gold), var(--gold-deep)); box-shadow: 0 5px 18px rgba(201,169,97,.36); }
+    .bkp-card.featured .bkp-choose-btn:hover { filter: brightness(1.06); }
+    .bkp-divider { display: flex; align-items: center; gap: 12px; max-width: 1000px; margin: 28px auto 22px; }
+    .bkp-divider::before, .bkp-divider::after { content: ''; flex: 1; height: 1px; background: rgba(0,168,150,.2); }
+    .bkp-divider span { font-size: .85rem; color: var(--text-soft); }
+    .bkp-tour-fg select.bkp-tour-active { border-color: var(--g-mid); background: var(--g-pale); color: var(--g-dark); font-weight: 700; }
+    @media (max-width: 820px) {
+      .bkp-compare { grid-template-columns: 1fr; max-width: 420px; gap: 26px; }
+      .bkp-wrap { padding: 80px 18px 60px; }
+    }
+
   </style>
 </head>
 <body>
@@ -3140,6 +3237,7 @@
   </div>
   <div class="nav-right">
     <ul class="nav-links" id="nav-links">
+      <li><a onclick="showView('view-booking')" data-i18n="nav_book" class="nav-book-link">ご予約</a></li>
       <li><a onclick="goHomeJump('services')" data-i18n="nav_sv" class="nav-exp">体験メニュー</a></li>
       <li><a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a></li>
       <li><a onclick="goHomeJump('faq')" data-i18n="nav_faq">よくある質問</a></li>
@@ -3202,8 +3300,8 @@
         完全貸切・完全送迎で、忘れられない海の体験を。
       </p>
       <div class="cta-row">
-        <button class="btn btn-primary" onclick="jumpTo('services')" data-i18n="cta_sv">サービスを見る</button>
-        <button class="btn btn-outline" onclick="jumpTo('contact')" data-i18n="cta_ct">お問い合わせ</button>
+        <button class="btn btn-book" onclick="showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
+        <a class="btn btn-line" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
       </div>
       <div class="hero-badges">
         <span class="hero-badge" data-i18n="hb_sameday">当日予約OK</span>
@@ -4009,6 +4107,163 @@
 
 
 <!-- ================================================================
+     BOOKING PAGE (view-booking) — 料金比較表 + 統一予約フォーム
+     ================================================================ -->
+<div id="view-booking" class="view">
+  <div class="back-bar">
+    <div class="back-inner">
+      <div class="breadcrumb">
+        <a onclick="goHome()" data-i18n="bc_home">ホーム</a> /
+        <span data-i18n="bkp_ttl">ご予約</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bkp-wrap">
+    <div class="container">
+      <div class="bkp-head">
+        <p class="s-label" data-i18n="bkp_lbl">BOOKING</p>
+        <h2 class="s-title" data-i18n="bkp_ttl">ご予約</h2>
+        <p class="s-sub" data-i18n="bkp_sub">まずはツアーをお選びください。当日・前日のご予約も大歓迎です。</p>
+      </div>
+
+      <!-- 料金比較表 -->
+      <div class="bkp-compare">
+
+        <!-- シュノーケル（人気No.1） -->
+        <div class="bkp-card featured">
+          <span class="bkp-pop-badge" data-i18n="bkp_popular">人気No.1</span>
+          <div class="bkp-card-name" data-i18n="sn_name">シュノーケル</div>
+          <div class="bkp-card-en" data-i18n="sn_en">Snorkeling</div>
+          <div class="bkp-price">¥5,500<small data-i18n="pp_per">〜 / 人</small></div>
+          <div class="bkp-orig" data-i18n="sn_orig">通常 ¥9,500〜 / 人</div>
+          <div class="bkp-divline"></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_level">難易度</span><span class="val bkp-stars"><span class="on">★</span><span class="off">★★</span></span></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_duration">所要時間</span><span class="val">約3〜4h</span></div>
+          <div class="bkp-rec"><strong data-i18n="bkp_rec_lbl">こんな方に</strong><span data-i18n="bkp_sn_rec">気軽に楽しみたい初心者・お子様連れに。浅瀬でカラフルな熱帯魚と泳ぐ定番ツアー。</span></div>
+          <ul class="bkp-feats">
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_feed">熱帯魚への餌付け体験</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_photo">写真最大20枚プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
+          </ul>
+          <div class="bkp-btns">
+            <button class="bkp-detail-btn" onclick="showDet('snorkeling')" data-i18n="bkp_detail">詳細を見る</button>
+            <button class="bkp-choose-btn" onclick="selectTourForBooking('シュノーケル')" data-i18n="bkp_choose">このツアーを選ぶ</button>
+          </div>
+        </div>
+
+        <!-- 青の洞窟 -->
+        <div class="bkp-card">
+          <div class="bkp-card-name" data-i18n="bc_name">青の洞窟シュノーケル</div>
+          <div class="bkp-card-en" data-i18n="bc_en">Blue Cave Snorkeling</div>
+          <div class="bkp-price">¥7,000<small data-i18n="pp_per">〜 / 人</small></div>
+          <div class="bkp-orig" data-i18n="bc_orig">通常 ¥12,000〜 / 人</div>
+          <div class="bkp-divline"></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_level">難易度</span><span class="val bkp-stars"><span class="on">★★</span><span class="off">★</span></span></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_duration">所要時間</span><span class="val">約3〜4h</span></div>
+          <div class="bkp-rec"><strong data-i18n="bkp_rec_lbl">こんな方に</strong><span data-i18n="bkp_bc_rec">特別な体験を求める方に。恩納村の神秘的な「青の洞窟」を探検する人気スポット。</span></div>
+          <ul class="bkp-feats">
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_cave">神秘の青の洞窟を探検</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_photo">写真最大20枚プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
+          </ul>
+          <div class="bkp-btns">
+            <button class="bkp-detail-btn" onclick="showDet('bluecave')" data-i18n="bkp_detail">詳細を見る</button>
+            <button class="bkp-choose-btn" onclick="selectTourForBooking('青の洞窟')" data-i18n="bkp_choose">このツアーを選ぶ</button>
+          </div>
+        </div>
+
+        <!-- スキンダイビング -->
+        <div class="bkp-card">
+          <div class="bkp-card-name" data-i18n="sk_name">スキンダイビング</div>
+          <div class="bkp-card-en" data-i18n="sk_en">Skin Diving</div>
+          <div class="bkp-price">¥9,000<small data-i18n="pp_per">〜 / 人</small></div>
+          <div class="bkp-orig" data-i18n="sk_orig">通常 ¥15,000〜 / 人</div>
+          <div class="bkp-divline"></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_level">難易度</span><span class="val bkp-stars"><span class="on">★★★</span></span></div>
+          <div class="bkp-spec"><span class="lbl" data-i18n="bkp_duration">所要時間</span><span class="val">約3〜4h</span></div>
+          <div class="bkp-rec"><strong data-i18n="bkp_rec_lbl">こんな方に</strong><span data-i18n="bkp_sk_rec">もっとアクティブに楽しみたい方に。素潜りで深い海へ。ウミガメ遭遇のチャンスも。</span></div>
+          <ul class="bkp-feats">
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_dive">素潜りの仕方を一から指導</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_photo">写真最大20枚プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
+          </ul>
+          <div class="bkp-btns">
+            <button class="bkp-detail-btn" onclick="showDet('skindiving')" data-i18n="bkp_detail">詳細を見る</button>
+            <button class="bkp-choose-btn" onclick="selectTourForBooking('スキンダイビング')" data-i18n="bkp_choose">このツアーを選ぶ</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bkp-divider"><span data-i18n="bkp_arrow_note">▼ 選んだら下のフォームへご記入ください</span></div>
+
+      <!-- 統一予約フォーム -->
+      <div class="bk-section" id="booking-form" style="padding-top:8px;">
+        <div class="container">
+          <div class="bk-sameday-note" data-i18n="bk_sameday_note">当日・前日のご予約も大歓迎！空き状況はお気軽にお問い合わせください</div>
+          <div class="bk-layout">
+            <div class="form-wrap">
+              <form novalidate onsubmit="submitForm(event,'bk-ok')">
+                <div class="fg bkp-tour-fg">
+                  <label><span data-i18n="bkp_tour_lbl">ご希望のツアー</span><span class="req">*</span></label>
+                  <select name="ご希望のツアー" id="bk-tour-select" class="bkp-tour-active" required>
+                    <option value="シュノーケル" data-i18n="sn_name">シュノーケル</option>
+                    <option value="青の洞窟" data-i18n="bc_name">青の洞窟シュノーケル</option>
+                    <option value="スキンダイビング" data-i18n="sk_name">スキンダイビング</option>
+                  </select>
+                </div>
+                <div class="form-row2">
+                  <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
+                  <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
+                </div>
+                <div class="form-row2">
+                  <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
+                  <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
+                </div>
+                <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+                <div class="form-row2">
+                  <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
+                  <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
+                </div>
+                <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+                <label class="video-check">
+                  <input type="checkbox" name="video" value="yes">
+                  <div class="vc-txt">🎬 <strong data-i18n="vid_opt">動画データ オプション (+¥2,000)</strong><br><span data-i18n="vid_desc">Insta360 X5で撮影した動画データも受け取る</span></div>
+                </label>
+                <div class="fg"><label><span data-i18n="lbl_other_req">備考</span><span class="req">*</span></label><textarea name="備考" placeholder="アレルギー、体調面での配慮事項など" data-i18n-placeholder="ph_notes" required></textarea></div>
+                <div class="fg">
+                  <label class="policy-check-wrap">
+                    <input type="checkbox" name="policy_agree" value="yes" required>
+                    <div class="vc-txt">
+                      <strong data-i18n="agree_notes_h">注意事項を確認しました（必須）</strong><br>
+                      <span data-i18n="agree_notes_p">参加前のご注意・キャンセルポリシーを確認し、同意の上で予約します</span>
+                    </div>
+                  </label>
+                </div>
+                <button type="submit" class="f-submit" data-i18n="bk_submit">予約リクエストを送信する</button>
+                <p class="f-note" data-i18n="bk_note">送信後、確認メールをお送りします。24時間以内にご連絡します。</p>
+              </form>
+            </div>
+            <!-- 右: ミニ空き状況カレンダー -->
+            <div class="bk-cal-wrap">
+              <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
+              <div id="gcal-mini-bk" class="cal-iframe-wrap"><div class="ccal-loading"><span>⟳</span><span data-i18n="cal_loading">読み込み中...</span></div></div>
+              <div class="bk-cal-legend">
+                <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
+                <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
      SNORKELING DETAIL
      ================================================================ -->
 <div id="view-snorkeling" class="view">
@@ -4184,6 +4439,7 @@
       <div class="bk-layout">
         <div class="form-wrap">
           <form novalidate onsubmit="submitForm(event,'sn-ok')">
+            <input type="hidden" name="ご希望のツアー" value="シュノーケル">
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
               <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
@@ -4491,6 +4747,7 @@
       <div class="bk-layout">
         <div class="form-wrap">
           <form novalidate onsubmit="submitForm(event,'sk-ok')">
+            <input type="hidden" name="ご希望のツアー" value="スキンダイビング">
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
               <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
@@ -4816,6 +5073,7 @@
       <div class="bk-layout">
         <div class="form-wrap">
           <form novalidate onsubmit="submitForm(event,'bc-ok')">
+            <input type="hidden" name="ご希望のツアー" value="青の洞窟">
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
               <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
@@ -5306,7 +5564,7 @@
       + buildMonthHtml(y0, m0, busyDates)
       + buildMonthHtml(y1, m1, busyDates)
       + '</div>';
-    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc'].forEach(function(id) {
+    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.innerHTML = html;
     });
@@ -5414,7 +5672,7 @@
   function initBookingCalendars(busyDates) {
     if (!_bkCalInited) {
       _bkCalInited = true;
-      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc'].forEach(function(id) {
+      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
         var container = document.getElementById(id);
         if (!container) return;
         container.addEventListener('click', function(e) {
@@ -5582,6 +5840,18 @@
       hero_tag:'Marine Guide  /  Okinawa',
       hero_desc:'沖縄の透き通ったエメラルドグリーンの海へ。<br>完全貸切・完全送迎で、忘れられない海の体験を。',
       cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
+      cta_book:'今すぐ予約', cta_line:'LINEで相談',
+      nav_book:'ご予約',
+      bkp_lbl:'BOOKING', bkp_ttl:'ご予約',
+      bkp_sub:'まずはツアーをお選びください。当日・前日のご予約も大歓迎です。',
+      bkp_popular:'人気No.1', bkp_level:'難易度', bkp_duration:'所要時間', bkp_rec_lbl:'こんな方に',
+      bkp_sn_rec:'気軽に楽しみたい初心者・お子様連れに。浅瀬でカラフルな熱帯魚と泳ぐ定番ツアー。',
+      bkp_bc_rec:'特別な体験を求める方に。恩納村の神秘的な「青の洞窟」を探検する人気スポット。',
+      bkp_sk_rec:'もっとアクティブに楽しみたい方に。素潜りで深い海へ。ウミガメ遭遇のチャンスも。',
+      bkp_feat_feed:'熱帯魚への餌付け体験', bkp_feat_photo:'写真最大20枚プレゼント', bkp_feat_transfer:'完全貸切・完全送迎',
+      bkp_feat_cave:'神秘の青の洞窟を探検', bkp_feat_dive:'素潜りの仕方を一から指導',
+      bkp_detail:'詳細を見る', bkp_choose:'このツアーを選ぶ',
+      bkp_arrow_note:'▼ 選んだら下のフォームへご記入ください', bkp_tour_lbl:'ご希望のツアー',
       /* ABOUT */
       about_lbl:'WHY CHOOSE US', about_ttl:'エメラルドリーフが選ばれる理由', about_sub:'あなたの大切な時間を、最高の海の思い出に変えます。',
       ac1_h:'完全貸切', ac1_p:'あなたのグループだけの専用ツアー。他の参加者を気にせず自分たちのペースで楽しめます。',
@@ -5812,6 +6082,18 @@
       hero_tag:'Marine Guide  /  Okinawa',
       hero_desc:'Discover the crystal-clear emerald waters of Okinawa.<br>Private, fully-guided tours with hotel transfers included.',
       cta_sv:'View Services', cta_ct:'Contact Us',
+      cta_book:'Book Now', cta_line:'Chat on LINE',
+      nav_book:'Book',
+      bkp_lbl:'BOOKING', bkp_ttl:'Book Now',
+      bkp_sub:'Pick your tour first. Same-day and next-day bookings are welcome too.',
+      bkp_popular:'Most Popular', bkp_level:'Level', bkp_duration:'Duration', bkp_rec_lbl:'Best for',
+      bkp_sn_rec:'Great for beginners and families. Swim with colorful tropical fish in shallow water — our classic tour.',
+      bkp_bc_rec:'For those seeking something special. Explore the mystical Blue Cave in Onna Village — a top spot.',
+      bkp_sk_rec:'For a more active experience. Free-dive into deeper waters — with a chance to meet sea turtles.',
+      bkp_feat_feed:'Tropical fish feeding', bkp_feat_photo:'Up to 20 free photos', bkp_feat_transfer:'Private tour & free transfer',
+      bkp_feat_cave:'Explore the mystical Blue Cave', bkp_feat_dive:'Free-diving taught from scratch',
+      bkp_detail:'View Details', bkp_choose:'Choose This Tour',
+      bkp_arrow_note:'▼ Once chosen, fill in the form below', bkp_tour_lbl:'Your Tour',
       /* HERO BADGES */
       hb_sameday:'Same-Day Booking', hb_feed:'Fish Feeding', hb_charter:'Private Charter', hb_transfer:'Transfer Included', hb_photo:'Free Photos',
       /* BOOKING SAME-DAY NOTE */
@@ -6028,6 +6310,18 @@
       hero_tag:'海洋向导  /  冲绳',
       hero_desc:'探索冲绳清澈见底的翡翠绿海洋。<br>全程包车・全程接送，留下难忘的海洋体验。',
       cta_sv:'查看服务', cta_ct:'联系我们',
+      cta_book:'立即预约', cta_line:'LINE咨询',
+      nav_book:'预约',
+      bkp_lbl:'BOOKING', bkp_ttl:'在线预约',
+      bkp_sub:'请先选择您的体验项目。当天・前一天预约也非常欢迎。',
+      bkp_popular:'人气No.1', bkp_level:'难度', bkp_duration:'所需时间', bkp_rec_lbl:'推荐对象',
+      bkp_sn_rec:'适合想轻松体验的初学者和亲子。在浅滩与色彩缤纷的热带鱼同游，经典之选。',
+      bkp_bc_rec:'适合追求特别体验的您。探索恩纳村神秘的「青之洞窟」人气景点。',
+      bkp_sk_rec:'适合想更尽兴的您。徒手潜入深海，还有机会遇见海龟。',
+      bkp_feat_feed:'热带鱼喂食体验', bkp_feat_photo:'赠送最多20张照片', bkp_feat_transfer:'完全包场・免费接送',
+      bkp_feat_cave:'探索神秘青之洞窟', bkp_feat_dive:'从零开始教学徒手潜水',
+      bkp_detail:'查看详情', bkp_choose:'选择此项目',
+      bkp_arrow_note:'▼ 选好后请填写下方表单', bkp_tour_lbl:'希望的项目',
       /* HERO BADGES */
       hb_sameday:'当日预约OK', hb_feed:'含喂鱼体验', hb_charter:'全程包车', hb_transfer:'含接送', hb_photo:'照片免费',
       bk_sameday_note:'当日・前一天预约也欢迎！请随时联系我们确认空位。',
@@ -6240,6 +6534,18 @@
       hero_tag:'마린 가이드  /  오키나와',
       hero_desc:'오키나와의 투명한 에메랄드 바다로.<br>완전 전세・완전 픽업으로 잊지 못할 바다 체험을.',
       cta_sv:'서비스 보기', cta_ct:'문의하기',
+      cta_book:'지금 예약', cta_line:'LINE 상담',
+      nav_book:'예약',
+      bkp_lbl:'BOOKING', bkp_ttl:'예약하기',
+      bkp_sub:'먼저 투어를 선택해 주세요. 당일・전날 예약도 대환영입니다.',
+      bkp_popular:'인기No.1', bkp_level:'난이도', bkp_duration:'소요시간', bkp_rec_lbl:'이런 분께',
+      bkp_sn_rec:'편하게 즐기고 싶은 초보자・아이 동반 가족에게. 얕은 바다에서 화려한 열대어와 헤엄치는 대표 투어.',
+      bkp_bc_rec:'특별한 경험을 원하는 분께. 온나손의 신비로운 「푸른 동굴」을 탐험하는 인기 스폿.',
+      bkp_sk_rec:'더 액티브하게 즐기고 싶은 분께. 맨몸 잠수로 깊은 바다로. 바다거북을 만날 기회도.',
+      bkp_feat_feed:'열대어 먹이주기 체험', bkp_feat_photo:'사진 최대 20장 증정', bkp_feat_transfer:'완전 전세・완전 픽업',
+      bkp_feat_cave:'신비로운 푸른 동굴 탐험', bkp_feat_dive:'맨몸 잠수법을 처음부터 지도',
+      bkp_detail:'자세히 보기', bkp_choose:'이 투어 선택',
+      bkp_arrow_note:'▼ 선택하셨다면 아래 양식을 작성해 주세요', bkp_tour_lbl:'희망 투어',
       /* HERO BADGES */
       hb_sameday:'당일 예약OK', hb_feed:'먹이 체험 포함', hb_charter:'완전 전세', hb_transfer:'픽업 포함', hb_photo:'사진 무료',
       bk_sameday_note:'당일・전날 예약도 환영합니다！ 빈자리는 부담 없이 문의해 주세요.',
@@ -6620,6 +6926,18 @@
   }
   function showDet(name) { showView('view-' + name, function(){ renderDetExtras(name); showDetailBanners(); }); }
 
+  /* 予約ページ: 比較表でツアーを選ぶ → フォームに反映してスクロール */
+  function selectTourForBooking(tour) {
+    var sel = document.getElementById('bk-tour-select');
+    if (sel) { sel.value = tour; sel.classList.add('bkp-tour-active'); }
+    var form = document.getElementById('booking-form');
+    if (form) {
+      var nav = document.getElementById('main-nav');
+      var navH = nav ? nav.offsetHeight : 64;
+      window.scrollTo({ top: form.getBoundingClientRect().top + window.pageYOffset - navH - 12, behavior: 'smooth' });
+    }
+  }
+
   /* ---- 予約バナー デモ ③⑥⑦ ---- */
   function scrollToBkForm() {
     var view = document.querySelector('.view.active');
@@ -6801,6 +7119,13 @@
     const form = e.target;
     /* バリデーション: 未入力・不正フィールドがあれば中断 */
     if (!validateForm(form)) return;
+    /* 統一予約フォーム(bk-ok): 選択されたツアーから okId を判定し、
+       詳細ページからの予約と同じ件名・内容のメールにする */
+    if (okId === 'bk-ok') {
+      const tourSel = form.querySelector('[name="ご希望のツアー"]');
+      const tourMap = { 'シュノーケル': 'sn-ok', '青の洞窟': 'bc-ok', 'スキンダイビング': 'sk-ok' };
+      okId = tourMap[tourSel ? tourSel.value : ''] || 'sn-ok';
+    }
     const btn = form.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = '送信中...'; }
     try {
@@ -7900,7 +8225,7 @@
 
     /* 初回ロード: ハッシュにビューIDがあればそのページを開く */
     var _initHash = location.hash.replace('#', '');
-    var _validViews = ['view-snorkeling','view-skindiving','view-bluecave','view-blog-list',
+    var _validViews = ['view-booking','view-snorkeling','view-skindiving','view-bluecave','view-blog-list',
       'view-blog-1','view-blog-2','view-blog-3','view-blog-4','view-blog-5','view-blog-6'];
     if (_initHash && _validViews.indexOf(_initHash) !== -1) {
       _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-bluecave'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
