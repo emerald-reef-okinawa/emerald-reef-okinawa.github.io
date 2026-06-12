@@ -4351,6 +4351,32 @@
       </div>
 
   </div>
+
+  <!-- FAQ -->
+  <section id="booking-faq" style="background:var(--white);">
+    <div class="container" style="max-width:760px;">
+      <p class="s-label fi" data-i18n="faq_lbl">FAQ</p>
+      <h2 class="s-title fi" data-i18n="faq_ttl">よくある質問</h2>
+      <p class="s-sub fi" data-i18n="faq_sub">ご参加前にご確認ください。他にご不明点があればお気軽にお問い合わせを。</p>
+      <div class="faq-list fi" id="booking-faq-list"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="ft-logo">
+      <img src="logo.webp" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
+      <div class="ft-logo-txt">EMERALD REEF OKINAWA</div>
+    </div>
+    <div class="ft-links">
+      <a onclick="goHomeJump('services')" data-i18n="nav_sv">サービス</a>
+      <a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a>
+      <a onclick="showView('view-booking')" data-i18n="nav_book">ご予約</a>
+      <a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a>
+    </div>
+    <p data-i18n-html="ft_tagline">沖縄の海で、最高の思い出を。<br>Snorkeling &amp; Skin Diving &amp; SUP (coming soon) — Private &amp; Fully Guided</p>
+    <p class="ft-copy" data-i18n="ft_copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
+  </footer>
 </div>
 
 
@@ -5556,10 +5582,14 @@
     throw new Error('All proxies failed');
   }
 
-  /* エントリ: APIキーがあれば方式A、なければ方式B */
+  /* エントリ: 方式A(APIキー) → 失敗時は方式B(iCalプロキシ)へフォールバック */
   async function fetchBusyDates() {
     if (GCAL_API_KEY && GCAL_API_KEY.trim() !== '') {
-      return fetchViaAPI();
+      try {
+        return await fetchViaAPI();
+      } catch (err) {
+        console.warn('[Calendar] API failed (' + err.message + ') — falling back to iCal proxy');
+      }
     }
     return fetchViaProxy();
   }
@@ -6871,7 +6901,7 @@
       if (d[key] !== undefined) el.innerHTML = d[key];
     });
     // CMS dynamic content re-render on lang change
-    if (typeof cmsRenderBlogs === 'function') { cmsRenderBlogs(); cmsRenderFaqs(); setTimeout(initFade, 50); }
+    if (typeof cmsRenderBlogs === 'function') { cmsRenderBlogs(); cmsRenderFaqs(); renderBookingFaq(); setTimeout(initFade, 50); }
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const key = el.dataset.i18nPlaceholder;
       if (d[key] !== undefined) el.placeholder = d[key];
@@ -6930,6 +6960,7 @@
     const t = document.getElementById(id);
     if (t) { t.style.display = 'block'; t.classList.add('active'); }
     document.body.classList.toggle('on-booking-page', id === 'view-booking');
+    if (id === 'view-booking' && typeof renderBookingFaq === 'function') renderBookingFaq();
     const nav = document.getElementById('main-nav');
     if (nav) nav.style.display = id === 'view-admin' ? 'none' : '';
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -7514,6 +7545,22 @@
     const lang=typeof curLang!=='undefined'?curLang:'ja';
     const c=document.getElementById('faq-dynamic-list'); if(!c) return;
     if(!faqs.length){ c.innerHTML='<p style="text-align:center;padding:40px;">まだ登録がありません</p>'; return; }
+    c.innerHTML=faqs.map(f=>`
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-txt"><span class="faq-lbl">Q</span><span>${f.q[lang]||f.q.ja||''}</span></div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">${f.a[lang]||f.a.ja||''}</div></div>
+      </div>`).join('');
+  }
+
+  /* 予約ページ用 FAQ（メインFAQと同じデータを表示） */
+  function renderBookingFaq(){
+    const c=document.getElementById('booking-faq-list'); if(!c) return;
+    const faqs=(cmsGetFaqs()||DEFAULT_FAQS).filter(f=>f.visible).sort((a,b)=>(a.order||0)-(b.order||0));
+    const lang=typeof curLang!=='undefined'?curLang:'ja';
+    if(!faqs.length){ c.innerHTML=''; return; }
     c.innerHTML=faqs.map(f=>`
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
