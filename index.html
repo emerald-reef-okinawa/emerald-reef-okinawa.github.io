@@ -5506,15 +5506,10 @@
      3. 下の GCAL_ID に貼り付けて保存するだけで自動的にカレンダーが表示されます
      ================================================================ */
   const GCAL_ID      = 'bae4673fc1586cd7d77b696a07915989913ec8da83407e71ec4866749306b115@group.calendar.google.com';
-  /* ↓ Google Cloud Console で取得した API キーを入力してください
-     取得方法: https://console.cloud.google.com/apis/credentials
-     1. プロジェクト作成 → 2. 「認証情報を作成」→「APIキー」→ 3. コピーして貼り付け
-     ⚠️  セキュリティ必須: GitHubで公開する前に必ずキーにHTTPリファラー制限を設定してください
-         Google Cloud Console → APIキー → アプリケーションの制限 → HTTPリファラー
-         許可するドメイン: fubukirichard.github.io/* および localhost/*
-         APIの制限: Google Calendar API のみ
-     ℹ️  空文字('')にするとプロキシ経由のフォールバックモードで動作します（制限不要） */
-  const GCAL_API_KEY = 'AIzaSyA4TlPpSTDw3GSu15gT1sRGQszb-jSqwBI';
+  /* APIキーは使用しません（公開リポジトリへの漏洩を避けるため空文字に）。
+     カレンダーは公開iCalフィード + CORSプロキシ経由で取得します（キー不要）。
+     ※絶対にここへAPIキー等の秘密情報を貼り付けないこと（公開GitHubに載るため）。 */
+  const GCAL_API_KEY = '';
   var _gcalBusy = null; /* store for language re-render */
 
   /* ================================================================
