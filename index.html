@@ -7318,6 +7318,8 @@
      ================================================================ */
   const mainNav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => {
+    /* モバイル(≤600px)はロゴ店名が2行になるため縮小しない（はみ出し防止） */
+    if (window.innerWidth <= 600) { mainNav.style.height = ''; return; }
     mainNav.style.height = window.scrollY > 50 ? '52px' : '64px';
   }, { passive: true });
 
