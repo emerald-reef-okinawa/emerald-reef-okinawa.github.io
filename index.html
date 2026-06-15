@@ -3303,7 +3303,7 @@
   </div>
   <div class="nav-right">
     <ul class="nav-links" id="nav-links">
-      <li class="nav-book-li"><a onclick="showView('view-booking')" data-i18n="nav_book" class="nav-book-link">ご予約</a></li>
+      <li class="nav-book-li"><a onclick="track('cta_book',{location:'nav'}); showView('view-booking')" data-i18n="nav_book" class="nav-book-link">ご予約</a></li>
       <li><a onclick="goHomeJump('services')" data-i18n="nav_sv" class="nav-exp">体験メニュー</a></li>
       <li><a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a></li>
       <li><a onclick="goHomeJump('faq')" data-i18n="nav_faq">よくある質問</a></li>
@@ -3366,7 +3366,7 @@
         完全貸切・完全送迎で、忘れられない海の体験を。
       </p>
       <div class="cta-row">
-        <button class="btn btn-primary" onclick="showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
+        <button class="btn btn-primary" onclick="track('cta_book',{location:'hero'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
         <a class="btn btn-outline" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
       </div>
       <div class="hero-badges">
@@ -7042,10 +7042,11 @@
       showView('view-main');
     }
   }
-  function showDet(name) { showView('view-' + name, function(){ renderDetExtras(name); showDetailBanners(); }); }
+  function showDet(name) { track('view_tour_detail', { tour: name }); showView('view-' + name, function(){ renderDetExtras(name); showDetailBanners(); }); }
 
   /* 予約ページ: 比較表でツアーを選ぶ → フォームに反映してスクロール */
   function selectTourForBooking(tour) {
+    track('select_tour', { tour: tour });
     var sel = document.getElementById('bk-tour-select');
     if (sel) { sel.value = tour; sel.classList.add('bkp-tour-active'); }
     var form = document.getElementById('booking-form');
@@ -7232,6 +7233,21 @@
   /* ================================================================
      FORM SUBMIT — sends to emeraldreefokinawa@gmail.com via FormSubmit
      ================================================================ */
+  /* ================================================================
+     GA4 イベント計測 — どのボタンが押されたかを記録
+     ================================================================ */
+  function track(action, params) {
+    try { if (typeof gtag === 'function') gtag('event', action, params || {}); } catch (e) {}
+  }
+  /* LINE / WhatsApp リンクのクリックをサイト全体で自動計測 */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('lin.ee') !== -1 || href.indexOf('line.me') !== -1) track('contact_click', { channel: 'line' });
+    else if (href.indexOf('wa.me') !== -1) track('contact_click', { channel: 'whatsapp' });
+  });
+
   async function submitForm(e, okId) {
     e.preventDefault();
     const form = e.target;
@@ -7272,6 +7288,10 @@
     const popId = (okId === 'cs-ok') ? 'popup-contact' : 'popup-booking';
     const pop = document.getElementById(popId);
     if (pop) pop.classList.add('open');
+    /* GA4: 予約リクエスト送信／お問い合わせ送信を計測 */
+    const tourLabels = { 'sn-ok': 'シュノーケル', 'sk-ok': 'スキンダイビング', 'bc-ok': '青の洞窟' };
+    if (okId === 'cs-ok') track('contact_submit', {});
+    else track('booking_submit', { tour: tourLabels[okId] || '' });
   }
 
   /* ================================================================
@@ -8698,7 +8718,7 @@
   <a class="mob-cf-btn mob-cf-wa" href="https://wa.me/817085168826?text=EMERALD%20REEF%20OKINAWA%20の体験について問い合わせしたいです" target="_blank" rel="noopener" aria-label="WhatsAppで問い合わせ">
     <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.605.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.199.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
   </a>
-  <a id="mob-book-float" onclick="showView('view-booking')" role="button" tabindex="0" aria-label="ご予約">
+  <a id="mob-book-float" onclick="track('cta_book',{location:'mobile_float'}); showView('view-booking')" role="button" tabindex="0" aria-label="ご予約">
     <span class="mbf-ico">📅</span><span class="mbf-txt" data-i18n="nav_book">ご予約</span>
   </a>
 </div>
