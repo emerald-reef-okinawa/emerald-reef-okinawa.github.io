@@ -1141,13 +1141,16 @@
     .ccal-cell.busy .ccal-dot  { background: #aaa; }
     .ccal-cell.past .ccal-dot  { display: none; }
     .ccal-loading {
-      padding: 48px 20px; text-align: center;
-      font-size: .9rem; color: var(--g-dark); font-weight: 700; letter-spacing: .03em;
+      padding: 46px 20px; text-align: center;
+      font-size: .86rem; color: var(--text-soft); font-weight: 600; letter-spacing: .03em;
     }
-    .ccal-loading .ccal-ico { display: block; font-size: 2.4rem; margin-bottom: 10px; animation: ccalBob 1.1s ease-in-out infinite; }
-    .ccal-loading .ccal-dots::after { content: ''; animation: ccalDots 1.4s steps(4,end) infinite; }
-    @keyframes ccalBob { 0%,100% { transform: translateY(0) rotate(-7deg); } 50% { transform: translateY(-10px) rotate(7deg); } }
-    @keyframes ccalDots { 0% { content: ''; } 25% { content: '・'; } 50% { content: '・・'; } 75% { content: '・・・'; } }
+    .ccal-loading .ccal-ico {
+      display: block; width: 32px; height: 32px; margin: 0 auto 14px;
+      border: 3px solid rgba(0,168,150,.18); border-top-color: var(--g-mid);
+      border-radius: 50%; animation: spin .8s linear infinite;
+    }
+    .ccal-loading .ccal-dots::after { display: inline-block; width: 1em; text-align: left; content: ''; animation: ccalDots 1.4s steps(4,end) infinite; }
+    @keyframes ccalDots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
     @keyframes spin { to { transform: rotate(360deg); } }
     .ccal-error {
       padding: 36px 20px; text-align: center;
@@ -4345,7 +4348,7 @@
             <!-- 右: ミニ空き状況カレンダー -->
             <div class="bk-cal-wrap">
               <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
-              <div id="gcal-mini-bk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico">🐠</span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+              <div id="gcal-mini-bk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
               <div class="bk-cal-legend">
                 <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
                 <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
@@ -4601,7 +4604,7 @@
         <!-- 右: ミニ空き状況カレンダー -->
         <div class="bk-cal-wrap">
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
-          <div id="gcal-mini-sn" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico">🐠</span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+          <div id="gcal-mini-sn" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
             <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
             <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
@@ -4909,7 +4912,7 @@
         <!-- 右: ミニ空き状況カレンダー -->
         <div class="bk-cal-wrap">
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
-          <div id="gcal-mini-sk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico">🐠</span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+          <div id="gcal-mini-sk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
             <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
             <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
@@ -5232,7 +5235,7 @@
         <!-- 右: ミニ空き状況カレンダー -->
         <div class="bk-cal-wrap">
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
-          <div id="gcal-mini-bc" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico">🐠</span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+          <div id="gcal-mini-bc" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
             <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
             <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
@@ -5553,31 +5556,38 @@
     return busy;
   }
 
-  /* 方式B: iCal + CORSプロキシ */
+  /* タイムアウト付き fetch（プロキシが固まっても次へ進む） */
+  async function fetchTextTimeout(url, ms) {
+    var ctrl = new AbortController();
+    var to = setTimeout(function(){ ctrl.abort(); }, ms || 6000);
+    try {
+      var r = await fetch(url, { cache: 'no-cache', signal: ctrl.signal });
+      if (!r.ok) return null;
+      return await r.text();
+    } catch (e) { return null; }
+    finally { clearTimeout(to); }
+  }
+
+  /* 方式B: iCal + CORSプロキシ（複数を順に試行・各6秒でタイムアウト） */
   async function fetchViaProxy() {
     var id    = GCAL_ID.trim();
     var enc   = id.replace('@', '%40');
-    var bust  = Math.floor(Date.now() / 600000);
+    var bust  = Date.now();
     var base  = 'https://calendar.google.com/calendar/ical/' + enc + '/public/basic.ics';
-    var raw   = 'https://calendar.google.com/calendar/ical/' + id  + '/public/basic.ics';
+    var raw   = 'https://calendar.google.com/calendar/ical/' + id  + '/public/basic.ics?t=' + bust;
 
     var proxies = [
+      'https://corsproxy.io/?url=' + encodeURIComponent(raw),
       'https://corsproxy.io/?' + base + '%3Ft%3D' + bust,
-      'https://corsproxy.io/?' + base,
-      'https://api.allorigins.win/raw?url=' + encodeURIComponent(raw + '?t=' + bust),
       'https://api.allorigins.win/raw?url=' + encodeURIComponent(raw),
     ];
 
     for (var i = 0; i < proxies.length; i++) {
-      try {
-        var r = await fetch(proxies[i], { cache: 'no-cache' });
-        if (!r.ok) continue;
-        var t = await r.text();
-        if (t && t.includes('BEGIN:VCALENDAR')) {
-          console.log('[Calendar] proxy #' + i + ' OK, events:', (t.match(/BEGIN:VEVENT/g)||[]).length);
-          return parseIcalDates(t);
-        }
-      } catch(e) { console.warn('[Calendar] proxy #' + i + ' failed:', e.message); }
+      var t = await fetchTextTimeout(proxies[i], 6000);
+      if (t && t.indexOf('BEGIN:VCALENDAR') !== -1) {
+        console.log('[Calendar] proxy #' + i + ' OK, events:', (t.match(/BEGIN:VEVENT/g)||[]).length);
+        return parseIcalDates(t);
+      }
     }
     throw new Error('All proxies failed');
   }
