@@ -17,4 +17,4 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Sitemap: https://emeraldreefokinawa.com/sitemap.xml
+Sitemap: https://emerald-reef-okinawa.com/sitemap.xml
