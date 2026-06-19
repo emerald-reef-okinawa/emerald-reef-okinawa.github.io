@@ -7049,6 +7049,28 @@
     }, 420);
   }
 
+  /* ページ遷移と同じ「波紋拡張＋グリッドリビール」演出を再生し、中間で applyFn を実行する。
+     モーダル（ブログ記事）など、ビュー切替を伴わない表示にも同じ演出を付けるために使う。 */
+  function _playRippleReveal(applyFn) {
+    const rpl = document.getElementById('page-ripple');
+    if (!rpl) { if (applyFn) applyFn(); return; }
+    rpl.className = '';
+    void rpl.offsetWidth;
+    rpl.classList.add('rpl-expanding');
+    setTimeout(() => {
+      if (applyFn) applyFn();
+      rpl.style.width  = '300vmax';
+      rpl.style.height = '300vmax';
+      rpl.classList.remove('rpl-expanding');
+      void rpl.offsetWidth;
+      if (_revealMode === 10) {
+        rpl.style.opacity = '0';
+        _gridReveal();
+        setTimeout(() => { rpl.style.cssText = ''; rpl.className = ''; }, 100);
+      }
+    }, 420);
+  }
+
   const _revealMode = 10; // グリッドリビール固定
 
   // ⑩ グリッドリビール
@@ -7670,11 +7692,11 @@
       if(body) html+=`<p class="cms-bm-para">${body.replace(/\n/g,'<br>')}</p>`;
     });
     document.getElementById('cms-bm-body').innerHTML=html||'<p style="color:var(--text-soft)">（本文は準備中です）</p>';
-    modal.style.display='flex';
-    modal.scrollTop=0;                         // 記事を開くたびに先頭から表示
     document.body.classList.add('blog-modal-open'); // 背面スクロールを固定
     /* スマホ/ブラウザの「戻る」で記事を閉じられるよう履歴に1エントリ積む（URLは変えない） */
     if(!_skipHistory){ try{ history.pushState({eroBlogModal:id}, ''); }catch(e){} }
+    /* 他ページと同じ波紋＋リビール演出で記事を表示 */
+    _playRippleReveal(function(){ modal.style.display='flex'; modal.scrollTop=0; });
     trackBlogView(id, p.title[lang]||p.title.ja||'');
   }
   /* 低レベル：モーダルを隠して背面スクロールを解除するだけ（履歴は触らない） */
