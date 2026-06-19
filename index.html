@@ -7129,6 +7129,7 @@
     const lang  = typeof curLang !== 'undefined' ? curLang : 'ja';
     const p     = posts.find(post => post.legacyId === n);
     if (!p) return;
+    trackBlogView(p.id || ('lg' + n), p.title[lang] || p.title.ja || '');
 
     // ① ヒーロー背景
     const heroEl = document.querySelector('#view-blog-' + n + ' .blog-det-hero');
@@ -7275,6 +7276,19 @@
      ================================================================ */
   function track(action, params) {
     try { if (typeof gtag === 'function') gtag('event', action, params || {}); } catch (e) {}
+  }
+  /* ブログ記事の閲覧をGA4で計測（記事ごとの閲覧数を「ページとスクリーン」レポートで確認できる） */
+  function trackBlogView(id, title) {
+    try {
+      if (typeof gtag !== 'function') return;
+      // ① 仮想ページビュー：標準レポートに /blog/<id> として記事ごとに表示
+      gtag('event', 'page_view', {
+        page_title: 'ブログ: ' + (title || id),
+        page_location: location.origin + '/blog/' + id
+      });
+      // ② カスタムイベント：イベント一覧で記事タイトル別に確認できる
+      gtag('event', 'blog_view', { blog_id: id, blog_title: title || id });
+    } catch (e) {}
   }
   /* LINE / WhatsApp リンクのクリックをサイト全体で自動計測 */
   document.addEventListener('click', function (e) {
@@ -7640,6 +7654,7 @@
     });
     document.getElementById('cms-bm-body').innerHTML=html||'<p style="color:var(--text-soft)">（本文は準備中です）</p>';
     modal.style.display='flex';
+    trackBlogView(id, p.title[lang]||p.title.ja||'');
   }
 
   function cmsRenderFaqs(){
