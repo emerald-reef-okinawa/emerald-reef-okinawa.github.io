@@ -2775,10 +2775,18 @@
       background:var(--g-mid); color:#fff; border:none; border-radius:10px;
       font-weight:700; cursor:pointer;
     }
-    /* モバイルでは記事モーダルを全画面表示（周囲に前の画面が見えないように） */
+    /* 記事モーダルを開いている間は背面ページのスクロールを固定 */
+    body.blog-modal-open { overflow:hidden; }
+    /* モバイル：記事モーダルはヘッダーの下から全画面表示し、中身だけスクロール */
     @media (max-width:600px) {
-      #cms-blog-modal { padding:0; background:#fff; align-items:stretch; }
-      .cms-bm-inner { max-width:100%; width:100%; min-height:100vh; border-radius:0; margin:0; }
+      #cms-blog-modal {
+        padding:0; background:#fff;
+        align-items:flex-start;         /* stretchだと中身が縦に潰れてスクロール不可になるため */
+        top:64px;                       /* ヘッダー(64px)を残して下から表示 */
+        overscroll-behavior:contain;    /* スクロールが背面へ伝播しないように */
+        -webkit-overflow-scrolling:touch;
+      }
+      .cms-bm-inner { max-width:100%; width:100%; min-height:calc(100vh - 64px); border-radius:0; margin:0; }
       .cms-bm-mainimg { max-height:240px; }
       .cms-bm-body { padding:24px 18px 44px; }
     }
@@ -7388,6 +7396,10 @@
     if (window.innerWidth <= 600) { mainNav.style.height = ''; return; }
     mainNav.style.height = window.scrollY > 50 ? '52px' : '64px';
   }, { passive: true });
+  /* 記事モーダルを開いたままヘッダーのナビを押したら、モーダルを閉じて遷移先を見せる */
+  if (mainNav) mainNav.addEventListener('click', () => {
+    if (document.body.classList.contains('blog-modal-open')) cmsCloseBlog();
+  });
 
 
   /* ================================================================
@@ -7654,7 +7666,14 @@
     });
     document.getElementById('cms-bm-body').innerHTML=html||'<p style="color:var(--text-soft)">（本文は準備中です）</p>';
     modal.style.display='flex';
+    modal.scrollTop=0;                         // 記事を開くたびに先頭から表示
+    document.body.classList.add('blog-modal-open'); // 背面スクロールを固定
     trackBlogView(id, p.title[lang]||p.title.ja||'');
+  }
+  function cmsCloseBlog(){
+    const m=document.getElementById('cms-blog-modal');
+    if(m) m.style.display='none';
+    document.body.classList.remove('blog-modal-open');
   }
 
   function cmsRenderFaqs(){
@@ -8789,14 +8808,14 @@
 </div>
 
 <!-- ブログ詳細モーダル -->
-<div id="cms-blog-modal" onclick="if(event.target===this)this.style.display='none'">
+<div id="cms-blog-modal" onclick="if(event.target===this)cmsCloseBlog()">
   <div class="cms-bm-inner">
     <img id="cms-bm-mainimg" class="cms-bm-mainimg" style="display:none;" alt="">
     <div class="cms-bm-body">
       <div class="cms-bm-meta" id="cms-bm-meta"></div>
       <h1 class="cms-bm-title" id="cms-bm-title"></h1>
       <div id="cms-bm-body"></div>
-      <button class="cms-bm-close" onclick="document.getElementById('cms-blog-modal').style.display='none'">閉じる ✕</button>
+      <button class="cms-bm-close" onclick="cmsCloseBlog()">閉じる ✕</button>
     </div>
   </div>
 </div>
