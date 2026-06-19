@@ -2775,6 +2775,13 @@
       background:var(--g-mid); color:#fff; border:none; border-radius:10px;
       font-weight:700; cursor:pointer;
     }
+    /* モバイルでは記事モーダルを全画面表示（周囲に前の画面が見えないように） */
+    @media (max-width:600px) {
+      #cms-blog-modal { padding:0; background:#fff; align-items:stretch; }
+      .cms-bm-inner { max-width:100%; width:100%; min-height:100vh; border-radius:0; margin:0; }
+      .cms-bm-mainimg { max-height:240px; }
+      .cms-bm-body { padding:24px 18px 44px; }
+    }
 
     /* ================================================================
        DET EXTRAS: SLIDER / CREATURES / MINI-FAQ
