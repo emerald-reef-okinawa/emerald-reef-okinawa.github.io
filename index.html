@@ -2165,6 +2165,11 @@
         linear-gradient(rgba(0,0,0,.30) 0%, rgba(0,0,0,.16) 100%),
         url('bc-coral.webp') center 55%/cover no-repeat;
     }
+    .det-hero.tc {
+      background:
+        linear-gradient(rgba(0,0,0,.32) 0%, rgba(0,0,0,.18) 100%),
+        url('https://images.unsplash.com/photo-1591025207163-942350e47db2?auto=format&w=1600&q=80') center 40%/cover no-repeat;
+    }
 
     /* ================================================================
        WAVE ANIMATION
@@ -3194,7 +3199,7 @@
     @keyframes bkpBubble { 0% { transform: translateY(0) scale(.6); opacity: 0; } 12% { opacity: 1; } 100% { transform: translateY(-380px) scale(1); opacity: 0; } }
 
     /* --- Comparison cards --- */
-    .bkp-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 18px; }
+    .bkp-compare { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 18px; }
     .bkp-card {
       position: relative; background: #fff; border: 1px solid rgba(0,168,150,.14);
       border-radius: 18px; overflow: hidden; text-align: center;
@@ -3623,8 +3628,41 @@
         </div>
       </div>
 
-      <!-- ④ SUP: テキスト 左 / 写真 右 (COMING SOON) -->
-      <div class="sv-row rev fi d4" style="cursor:default;">
+      <!-- ④ 那覇近海ウミガメシュノーケル: テキスト 左 / 写真 右 -->
+      <div class="sv-row rev fi d4" onclick="showDet('turtle')">
+        <div class="sv-row-img-wrap">
+          <div class="sv-row-img" style="background:
+            linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.22) 100%),
+            url('https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&w=900&q=80') center 30%/cover;">
+          </div>
+        </div>
+        <div class="sv-row-body">
+          <div class="sv-row-badges">
+            <span class="sv-row-badge prem" data-i18n="tc_badge">NAHA LIMITED</span>
+            <span class="sv-row-badge beg" data-i18n="sk_badge">初心者歓迎</span>
+          </div>
+          <p class="sv-row-lbl">OUR SERVICES 04</p>
+          <h3 class="sv-row-ttl" data-i18n="tc_name">那覇近海ウミガメシュノーケル</h3>
+          <p class="sv-row-en" data-i18n="tc_en">Naha Sea Turtle Snorkeling</p>
+          <div class="sv-sale-note" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
+          <div class="sv-row-orig" data-i18n="bc_orig">通常 ¥12,000〜 / 人</div>
+          <div class="sv-row-price-row">
+            <span class="sv-row-price">¥7,000<span data-i18n="pp_per">〜 / 人</span></span>
+            <span class="sv-off-badge"><strong>40%</strong><small>OFF</small></span>
+          </div>
+          <ul class="sv-row-feats">
+            <li><span class="ck">✓</span><span data-i18n="tc_f1">🐢 那覇近海でウミガメと泳ぐ</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f2">初心者・お子様も安心</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f3">写真最大20枚プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f4">完全貸切・那覇エリア送迎</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f5">那覇宿泊の方限定プラン</span></li>
+          </ul>
+          <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
+        </div>
+      </div>
+
+      <!-- ⑤ SUP: テキスト 左 / 写真 右 (COMING SOON) -->
+      <div class="sv-row fi d5" style="cursor:default;">
         <div class="sv-row-img-wrap">
           <div class="sv-row-img" style="background:linear-gradient(135deg,#2d6a4f,#52b788);"></div>
         </div>
@@ -3632,7 +3670,7 @@
           <div class="sv-row-badges">
             <span class="sv-row-badge soon">COMING SOON</span>
           </div>
-          <p class="sv-row-lbl">OUR SERVICES 04</p>
+          <p class="sv-row-lbl">OUR SERVICES 05</p>
           <h3 class="sv-row-ttl">SUP</h3>
           <p class="sv-row-en">Stand Up Paddleboard</p>
           <div class="sv-row-price-row">
@@ -4314,6 +4352,33 @@
           </div>
         </div>
 
+        <!-- 那覇近海ウミガメシュノーケル -->
+        <div class="bkp-card">
+          <div class="bkp-card-img">
+            <span class="bkp-off-tag">42% OFF</span>
+            <img src="https://images.unsplash.com/photo-1709483095301-2d1f3e95b1d4?auto=format&w=600&q=80" alt="那覇近海ウミガメシュノーケル" loading="lazy">
+          </div>
+          <div class="bkp-card-body">
+            <div class="bkp-card-name" data-i18n="tc_name">那覇近海ウミガメシュノーケル</div>
+            <div class="bkp-card-en" data-i18n="tc_en">Naha Sea Turtle Snorkeling</div>
+            <div class="bkp-price">¥7,000<small data-i18n="pp_per">〜 / 人</small></div>
+            <div class="bkp-orig" data-i18n="bc_orig">通常 ¥12,000〜 / 人</div>
+            <div class="bkp-divline"></div>
+            <div class="bkp-spec"><span class="lbl" data-i18n="bkp_level">難易度</span><span class="val bkp-stars"><span class="on">★★</span><span class="off">★</span></span></div>
+            <div class="bkp-spec"><span class="lbl" data-i18n="bkp_duration">所要時間</span><span class="val">約3〜4h</span></div>
+            <div class="bkp-rec"><strong data-i18n="bkp_rec_lbl">こんな方に</strong><span data-i18n="bkp_tc_rec">那覇に泊まっている方に。近海でウミガメと泳ぐ感動体験。那覇エリア限定プラン。</span></div>
+            <ul class="bkp-feats">
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_turtle">🐢 ウミガメとの遭遇チャンス</span></li>
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_photo">写真最大20枚プレゼント</span></li>
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
+            </ul>
+            <div class="bkp-btns">
+              <button class="bkp-detail-btn" onclick="showDet('turtle')" data-i18n="bkp_detail">詳細を見る</button>
+              <button class="bkp-choose-btn" onclick="selectTourForBooking('那覇ウミガメシュノーケル')" data-i18n="bkp_choose">このツアーを選ぶ</button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="bkp-divider"><span data-i18n="bkp_arrow_note">▼ 選んだら下のフォームへご記入ください</span></div>
@@ -4331,6 +4396,7 @@
                     <option value="シュノーケル" data-i18n="sn_name">シュノーケル</option>
                     <option value="青の洞窟" data-i18n="bc_name">青の洞窟シュノーケル</option>
                     <option value="スキンダイビング" data-i18n="sk_name">スキンダイビング</option>
+                    <option value="那覇ウミガメシュノーケル" data-i18n="tc_name">那覇近海ウミガメシュノーケル</option>
                   </select>
                 </div>
                 <div class="form-row2">
@@ -4641,20 +4707,13 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map.webp" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-bc.webp" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
-            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_covered">無料送迎対応エリア（南部・中部）</span></div>
+            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_central">無料送迎対応エリア（中部）</span></div>
           </div>
         </div>
         <div class="oki-info-col">
           <div class="oki-area-cards">
-            <div class="oki-area-card">
-              <h4 data-i18n="area_naha_h">🏙️ 那覇エリア</h4>
-              <p data-i18n="area_naha_desc">那覇市内のホテル・宿泊先から送迎いたします。国際通り・空港周辺も対応。</p>
-              <div class="oki-tags">
-                <span class="oki-tag">那覇市内</span><span class="oki-tag">国際通り周辺</span><span class="oki-tag">空港周辺</span>
-              </div>
-            </div>
             <div class="oki-area-card central">
               <h4 data-i18n="area_central_h">🌊 中部リゾートエリア</h4>
               <p data-i18n="area_central_desc">恩納村・読谷村・北谷町・沖縄市など中部エリアのホテルからも送迎いたします。</p>
@@ -4949,20 +5008,13 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map.webp" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-bc.webp" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
-            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_covered">無料送迎対応エリア（南部・中部）</span></div>
+            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_central">無料送迎対応エリア（中部）</span></div>
           </div>
         </div>
         <div class="oki-info-col">
           <div class="oki-area-cards">
-            <div class="oki-area-card">
-              <h4 data-i18n="area_naha_h">🏙️ 那覇エリア</h4>
-              <p data-i18n="area_naha_desc">那覇市内のホテル・宿泊先から送迎いたします。国際通り・空港周辺も対応。</p>
-              <div class="oki-tags">
-                <span class="oki-tag">那覇市内</span><span class="oki-tag">国際通り周辺</span><span class="oki-tag">空港周辺</span>
-              </div>
-            </div>
             <div class="oki-area-card central">
               <h4 data-i18n="area_central_h">🌊 中部リゾートエリア</h4>
               <p data-i18n="area_central_desc">恩納村・読谷村・北谷町・沖縄市など中部エリアのホテルからも送迎いたします。</p>
@@ -5358,6 +5410,321 @@
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
 </div><!-- /view-bluecave -->
+
+
+<!-- ================================================================
+     TURTLE SNORKELING PAGE (view-turtle)
+     ================================================================ -->
+<div id="view-turtle" class="view">
+  <div class="back-bar">
+    <div class="back-inner">
+      <div class="breadcrumb">
+        <a onclick="goHome()" data-i18n="bc_home">ホーム</a> /
+        <a onclick="goHomeJump('services')" data-i18n="bc_sv">サービス</a> /
+        <span data-i18n="tc_name">那覇近海ウミガメシュノーケル</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="det-hero tc" id="tc-hero">
+    <h1 data-i18n="tc_name">那覇近海ウミガメシュノーケル</h1>
+    <p data-i18n="tc_det_sub">Naha Sea Turtle Snorkeling — 那覇の海でウミガメと泳ごう</p>
+    <div class="cta-row">
+      <a href="#tc-bk" class="btn btn-primary" data-i18n="det_book_now">今すぐ予約する</a>
+    </div>
+  </div>
+
+  <div id="det-slider-turtle"></div>
+  <div id="det-highlights-turtle"></div>
+  <div id="det-points-turtle"></div>
+
+  <div class="det-body">
+    <section>
+      <div class="container">
+        <div class="det-grid">
+          <div>
+            <h2 class="s-title" style="text-align:left;font-size:1.5rem;" data-i18n="det_price_ttl">料金プラン</h2>
+            <div style="height:12px;"></div>
+            <div class="price-card">
+              <h3 data-i18n="pc_ttl">💴 料金（人数別）</h3>
+              <div class="sale-banner">
+                <div class="sb-body">
+                  <div class="sb-label" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
+                  <div class="sb-sub"  data-i18n="sale_sub">期間限定・全プランが最大割引</div>
+                </div>
+                <div class="sb-badge">
+                  <div class="sb-pct">40<span class="sb-sym">%</span></div>
+                  <div class="sb-off">OFF</div>
+                </div>
+              </div>
+              <!-- 大人 -->
+              <div class="p-plan">
+                <div class="p-plan-name" data-i18n="pr_adult">大人（13歳以上）</div>
+                <div class="pt-grid">
+                  <div class="pt-row">
+                    <div class="pt-lbl" data-i18n="pr_1pax">1名</div>
+                    <div class="pt-amt"><small class="pt-orig">通常 ¥20,000</small>¥12,000</div>
+                  </div>
+                  <div class="pt-row">
+                    <div class="pt-lbl" data-i18n="pr_2pax">2名</div>
+                    <div class="pt-amt"><small class="pt-orig">通常 ¥14,000 / 人</small>¥8,000<span data-i18n="pr_pp"> / 人</span></div>
+                  </div>
+                  <div class="pt-row highlight">
+                    <div class="pt-lbl" data-i18n="pr_3plus">3名以上</div>
+                    <div class="pt-amt"><small class="pt-orig">通常 ¥12,000 / 人</small>¥7,000<span data-i18n="pr_pp"> / 人</span></div>
+                  </div>
+                </div>
+              </div>
+              <!-- 小学生 -->
+              <div class="p-plan">
+                <div class="p-plan-name" data-i18n="pr_child">小学生（6〜12歳）</div>
+                <div class="pt-grid">
+                  <div class="pt-row highlight">
+                    <div class="pt-lbl" data-i18n="pr_flat">一律</div>
+                    <div class="pt-amt"><small class="pt-orig">通常 ¥8,500 / 人</small>¥5,000<span data-i18n="pr_pp"> / 人</span></div>
+                  </div>
+                </div>
+              </div>
+              <!-- 幼児 -->
+              <div class="p-plan p-plan-free">
+                <div class="p-plan-name" data-i18n="pr_infant">幼児（3〜5歳）</div>
+                <div>
+                  <div class="pt-free-note" data-i18n="pr_infant_note">大人1名につき1名無料</div>
+                  <div class="pt-free-sub" data-i18n="pr_infant_sub">ライフジャケット・マスク提供</div>
+                </div>
+              </div>
+              <div class="pc-bottom-notes">
+                <span data-i18n="pc_note">※全機材・送迎・写真データ込みの価格です。</span><br>
+                <span data-i18n="pr_junior_note">※中学生以上は大人料金が適用されます。</span><br>
+                <span data-i18n="pr_max_cap">※1組最大6名まで。</span>
+              </div>
+              <div class="video-opt">
+                <div class="vico">🎬</div>
+                <div class="vtxt">
+                  <h4 data-i18n="vid_opt_h">動画データ オプション</h4>
+                  <p data-i18n="vid_opt_p">Insta360 X5で撮影した動画データも追加提供できます</p>
+                </div>
+                <div class="vprc">+¥2,000</div>
+              </div>
+              <div style="margin-top:20px;">
+                <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="s-title" style="text-align:left;font-size:1.5rem;" data-i18n="det_inc_ttl">含まれるもの</h2>
+            <div style="height:12px;"></div>
+            <ul class="inc-list">
+              <li><span class="inc-ico">🚗</span><div><strong data-i18n="inc_h1">完全送迎</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p1">ホテル・宿泊先からの往復送迎</span></div></li>
+              <li><span class="inc-ico">🎿</span><div><strong data-i18n="inc_h2">全機材レンタル</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="sn_inc_p2">マスク・シュノーケル・フィン・ライフジャケット</span></div></li>
+              <li><span class="inc-ico">📸</span><div><strong data-i18n="inc_h3">写真最大20枚プレゼント</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p3">Insta360 X5撮影写真を後日メールにてお送りします</span></div></li>
+              <li><span class="inc-ico">🎬</span><div><strong data-i18n="inc_h4">動画データ（オプション）</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p4">動画データ追加提供 +¥2,000</span></div></li>
+              <li><span class="inc-ico">👨‍🏫</span><div><strong data-i18n="sn_inc_h5">専任ガイド</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="sn_inc_p5">経験豊富なマリンガイドが終始サポート</span></div></li>
+              <li><span class="inc-ico">🔒</span><div><strong data-i18n="inc_h6">完全貸切</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p6">あなたのグループだけの専用ツアー</span></div></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:48px;"></div>
+
+        <div class="sched sched-with-img">
+          <div class="sched-steps-col">
+            <h3 data-i18n="det_sched_ttl">当日の流れ</h3>
+            <div class="tl-duration" data-i18n="tl_duration" style="margin:10px 0 18px;justify-content:flex-start;">⏱ 所要時間：約3〜4時間程度</div>
+            <div class="steps">
+              <div class="step"><div class="step-n">1</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sn_s1_h">お迎え</h4><p data-i18n="tc_s1_p">那覇市内のホテル・宿泊先にお迎えに上がります。</p></div></div>
+              <div class="step"><div class="step-n">2</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sn_s2_h">海岸到着・器材フィッティング</h4><p data-i18n="sn_s2_p">マスク・フィン等のサイズ調整を行います。</p></div></div>
+              <div class="step"><div class="step-n">3</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sn_s3_h">安全レクチャー</h4><p data-i18n="sn_s3_p">呼吸法・ハンドサインなど安全のためのレクチャーを実施します。</p></div></div>
+              <div class="step"><div class="step-n">4</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="tc_s4_h">那覇近海ウミガメシュノーケル（60〜90分）</h4><p data-i18n="tc_s4_p">ウミガメが生息する那覇近海スポットへご案内します。ウミガメや熱帯魚と泳ぐ感動の体験です。写真撮影も行います。</p></div></div>
+              <div class="step"><div class="step-n">5</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sn_s5_h">送迎（ご指定の場所）</h4><p data-i18n="sn_s5_p">ホテル・宿泊先までお送りします。写真は後日メールにてお送りします（最大20枚）。</p></div></div>
+            </div>
+          </div>
+          <div class="sched-img-col">
+            <img src="https://images.unsplash.com/photo-1589634749362-a8ef3056cbe9?auto=format&w=600&q=80" alt="那覇近海ウミガメシュノーケル体験イメージ" class="sched-pixel-img" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="det-creatures-turtle"></div>
+  <!-- Gear / What to Bring -->
+  <section class="gear-section">
+    <div class="container">
+      <p class="s-label">WHAT TO BRING</p>
+      <h2 class="s-title" data-i18n="gear_ttl">当日の服装と持ち物</h2>
+      <div class="gear-grid">
+        <div class="gear-card">
+          <div class="gear-icon">👙</div>
+          <h3 class="gear-card-ttl" data-i18n="gear_wear_ttl">服装</h3>
+          <ul class="gear-list">
+            <li data-i18n="gear_wear_1">水着・ビーチサンダル</li>
+            <li data-i18n="gear_wear_2">水着は着た状態でご参加ください</li>
+          </ul>
+        </div>
+        <div class="gear-card">
+          <div class="gear-icon">🎒</div>
+          <h3 class="gear-card-ttl" data-i18n="gear_items_ttl">持ち物</h3>
+          <ul class="gear-list">
+            <li><span class="gear-badge" data-i18n="gear_req">必須</span><span data-i18n="gear_items_req">飲み物、タオル</span></li>
+            <li><span class="gear-badge gear-badge-opt" data-i18n="gear_opt">必要な方は</span><span data-i18n="gear_items_opt">日焼け止め、酔い止めなど</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="gear-shower-note" data-i18n-html="gear_shower">🚿 <strong>シャワー・更衣スペース完備</strong> — プライベートシャワーと専用更衣テントをご用意しています。</div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <div class="bk-section" id="tc-bk">
+    <div class="container">
+      <p class="s-label" style="color:var(--g-light);">BOOKING</p>
+      <h2 class="s-title" data-i18n="tc_bk_ttl">那覇近海ウミガメシュノーケル 予約フォーム</h2>
+      <div class="bk-sameday-note" data-i18n="bk_sameday_note">当日・前日のご予約も大歓迎！空き状況はお気軽にお問い合わせください</div>
+      <p class="s-sub" data-i18n="bk_sub">以下のフォームにご記入ください。確認後、24時間以内にご連絡いたします。</p>
+      <div class="bk-layout">
+        <div class="form-wrap">
+          <form novalidate onsubmit="submitForm(event,'tc-ok')">
+            <input type="hidden" name="ご希望のツアー" value="那覇ウミガメシュノーケル">
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
+              <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
+            </div>
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
+              <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
+            </div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
+              <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
+            </div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+            <label class="video-check">
+              <input type="checkbox" name="video" value="yes">
+              <div class="vc-txt">🎬 <strong data-i18n="vid_opt">動画データ オプション (+¥2,000)</strong><br><span data-i18n="vid_desc">Insta360 X5で撮影した動画データも受け取る</span></div>
+            </label>
+            <div class="fg"><label><span data-i18n="lbl_other_req">備考</span><span class="req">*</span></label><textarea name="備考" placeholder="アレルギー、体調面での配慮事項など" data-i18n-placeholder="ph_notes" required></textarea></div>
+            <div class="fg">
+              <label class="policy-check-wrap">
+                <input type="checkbox" name="policy_agree" value="yes" required>
+                <div class="vc-txt">
+                  <strong data-i18n="agree_notes_h">注意事項を確認しました（必須）</strong><br>
+                  <span data-i18n="agree_notes_p">参加前のご注意・キャンセルポリシーを確認し、同意の上で予約します</span>
+                </div>
+              </label>
+            </div>
+            <button type="submit" class="f-submit" data-i18n="bk_submit">予約リクエストを送信する</button>
+            <p class="f-note" data-i18n="bk_note">送信後、確認メールをお送りします。24時間以内にご連絡します。</p>
+            <div class="f-success" id="tc-ok"><p data-i18n="bk_ok">✅ 予約リクエストを受け付けました！24時間以内に確認のご連絡をいたします。</p></div>
+          </form>
+        </div>
+        <!-- 右: ミニ空き状況カレンダー -->
+        <div class="bk-cal-wrap">
+          <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
+          <div id="gcal-mini-tc" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+          <div class="bk-cal-legend">
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Area Map — Turtle (那覇エリア限定) -->
+  <div class="area-section">
+    <div class="container">
+      <p class="s-label" style="text-align:left;">SERVICE AREA</p>
+      <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
+      <div class="oki-map-layout">
+        <div class="oki-map-col">
+          <img src="okinawa-map.webp" alt="沖縄 那覇エリア 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <div class="oki-legend">
+            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_naha">無料送迎対応エリア（那覇）</span></div>
+          </div>
+        </div>
+        <div class="oki-info-col">
+          <div class="oki-area-cards">
+            <div class="oki-area-card">
+              <h4 data-i18n="area_naha_h">🏙️ 那覇エリア</h4>
+              <p data-i18n="tc_area_naha_p">那覇市内のホテル・宿泊先から送迎いたします。那覇近海のウミガメスポットへご案内します。</p>
+              <div class="oki-tags">
+                <span class="oki-tag">那覇市内</span><span class="oki-tag">国際通り周辺</span><span class="oki-tag">空港周辺</span>
+              </div>
+            </div>
+          </div>
+          <div class="oki-consult-box">
+            💬 <strong data-i18n="tc_area_note_strong">※このプランは那覇エリア限定です。</strong><br>
+            <span data-i18n="tc_area_note_p">中部エリアにご宿泊の方は、シュノーケルまたは青の洞窟プランをご検討ください。</span>
+          </div>
+          <div class="oki-time-note">
+            🕐 <span data-i18n="area_time">お客様のご希望の時間帯に送迎いたします（完全プライベートツアー）。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notices & Cancellation Policy — Turtle -->
+  <section class="policy-section fi">
+    <div class="container">
+      <p class="s-label" style="text-align:left;">IMPORTANT INFO</p>
+      <div class="policy-grid">
+        <div class="policy-card">
+          <div class="policy-card-head">
+            <span class="policy-icon">⚠️</span>
+            <h3 class="policy-card-ttl" data-i18n="notes_ttl">参加前のご注意</h3>
+          </div>
+          <div class="policy-body">
+            <ul class="policy-list">
+              <li><span class="policy-dot">🏥</span><span data-i18n="note_1"></span></li>
+              <li><span class="policy-dot">🍺</span><span data-i18n="note_2"></span></li>
+              <li><span class="policy-dot">🌊</span><span data-i18n="note_3"></span></li>
+              <li><span class="policy-dot">📋</span><span data-i18n="note_4"></span></li>
+              <li><span class="policy-dot">👴</span><span data-i18n="note_5"></span></li>
+              <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
+              <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
+              <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="policy-card">
+          <div class="policy-card-head">
+            <span class="policy-icon">📋</span>
+            <h3 class="policy-card-ttl" data-i18n="cancel_ttl">キャンセルポリシー</h3>
+          </div>
+          <div class="policy-body">
+            <div class="cancel-table">
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_7d">7日前まで</div>
+                <div class="cancel-fee free" data-i18n="cv_7d">無料</div>
+              </div>
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_6d">6日前〜前日18時まで</div>
+                <div class="cancel-fee" data-i18n="cv_6d">料金の50%</div>
+              </div>
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_od">前日18時〜当日・無連絡</div>
+                <div class="cancel-fee" data-i18n="cv_od">料金の100%</div>
+              </div>
+            </div>
+            <div class="cancel-weather" data-i18n="cancel_weather">🌀 悪天候・海況不良による中止は全額返金または無料日程変更にて対応いたします。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="det-faq-turtle"></div>
+
+  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
+  <footer>
+    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
+    <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
+  </footer>
+</div><!-- /view-turtle -->
 
 
 <!-- ================================================================
@@ -6195,6 +6562,20 @@
       bc_bk_ttl:'青の洞窟シュノーケル 予約フォーム',
       bc_s4_h:'青の洞窟シュノーケル（60〜90分）', bc_s4_p:'幻想的な青の洞窟を探検。太陽の光が差し込む神秘的な空間で熱帯魚と泳ぎます。写真撮影も行います。',
       bc_orig:'通常 ¥12,000〜 / 人', bc_save:'1名 ¥12,000 ｜ 2名 ¥8,000/人 ｜ 3名〜 ¥7,000/人',
+      /* TURTLE */
+      tc_badge:'NAHA限定', tc_name:'那覇近海ウミガメシュノーケル', tc_en:'Naha Sea Turtle Snorkeling',
+      tc_f1:'🐢 那覇近海でウミガメと泳ぐ', tc_f2:'初心者・お子様も安心', tc_f3:'写真最大20枚プレゼント', tc_f4:'完全貸切・那覇エリア送迎', tc_f5:'那覇宿泊の方限定プラン',
+      tc_det_sub:'Naha Sea Turtle Snorkeling — 那覇の海でウミガメと泳ごう',
+      tc_bk_ttl:'那覇近海ウミガメシュノーケル 予約フォーム',
+      tc_s1_p:'那覇市内のホテル・宿泊先にお迎えに上がります。',
+      tc_s4_h:'那覇近海ウミガメシュノーケル（60〜90分）', tc_s4_p:'ウミガメが生息する那覇近海スポットへご案内します。ウミガメや熱帯魚と泳ぐ感動の体験です。写真撮影も行います。',
+      tc_area_naha_p:'那覇市内のホテル・宿泊先から送迎いたします。那覇近海のウミガメスポットへご案内します。',
+      tc_area_note_strong:'※このプランは那覇エリア限定です。',
+      tc_area_note_p:'中部エリアにご宿泊の方は、シュノーケルまたは青の洞窟プランをご検討ください。',
+      bkp_tc_rec:'那覇に泊まっている方に。近海でウミガメと泳ぐ感動体験。那覇エリア限定プラン。',
+      bkp_feat_turtle:'🐢 ウミガメとの遭遇チャンス',
+      area_leg_naha:'無料送迎対応エリア（那覇）',
+      area_leg_central:'無料送迎対応エリア（中部）',
       /* AREA CARDS */
       area_naha_h:'🏙️ 那覇エリア',
       area_yomitan_h:'🌊 読谷村・恩納村エリア',
@@ -6372,6 +6753,20 @@
       bc_bk_ttl:'Blue Cave Snorkeling Booking Form',
       bc_s4_h:'Blue Cave Snorkeling (60–90 min)', bc_s4_p:'Explore the magical Blue Cave. Swim with tropical fish in the mysterious sunlit cavern. Photos taken throughout.',
       bc_orig:'Regular ¥12,000~ / person', bc_save:'1 person ¥12,000 | 2 persons ¥8,000/ea | 3+ ¥7,000/ea',
+      /* TURTLE */
+      tc_badge:'NAHA LIMITED', tc_name:'Naha Sea Turtle Snorkeling', tc_en:'Naha Sea Turtle Snorkeling',
+      tc_f1:'🐢 Swim with sea turtles off Naha coast', tc_f2:'Beginner &amp; child-friendly', tc_f3:'Up to 20 photos included', tc_f4:'Private charter &amp; Naha transfers', tc_f5:'Exclusive plan for Naha guests',
+      tc_det_sub:'Naha Sea Turtle Snorkeling — Swim with turtles off the Naha coast',
+      tc_bk_ttl:'Naha Sea Turtle Snorkeling Booking Form',
+      tc_s1_p:'We will come to pick you up at your hotel / accommodation in Naha city.',
+      tc_s4_h:'Naha Sea Turtle Snorkeling (60–90 min)', tc_s4_p:'We guide you to sea turtle habitats just off the Naha coast. Swim with sea turtles and tropical fish — an unforgettable experience. Photos taken throughout.',
+      tc_area_naha_p:'We offer transfers from hotels in Naha city. We guide you to sea turtle spots accessible from the Naha coast.',
+      tc_area_note_strong:'※ This plan is exclusively for guests staying in the Naha area.',
+      tc_area_note_p:'Guests staying in the central area should consider our Snorkeling or Blue Cave Snorkeling plans.',
+      bkp_tc_rec:'For guests staying in Naha. A moving experience swimming with sea turtles in the nearby ocean. Naha area exclusive.',
+      bkp_feat_turtle:'🐢 Chance to encounter sea turtles',
+      area_leg_naha:'Free transfer coverage (Naha)',
+      area_leg_central:'Free transfer coverage (Central)',
       /* AREA CARDS */
       area_naha_h:'🏙️ Naha Area',
       area_yomitan_h:'🌊 Yomitan / Onna Village Area',
@@ -6597,6 +6992,20 @@
       bc_bk_ttl:'青之洞窟浮潜预约表',
       bc_s4_h:'青之洞窟浮潜（60〜90分钟）', bc_s4_p:'探索梦幻般的青之洞窟。在阳光穿透的神秘洞窟中与热带鱼共游。全程拍摄照片。',
       bc_orig:'原价 ¥12,000起 / 人', bc_save:'1人 ¥12,000 | 2人 ¥8,000/人 | 3人以上 ¥7,000/人',
+      /* TURTLE */
+      tc_badge:'那霸限定', tc_name:'那霸近海海龟浮潜', tc_en:'Naha Sea Turtle Snorkeling',
+      tc_f1:'🐢 在那霸近海与海龟共游', tc_f2:'初学者和儿童友好', tc_f3:'最多20张照片赠送', tc_f4:'全程包车・那霸地区接送', tc_f5:'那霸住宿客人专属套餐',
+      tc_det_sub:'那霸近海海龟浮潜 — 在那霸的海洋与海龟共游',
+      tc_bk_ttl:'那霸近海海龟浮潜预约表',
+      tc_s1_p:'我们会到那霸市内的酒店・住宿处接您。',
+      tc_s4_h:'那霸近海海龟浮潜（60〜90分钟）', tc_s4_p:'带您前往那霸近海的海龟栖息地。与海龟和热带鱼共游的感动体验。全程拍摄照片。',
+      tc_area_naha_p:'提供那霸市内酒店・住宿地的接送。带您前往那霸近海的海龟景点。',
+      tc_area_note_strong:'※ 本套餐仅限那霸地区。',
+      tc_area_note_p:'住在中部地区的客人，请考虑浮潜或青之洞窟浮潜套餐。',
+      bkp_tc_rec:'适合住在那霸的您。在近海与海龟共游的感动体验。那霸地区限定套餐。',
+      bkp_feat_turtle:'🐢 邂逅海龟的机会',
+      area_leg_naha:'免费接送范围（那霸）',
+      area_leg_central:'免费接送范围（中部）',
       /* AREA CARDS */
       area_naha_h:'🏙️ 那霸地区',
       area_yomitan_h:'🌊 读谷村·恩纳村地区',
@@ -6822,6 +7231,20 @@
       bc_bk_ttl:'블루 케이브 스노클링 예약 폼',
       bc_s4_h:'블루 케이브 스노클링（60〜90분）', bc_s4_p:'환상적인 블루 케이브를 탐험합니다. 햇빛이 비치는 신비로운 동굴 속에서 열대어와 함께 수영합니다. 사진 촬영도 합니다.',
       bc_orig:'정가 ¥12,000~ / 인', bc_save:'1인 ¥12,000 | 2인 ¥8,000/인 | 3인~ ¥7,000/인',
+      /* TURTLE */
+      tc_badge:'나하 한정', tc_name:'나하 근해 바다거북 스노클링', tc_en:'Naha Sea Turtle Snorkeling',
+      tc_f1:'🐢 나하 근해에서 바다거북과 수영', tc_f2:'초보자・어린이도 안심', tc_f3:'사진 최대 20장 선물', tc_f4:'완전 전세・나하 지역 픽업', tc_f5:'나하 숙박 고객 한정 플랜',
+      tc_det_sub:'나하 근해 바다거북 스노클링 — 나하 바다에서 바다거북과 함께',
+      tc_bk_ttl:'나하 근해 바다거북 스노클링 예약 폼',
+      tc_s1_p:'나하 시내 호텔・숙소로 픽업하러 갑니다.',
+      tc_s4_h:'나하 근해 바다거북 스노클링（60〜90분）', tc_s4_p:'나하 근해의 바다거북 서식지로 안내해 드립니다. 바다거북과 열대어와 함께 수영하는 감동 체험입니다. 사진 촬영도 합니다.',
+      tc_area_naha_p:'나하 시내 호텔・숙소에서 픽업합니다. 나하 근해의 바다거북 스팟으로 안내합니다.',
+      tc_area_note_strong:'※ 이 플랜은 나하 지역 한정입니다.',
+      tc_area_note_p:'중부 지역에 머무시는 분은 스노클링 또는 블루 케이브 스노클링 플랜을 검토해 주세요.',
+      bkp_tc_rec:'나하에 머무시는 분께. 근해에서 바다거북과 수영하는 감동 체험. 나하 지역 한정 플랜.',
+      bkp_feat_turtle:'🐢 바다거북 조우 기회',
+      area_leg_naha:'무료 픽업 대응 지역（나하）',
+      area_leg_central:'무료 픽업 대응 지역（중부）',
       /* AREA CARDS */
       area_naha_h:'🏙️ 나하 지역',
       area_yomitan_h:'🌊 요미탄·온나 지역',
@@ -7643,7 +8066,7 @@
   function cmsSaveFaqs(d){  localStorage.setItem(CMS_FAQ_KEY, JSON.stringify(d)); }
   function cmsGetPw(){ return localStorage.getItem(CMS_PW_KEY)||CMS_DEFAULT_PW; }
   function cmsUid(){ return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); }
-  const CMS_VER=23;
+  const CMS_VER=24;
   function cmsInitData(){
     const v=parseInt(localStorage.getItem('ero_ver')||'0');
     if(v<CMS_VER){ cmsSaveBlogs(DEFAULT_BLOGS); cmsSaveFaqs(DEFAULT_FAQS); localStorage.setItem('ero_ver',CMS_VER); return; }
@@ -8177,6 +8600,12 @@
       {url:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&w=1200&q=80', cap:{ja:'息をのむ幻想的な青の世界',en:'A breathtaking, magical blue world',zh:'令人叹为观止的梦幻蓝色世界',ko:'숨막힐 듯 환상적인 푸른 세계'}},
       {url:'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&w=1200&q=80', cap:{ja:'完全貸切だから心ゆくまで堪能',en:'All to yourselves — enjoy to the fullest',zh:'全程包场，尽情享受',ko:'완전 전세라 마음껏 즐기기'}},
       {url:'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&w=1200&q=80', cap:{ja:'神秘的な光と熱帯魚の共演',en:'Mystical light and tropical fish together',zh:'神秘光芒与热带鱼的共演',ko:'신비로운 빛과 열대어의 공연'}}
+    ],
+    turtle:[
+      {url:'https://images.unsplash.com/photo-1573551089778-46a7abc39d9f?auto=format&w=1200&q=80', cap:{ja:'那覇近海でウミガメに会いに行こう',en:'Meet sea turtles off the coast of Naha',zh:'前往那霸近海与海龟相遇',ko:'나하 근해에서 바다거북을 만나러'}},
+      {url:'https://images.unsplash.com/photo-1581242163695-19d0acfd486f?auto=format&w=1200&q=80', cap:{ja:'珊瑚礁を悠々と泳ぐウミガメ',en:'Sea turtles gliding gracefully over coral reefs',zh:'悠然游过珊瑚礁的海龟',ko:'산호초 위를 유유히 헤엄치는 바다거북'}},
+      {url:'https://images.unsplash.com/photo-1533787896899-91b040188f57?auto=format&w=1200&q=80', cap:{ja:'光差し込む海の中の感動',en:'The moving beauty of sunlit underwater world',zh:'阳光照耀下的水中感动瞬间',ko:'햇빛이 비추는 바다 속의 감동'}},
+      {url:'https://images.unsplash.com/photo-1496196614460-48988a57fccf?auto=format&w=1200&q=80', cap:{ja:'那覇から行けるウミガメの楽園',en:'A sea turtle paradise reachable from Naha',zh:'从那霸出发可达的海龟乐园',ko:'나하에서 갈 수 있는 바다거북 낙원'}}
     ]
   };
 
@@ -8238,6 +8667,22 @@
       {e:'🎏',n:{ja:'しましまの熱帯魚',en:'Striped Tropical Fish',zh:'条纹热带鱼',ko:'줄무늬 열대어'},r:'common',img:'creature-stripe.webp'},
       {e:'🪸',n:{ja:'サンゴ礁',en:'Coral Reef',zh:'珊瑚礁',ko:'산호초'},r:'common',img:'creature-coral.webp'},
       {e:'✨',n:{ja:'青い光の反射',en:'Blue Light Effect',zh:'蓝色光芒',ko:'블루 라이트'},r:'common'}
+    ],
+    turtle:[
+      /* ultra */
+      {e:'🐢',n:{ja:'アオウミガメ',en:'Green Sea Turtle',zh:'绿海龟',ko:'바다거북'},r:'ultra',img:'creature-turtle.webp'},
+      /* rare */
+      {e:'🐠',n:{ja:'クマノミ',en:'Clownfish',zh:'小丑鱼',ko:'흰동가리'},r:'rare',img:'creature-clownfish.webp'},
+      {e:'🐡',n:{ja:'フグ',en:'Pufferfish',zh:'河豚',ko:'복어'},r:'rare',img:'creature-puffer.webp'},
+      {e:'⭐',n:{ja:'ヒトデ',en:'Starfish',zh:'海星',ko:'불가사리'},r:'rare',img:'creature-starfish.webp'},
+      {e:'🦐',n:{ja:'エビ',en:'Shrimp',zh:'虾',ko:'새우'},r:'rare',img:'creature-shrimp.webp'},
+      {e:'🐍',n:{ja:'ウミヘビ',en:'Sea Snake',zh:'海蛇',ko:'바다뱀'},r:'rare',img:'creature-seasnake.webp'},
+      /* common */
+      {e:'🐟',n:{ja:'青い熱帯魚',en:'Blue Tropical Fish',zh:'蓝色热带鱼',ko:'파란 열대어'},r:'common',img:'creature-blue-fish.webp'},
+      {e:'🐠',n:{ja:'赤い熱帯魚',en:'Red Tropical Fish',zh:'红色热带鱼',ko:'빨간 열대어'},r:'common',img:'creature-red-fish.webp'},
+      {e:'🐡',n:{ja:'黄色い熱帯魚',en:'Yellow Tropical Fish',zh:'黄色热带鱼',ko:'노란 열대어'},r:'common',img:'creature-yellow-fish.webp'},
+      {e:'🎏',n:{ja:'しましまの熱帯魚',en:'Striped Tropical Fish',zh:'条纹热带鱼',ko:'줄무늬 열대어'},r:'common',img:'creature-stripe.webp'},
+      {e:'🪸',n:{ja:'サンゴ礁',en:'Coral Reef',zh:'珊瑚礁',ko:'산호초'},r:'common',img:'creature-coral.webp'}
     ]
   };
   /* ---- Tour Detail ---- */
@@ -8251,7 +8696,7 @@
         ko: '고객님의 숙박 지역에 맞춰 남부·중부의 아름다운 바다로 안내해 드립니다. <span class="hl">완전 프라이빗 투어</span>라 다른 손님을 신경 쓰지 않고 편안하게 즐기실 수 있습니다.'
       },
       points: [
-        {ja:'那覇に泊まっている方は<span class="hl-s">那覇エリア</span>の海へ、中部エリア（恩納村・読谷村・北谷）に泊まっている方は<span class="hl-s">中部エリア</span>の海へご案内します。どのエリアからでも綺麗な海でシュノーケルが楽しめます！',en:'Guests in <span class="hl-s">Naha</span> go to the Naha area sea; guests in the <span class="hl-s">central area</span> (Onna, Yomitan, Chatan) go to the central area sea. Beautiful snorkeling from every location!',zh:'住在<span class="hl-s">那霸</span>的客人前往那霸海域，住在<span class="hl-s">中部地区</span>（恩纳村・读谷村・北谷）的客人前往中部海域。无论哪个区域，都能享受到美丽的浮潜体验！',ko:'나하에 머무시는 분은 <span class="hl-s">나하 지역</span> 바다로, <span class="hl-s">중부 지역</span>(온나촌·요미탄촌·차탄)에 머무시는 분은 중부 지역 바다로 안내해 드립니다. 어느 지역에서도 아름다운 바다 스노클링을 즐기실 수 있어요！'},
+        {ja:'<span class="hl-s">中部エリア（恩納村・読谷村・北谷）</span>のホテル・宿泊先よりお迎えに伺います。那覇にご宿泊の方は<span class="hl-s">那覇近海ウミガメシュノーケル</span>プランもご検討ください。',en:'Pick-up from hotels in the <span class="hl-s">central area (Onna, Yomitan, Chatan)</span>. Guests staying in Naha may also want to check out the <span class="hl-s">Naha Sea Turtle Snorkeling</span> plan.',zh:'从<span class="hl-s">中部地区（恩纳村・读谷村・北谷）</span>的酒店・住宿出发接送。住在那霸的客人也可参考<span class="hl-s">那霸近海海龟浮潜</span>套餐。',ko:'<span class="hl-s">중부 지역(온나촌·요미탄촌·차탄)</span>의 호텔·숙소에서 픽업해 드립니다. 나하에 머무시는 분은 <span class="hl-s">나하 근해 바다거북 스노클링</span> 플랜도 확인해 보세요.'},
         {ja:'沖縄の海には<span class="hl">色鮮やかな熱帯魚やサンゴ礁</span>がいっぱい！<span class="hl-s">特別な餌やり体験</span>で、お魚たちが目の前にわんさか集まってくる感動をお楽しみいただけます。',en:'Okinawa\'s ocean teems with <span class="hl">colorful tropical fish and coral reefs</span>! Try our <span class="hl-s">special fish-feeding experience</span> and watch them swarm right up to you — pure joy!',zh:'冲绳的海洋里满是<span class="hl">色彩斑斓的热带鱼和珊瑚礁</span>！还有<span class="hl-s">特别的喂鱼体验</span>，看着小鱼们争先恐后地游到您面前，感动满满！',ko:'오키나와 바다에는 <span class="hl">알록달록 열대어와 산호초</span>가 가득！<span class="hl-s">특별한 먹이주기 체험</span>으로 물고기들이 눈앞으로 와글와글 모여드는 감동을 즐겨보세요.'},
         {ja:'お客様の<span class="hl">ご希望の時間</span>にお迎えに伺います。「他社ツアーで都合のいい時間がなかった…」という方も、ご希望の時間帯でご予約いただけます。',en:'We pick you up at <span class="hl">whatever time works for you</span>. No more settling for inconvenient times — just choose your preferred slot.',zh:'按照您<span class="hl">希望的时间</span>前往接送。「其他公司的团都没有合适的时间……」的烦恼不复存在，请按您心仪的时间预约！',ko:'고객님이 <span class="hl">원하시는 시간</span>에 맞춰 픽업해 드립니다. "다른 업체는 맞는 시간이 없었는데…"라는 분도 원하는 시간대로 예약하실 수 있습니다.'},
         {ja:'ビーチから直接エントリーするため、<span class="hl">船に乗る必要がありません</span>。<span class="hl-s">船酔いの心配なし！</span>お子様や泳ぎに自信のない方も安心してご参加いただけます。',en:'<span class="hl">Direct beach entry — no boat required</span>. <span class="hl-s">Zero seasickness!</span> Perfect for children and anyone less confident in the water.',zh:'<span class="hl">直接从海滩下水，无需乘船</span>，<span class="hl-s">完全不担心晕船！</span>非常适合孩子和不擅长游泳的朋友。',ko:'<span class="hl">해변에서 직접 입수하기 때문에 배를 탈 필요가 없습니다</span>. <span class="hl-s">뱃멀미 걱정 전혀 없음！</span>어린이나 수영에 자신 없는 분도 안심하고 참가하실 수 있습니다.'},
@@ -8283,11 +8728,26 @@
         ko: '소잠수로 펼쳐지는 또 하나의 바다 세계로. <span class="hl">마스크와 핀만으로</span> <span class="hl-s">산호초 바로 옆</span>까지 잠수할 수 있는 스킨다이빙은 스노클링이나 스쿠버와는 다른 자유로운 감동이 있습니다.'
       },
       points: [
-        {ja:'<span class="hl-s">那覇エリア</span>および<span class="hl-s">中部エリア</span>（恩納村・読谷村・北谷）のホテル・宿泊先よりお迎えに伺います。',en:'We pick you up from hotels and accommodations in the <span class="hl-s">Naha area</span> and <span class="hl-s">central area</span> (Onna, Yomitan, Chatan).',zh:'从<span class="hl-s">那霸地区</span>及<span class="hl-s">中部地区</span>（恩纳村・读谷村・北谷）的酒店及住宿处接送。',ko:'<span class="hl-s">나하 지역</span> 및 <span class="hl-s">중부 지역</span>(온나촌·요미탄촌·차탄)의 호텔·숙소에서 픽업해 드립니다.'},
+        {ja:'<span class="hl-s">中部エリア（恩納村・読谷村・北谷）</span>のホテル・宿泊先よりお迎えに伺います。ウミガメに出会える中部のスポットへご案内します。',en:'We pick you up from hotels in the <span class="hl-s">central area (Onna, Yomitan, Chatan)</span>. We guide you to the best sea turtle spots in the central area.',zh:'从<span class="hl-s">中部地区（恩纳村・读谷村・北谷）</span>的酒店及住宿处接送。带您前往中部地区可邂逅海龟的最佳景点。',ko:'<span class="hl-s">중부 지역(온나촌·요미탄촌·차탄)</span>의 호텔·숙소에서 픽업해 드립니다. 중부의 바다거북 명소로 안내해 드립니다.'},
         {ja:'お客様の<span class="hl">ご希望の時間</span>にお迎えに伺います。<span class="hl-s">フレキシブルに対応</span>しますのでスケジュール調整もしやすいです。',en:'We pick you up at <span class="hl">your preferred time</span> — <span class="hl-s">flexible scheduling</span> makes it easy to fit into your itinerary.',zh:'按照您<span class="hl">希望的时间</span>接送，<span class="hl-s">灵活安排</span>，轻松配合您的行程计划。',ko:'고객님이 <span class="hl">원하시는 시간</span>에 픽업해 드립니다. <span class="hl-s">유연하게 대응</span>하므로 일정 조정도 편합니다.'},
         {ja:'<span class="hl">スキンダイビングが初めての方も大丈夫</span>。<span class="hl-s">呼吸法・耳抜き・潜り方</span>を専任インストラクターがゼロから丁寧にレクチャーします（対象年齢：<span class="hl-s">10〜59歳</span>）。',en:'<span class="hl">Complete beginners are welcome</span>. A dedicated instructor teaches <span class="hl-s">breathing technique, ear equalization &amp; diving</span> from scratch (<span class="hl-s">ages 10–59</span>).',zh:'<span class="hl">素潜初学者也没问题</span>。专属教练从零开始耐心讲解<span class="hl-s">呼吸方法、耳压平衡和下潜技巧</span>（适合年龄：<span class="hl-s">10~59岁</span>）。',ko:'<span class="hl">스킨다이빙이 처음인 분도 괜찮습니다</span>. <span class="hl-s">호흡법·이퀄라이징·잠수법</span>을 전담 인스트럭터가 처음부터 친절하게 레클처해 드립니다（<span class="hl-s">대상 연령: 10~59세</span>）.'},
         {ja:'スキューバのような<span class="hl">大がかりな機材は不要</span>。<span class="hl-s">マスクとフィンだけ</span>で、珊瑚礁のすぐそばまで自由に潜れる感覚は格別です。',en:'<span class="hl">No heavy scuba gear needed</span>. The feeling of gliding freely right alongside the coral reef with <span class="hl-s">just a mask and fins</span> is something else entirely.',zh:'无需<span class="hl">笨重的水肺装备</span>，<span class="hl-s">只需面镜和脚蹼</span>，就能自由潜入珊瑚礁旁边，那种感觉无比美妙。',ko:'스쿠버 같은 <span class="hl">무거운 장비는 필요 없습니다</span>. <span class="hl-s">마스크와 핀만</span>으로 산호초 바로 옆까지 자유롭게 잠수하는 그 감각은 특별합니다.'},
         {ja:'<span class="hl-s">水深5〜10m</span>付近の珊瑚礁の世界は<span class="hl">圧倒的な美しさ</span>。カラフルな熱帯魚が舞い、沖縄の海の豊かさを全身で感じることができます。',en:'The coral reef world at <span class="hl-s">5–10 m depth</span> is <span class="hl">overwhelmingly beautiful</span>. Colorful tropical fish dance all around — you\'ll feel the full richness of Okinawa\'s ocean.',zh:'<span class="hl-s">水深5~10米</span>的珊瑚礁世界<span class="hl">美得令人窒息</span>。彩色热带鱼翩翩起舞，让您全身心感受冲绳海洋的丰富魅力。',ko:'<span class="hl-s">수심 5~10m</span> 근처의 산호초 세계는 <span class="hl">압도적인 아름다움</span>. 알록달록한 열대어가 춤을 추고, 오키나와 바다의 풍요로움을 온몸으로 느낄 수 있습니다.'}
+      ]
+    },
+    turtle: {
+      photo: 'https://images.unsplash.com/photo-1568660357733-823cbddb0f6a?auto=format&w=900&q=80',
+      intro: {
+        ja: '那覇市内から車で数分、<span class="hl">那覇近海</span>にはウミガメが生息する豊かな海が広がっています。<span class="hl-s">那覇エリア限定</span>の特別なプランで、ウミガメと泳ぐ感動を体験しましょう。',
+        en: 'Just minutes from Naha city, the <span class="hl">coastal waters off Naha</span> are home to sea turtles in their natural habitat. This <span class="hl-s">Naha-exclusive</span> plan lets you swim alongside these magnificent creatures.',
+        zh: '距那霸市中心仅需数分钟，<span class="hl">那霸近海</span>栖息着野生海龟。这是<span class="hl-s">那霸地区专属</span>的特别套餐，让您体验与海龟共游的感动时刻。',
+        ko: '나하 시내에서 차로 단 몇 분, <span class="hl">나하 근해</span>에는 바다거북이 서식하는 풍요로운 바다가 펼쳐져 있습니다. <span class="hl-s">나하 지역 한정</span> 특별 플랜으로 바다거북과 함께 수영하는 감동을 경험하세요.'
+      },
+      points: [
+        {ja:'<span class="hl-s">那覇エリア限定</span>プランです。那覇市内のホテル・宿泊先よりお迎えに伺い、那覇近海のウミガメスポットへご案内します。',en:'This is a <span class="hl-s">Naha-area exclusive</span> plan. We pick you up from your hotel in Naha city and guide you to sea turtle spots just off the Naha coast.',zh:'这是<span class="hl-s">那霸地区专属</span>套餐。从那霸市内的酒店・住宿出发接送，带您前往那霸近海的海龟景点。',ko:'<span class="hl-s">나하 지역 한정</span> 플랜입니다. 나하 시내 호텔·숙소에서 픽업해 드리며, 나하 근해의 바다거북 스팟으로 안내해 드립니다.'},
+        {ja:'シュノーケルなので<span class="hl">水泳が苦手な方やお子様</span>でも安心。<span class="hl-s">ライフジャケット着用</span>でガイドが常にそばに。対象は<span class="hl-s">3〜65歳</span>です。',en:'Because it\'s snorkeling, <span class="hl">non-swimmers and children</span> can join with confidence. <span class="hl-s">Life jackets provided</span> and our guide stays right beside you. Ages <span class="hl-s">3–65</span> welcome.',zh:'由于是浮潜，<span class="hl">不擅长游泳者和小朋友</span>也可安心参加。<span class="hl-s">配备救生衣</span>，向导全程陪伴。适合<span class="hl-s">3~65岁</span>。',ko:'스노클링이므로 <span class="hl">수영이 서툰 분이나 어린이</span>도 안심. <span class="hl-s">구명조끼 착용</span>에 가이드가 항상 옆에 있습니다. 대상 <span class="hl-s">3~65세</span>.'},
+        {ja:'ビーチから直接エントリーするため<span class="hl">船に乗りません</span>。<span class="hl-s">船酔いの心配なし</span>！那覇観光の後や翌朝でも気軽に参加できます。',en:'<span class="hl">Direct beach entry — no boat needed</span>. <span class="hl-s">Zero seasickness</span>! Easy to fit in after sightseeing in Naha or on the morning after.',zh:'直接从海滩下水，<span class="hl">无需乘船</span>，<span class="hl-s">不担心晕船</span>！游览那霸之后或次日早晨都可轻松参加。',ko:'해변에서 직접 입수하기 때문에 <span class="hl">배를 타지 않습니다</span>. <span class="hl-s">뱃멀미 걱정 없음</span>！나하 관광 후나 다음날 아침에도 편하게 참가할 수 있습니다.'},
+        {ja:'ウミガメとの出会いは自然次第ですが、ガイドが<span class="hl">出会える確率の高いスポット</span>へご案内します。遭遇した感動は一生の宝物になるはずです！',en:'While encounters with sea turtles depend on nature, our guide takes you to the <span class="hl">spots with the highest chance of meeting them</span>. The emotion of that encounter will be a lifelong treasure!',zh:'与海龟的相遇取决于自然，但向导会带您前往<span class="hl">邂逅概率最高的景点</span>。那份感动将成为您一生的珍贵宝藏！',ko:'바다거북과의 만남은 자연 나름이지만, 가이드가 <span class="hl">만날 가능성이 높은 스팟</span>으로 안내해 드립니다. 그 감동은 평생의 보물이 될 것이에요！'}
       ]
     }
   };
@@ -8344,6 +8804,23 @@
         photo:'https://images.unsplash.com/photo-1752006183697-32eab1aab6dc?auto=format&w=800&q=80',
         ttl:{ja:'珊瑚礁の真下へ！運がよければウミガメとも泳げる',en:'Dive under the coral reef — maybe swim with a sea turtle!',zh:'潜入珊瑚礁之下！运气好的话还能与海龟共游！',ko:'산호초 아래로！운이 좋으면 바다거북과 함께 수영할 수도!'},
         body:{ja:'水深5〜10m付近の珊瑚礁の世界は、シュノーケルとはひと味違う圧倒的な美しさ。ウミガメが生息するスポットへもご案内します。出会えるかどうかは自然次第ですが、その感動は一生の宝物になるはずです！',en:'The coral reef world at 5–10 m depth offers breathtaking beauty that\'s a whole step beyond snorkeling. We\'ll guide you to known sea turtle habitats too. Whether you spot one depends on nature, but the experience itself will stay with you for life!',zh:'水深5~10米的珊瑚礁世界，有着远超浮潜的震撼美感。我们也会带您前往海龟栖息地。能否相遇全凭自然，但那份感动将成为您一生的珍贵宝藏！',ko:'수심 5~10m 근처의 산호초 세계는 스노클링과는 차원이 다른 압도적인 아름다움. 바다거북이 서식하는 스팟으로도 안내해 드립니다. 만날 수 있을지는 자연 나름이지만, 그 감동은 평생의 보물이 될 거예요！'}
+      }
+    ],
+    turtle:[
+      {
+        photo:'https://images.unsplash.com/photo-1580603474920-aa3332b2c40f?auto=format&w=800&q=80',
+        ttl:{ja:'那覇に泊まっていてもウミガメと泳げる！',en:'You can swim with sea turtles even from Naha!',zh:'即使住在那霸，也能与海龟共游！',ko:'나하에 머물면서도 바다거북과 함께 수영할 수 있어요!'},
+        body:{ja:'「那覇から遠い海まで行かなければ…」と思っていませんか？那覇の近海にも、ウミガメが生息する美しいスポットがあります。那覇市内のホテルから送迎するから、わざわざ移動する手間もなし。那覇滞在中に手軽に感動体験！',en:'Think you have to travel far from Naha to find sea turtles? Think again — there are beautiful spots just off the Naha coast where sea turtles live. We pick you up from your Naha hotel, so no need to worry about getting there. An unforgettable experience, right from your doorstep!',zh:'您是否认为要看海龟必须去很远的海？其实不然——那霸近海就有海龟栖息的美丽景点。我们从那霸市内酒店接送，无需自行前往。在那霸期间轻松体验感动瞬间！',ko:'\"나하에서 멀리 가야 바다거북을 볼 수 있다\"고 생각하셨나요? 나하 근해에도 바다거북이 서식하는 아름다운 스팟이 있습니다. 나하 시내 호텔에서 픽업하니 이동 걱정도 없어요. 나하 체류 중에 손쉽게 감동 체험！'}
+      },
+      {
+        photo:'https://images.unsplash.com/photo-1554555263-f440a3f535f3?auto=format&w=800&q=80',
+        ttl:{ja:'ウミガメに特化したガイドが絶好スポットへ案内',en:'Turtle-specialist guide takes you to the best spots',zh:'专攻海龟的向导带您前往最佳景点',ko:'바다거북 전문 가이드가 최고의 스팟으로 안내'},
+        body:{ja:'ウミガメが集まりやすいポイントを熟知したガイドがご案内します。生き物との出会いは自然次第ですが、確率を高めるために最善のルートでご案内します。シュノーケルの基本もサポートするので初めての方も安心。',en:'Our guide knows exactly where sea turtles gather and will lead you on the best route to maximize your chances of an encounter. While nature always has the final say, we make every effort to put you in the right place. Snorkeling basics supported too — perfect for first-timers.',zh:'向导熟知海龟聚集的水域，会带您走最佳路线，提高邂逅概率。虽然与生物的相遇取决于自然，但我们会竭尽所能地引导您到最佳位置。同时也会指导浮潜基础知识，初次参加者也可放心。',ko:'바다거북이 모이기 쉬운 포인트를 잘 아는 가이드가 안내해 드립니다. 생물과의 만남은 자연 나름이지만, 확률을 높이기 위해 최선의 루트로 안내합니다. 스노클링 기초도 서포트하므로 처음인 분도 안심.'}
+      },
+      {
+        photo:'https://images.unsplash.com/photo-1580237995396-a21928e71e63?auto=format&w=800&q=80',
+        ttl:{ja:'初心者・お子様（3歳〜）・家族連れも大歓迎！',en:'Beginners, children (from age 3) and families all welcome!',zh:'欢迎初学者、小朋友（3岁起）和家庭参加！',ko:'초보자·어린이（3세~）·가족 동반 대환영!'},
+        body:{ja:'シュノーケルはスキューバと違い難しい技術は不要。ライフジャケット着用で泳ぎが苦手な方もOK。3歳〜65歳まで参加可能で、完全貸し切りだからご家族のペースでゆっくり楽しめます。子供から大人まで、全員にとって忘れられない体験になります！',en:'Snorkeling requires no special skills unlike scuba. With life jackets on, even non-swimmers can join. Ages 3–65 welcome, and because it\'s fully private, your family goes at its own pace. From toddlers to grandparents — an unforgettable experience for everyone!',zh:'浮潜不同于水肺，不需要特殊技能。穿上救生衣，不擅长游泳的人也可以参加。3~65岁均可参与，完全包场可以按家人的节奏悠然享受。从孩子到大人，将成为每个人都难以忘怀的体验！',ko:'스노클링은 스쿠버와 달리 어려운 기술이 필요 없어요. 구명조끼 착용으로 수영이 서툰 분도 OK. 3~65세 참가 가능, 완전 전세라 가족 페이스로 여유롭게 즐길 수 있습니다. 아이부터 어른까지 모두에게 잊을 수 없는 체험이 됩니다！'}
       }
     ]
   };
@@ -8409,6 +8886,24 @@
       {
         q:{ja:'天候が悪い日はどうなりますか？',en:'What happens on a bad weather day?',zh:'天气不好的话怎么办？',ko:'날씨가 나쁜 날은 어떻게 되나요？'},
         a:{ja:'安全を最優先に考え、海況・天候が悪い場合は別日程への変更をご提案します。キャンセル料は天候理由の場合はいただきません。',en:'Safety comes first. If sea or weather conditions are poor, we\'ll propose rescheduling. No cancellation fee is charged for weather-related changes.',zh:'安全第一。如果海况或天气不佳，我们会建议更改日期。因天气原因取消不收取任何费用。',ko:'안전을 최우선으로 생각하여, 해상 상황과 날씨가 나쁜 경우에는 다른 일정으로 변경을 제안합니다. 날씨 이유로 인한 취소료는 받지 않습니다.'}
+      }
+    ],
+    turtle:[
+      {
+        q:{ja:'ウミガメに必ず会えますか？',en:'Is a sea turtle encounter guaranteed?',zh:'一定能遇到海龟吗？',ko:'반드시 바다거북을 만날 수 있나요？'},
+        a:{ja:'残念ながら、野生動物との出会いを100%保証することはできません。しかし、ガイドがウミガメの出現率が高いスポットを把握しており、遭遇できる可能性が高い場所へご案内します。天候・潮流など当日の海況にもよりますが、ベストを尽くします。',en:'Unfortunately, we cannot guarantee a 100% encounter with wild sea turtles. However, our guide knows the spots with the highest turtle activity and will take you there. Conditions vary with weather and currents, but we always do our best.',zh:'很遗憾，无法100%保证与野生海龟相遇。但向导熟知海龟出现率高的水域，会带您前往最有可能遇见海龟的地方。具体情况取决于当天的天气和洋流，但我们会全力以赴。',ko:'안타깝게도 야생 바다거북과의 만남을 100% 보장할 수는 없습니다. 하지만 가이드가 바다거북이 자주 나타나는 스팟을 파악하고 있어, 만날 가능성이 높은 장소로 안내해 드립니다. 날씨·조류 등 당일 해상 상황에 따라 다르지만 최선을 다합니다.'}
+      },
+      {
+        q:{ja:'泳げなくても参加できますか？',en:'Can I join if I can\'t swim?',zh:'不会游泳也可以参加吗？',ko:'수영을 못해도 참가할 수 있나요？'},
+        a:{ja:'はい、問題ありません！ライフジャケットを着用することで浮力が生まれ、泳ぎが苦手な方でも安全に参加できます。ガイドが常にそばでサポートしますので、安心してお楽しみください。',en:'Absolutely! With a life jacket on, you have plenty of buoyancy, so non-swimmers can participate safely. Our guide stays right beside you the whole time — just relax and enjoy!',zh:'当然可以！穿上救生衣后浮力充足，即使不会游泳也能安全参加。向导会始终陪在您身边，请放心享受！',ko:'네, 문제없습니다！구명조끼를 착용하면 부력이 생겨서 수영을 못하시는 분도 안전하게 참가할 수 있습니다. 가이드가 항상 옆에서 서포트하니 안심하고 즐기세요.'}
+      },
+      {
+        q:{ja:'このプランは那覇エリアのみですか？',en:'Is this plan only available from the Naha area?',zh:'这个套餐只限那霸地区吗？',ko:'이 플랜은 나하 지역만 가능한가요？'},
+        a:{ja:'はい、このプランは那覇エリア限定です。中部エリア（恩納村・読谷村・北谷）にご宿泊の方は、シュノーケルプランまたは青の洞窟シュノーケルプランをご検討ください。ご不明の場合はお気軽にお問い合わせください。',en:'Yes, this plan is exclusively for guests staying in the Naha area. Guests in the central area (Onna, Yomitan, Chatan) should consider our Snorkeling or Blue Cave Snorkeling plans. Feel free to contact us if you\'re unsure.',zh:'是的，这个套餐仅限那霸地区。住在中部地区（恩纳村・读谷村・北谷）的客人，请考虑浮潜套餐或青之洞窟浮潜套餐。如有疑问，请随时联系我们。',ko:'네, 이 플랜은 나하 지역 한정입니다. 중부 지역(온나촌·요미탄촌·차탄)에 머무시는 분은 스노클링 플랜 또는 블루 케이브 스노클링 플랜을 검토해 주세요. 잘 모르시면 편하게 문의해 주세요.'}
+      },
+      {
+        q:{ja:'子どもは何歳から参加できますか？',en:'What is the minimum age for children?',zh:'孩子几岁可以参加？',ko:'어린이는 몇 살부터 참가할 수 있나요？'},
+        a:{ja:'3歳から参加可能です。小さなお子様には専用サイズの器材をご用意しており、ガイドがお子様のペースに合わせてサポートします。保護者の方の同伴をお願いしております。',en:'Children from age 3 can join. We have child-sized equipment ready, and our guide will adapt to each child\'s pace. A guardian must accompany children.',zh:'3岁以上的孩子均可参加。我们为小朋友准备了专属尺寸的装备，向导会配合孩子的节奏进行引导。请监护人陪同参加。',ko:'3세부터 참가 가능합니다. 어린이 전용 장비를 준비하고 있으며, 가이드가 아이의 페이스에 맞춰 서포트합니다. 보호자 동반을 부탁드립니다.'}
       }
     ]
   };
@@ -8574,10 +9069,10 @@
 
     /* 初回ロード: ハッシュにビューIDがあればそのページを開く */
     var _initHash = location.hash.replace('#', '');
-    var _validViews = ['view-booking','view-snorkeling','view-skindiving','view-bluecave','view-blog-list',
+    var _validViews = ['view-booking','view-snorkeling','view-skindiving','view-bluecave','view-turtle','view-blog-list',
       'view-blog-1','view-blog-2','view-blog-3','view-blog-4','view-blog-5','view-blog-6'];
     if (_initHash && _validViews.indexOf(_initHash) !== -1) {
-      _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-bluecave'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
+      _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-bluecave','view-turtle'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
     } else {
       _curView = 'view-main'; _applyView('view-main');  // 初回ロード：波紋なしで表示
     }
@@ -8599,7 +9094,7 @@
         if (targetView.startsWith('view-blog-') && targetView !== 'view-blog-list') {
           var n = parseInt(targetView.replace('view-blog-',''));
           if (!isNaN(n)) showBlog(n);
-        } else if (['view-snorkeling','view-skindiving','view-bluecave'].indexOf(targetView) !== -1) {
+        } else if (['view-snorkeling','view-skindiving','view-bluecave','view-turtle'].indexOf(targetView) !== -1) {
           renderDetExtras(targetView.replace('view-','')); showDetailBanners();
         }
       });

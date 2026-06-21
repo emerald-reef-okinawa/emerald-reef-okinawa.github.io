@@ -34,7 +34,15 @@
   <!-- 青の洞窟ツアー -->
   <url>
     <loc>https://emerald-reef-okinawa.com/#bluecave</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 那覇近海ウミガメシュノーケルツアー -->
+  <url>
+    <loc>https://emerald-reef-okinawa.com/#turtle</loc>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
