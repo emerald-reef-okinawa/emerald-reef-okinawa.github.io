@@ -1434,7 +1434,7 @@
     .det-hero.sk {
       background:
         linear-gradient(rgba(0,0,0,.38) 0%, rgba(0,0,0,.22) 100%),
-        url('skindiving.webp') center 35%/cover no-repeat;
+        url('https://images.unsplash.com/photo-1674786375512-0b1d38fda375?auto=format&w=1600&q=80') center 40%/cover no-repeat;
     }
     .det-hero h1 { font-size: clamp(1.8rem,5vw,3rem); font-weight: 800; margin-bottom: 8px; }
     .det-hero p { font-size: 1rem; color: rgba(255,255,255,.72); margin-bottom: 24px; }
@@ -2168,7 +2168,7 @@
     .det-hero.tc {
       background:
         linear-gradient(rgba(0,0,0,.32) 0%, rgba(0,0,0,.18) 100%),
-        url('https://images.unsplash.com/photo-1591025207163-942350e47db2?auto=format&w=1600&q=80') center 40%/cover no-repeat;
+        url('skindiving.webp') center 35%/cover no-repeat;
     }
 
     /* ================================================================
@@ -3595,19 +3595,52 @@
         </div>
       </div>
 
-      <!-- ③ スキンダイビング: 写真 左 / テキスト 右 -->
-      <div class="sv-row fi d3" onclick="showDet('skindiving')">
+      <!-- ③ 那覇近海ウミガメシュノーケル: 写真 左 / テキスト 右 -->
+      <div class="sv-row fi d3" onclick="showDet('turtle')">
+        <div class="sv-row-img-wrap">
+          <div class="sv-row-img" style="background:
+            linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.22) 100%),
+            url('skindiving.webp') center 30%/cover;">
+          </div>
+        </div>
+        <div class="sv-row-body">
+          <div class="sv-row-badges">
+            <span class="sv-row-badge prem" data-i18n="tc_badge">NAHA LIMITED</span>
+            <span class="sv-row-badge beg" data-i18n="sk_badge">初心者歓迎</span>
+          </div>
+          <p class="sv-row-lbl">OUR SERVICES 03</p>
+          <h3 class="sv-row-ttl" data-i18n="tc_name">那覇近海ウミガメシュノーケル</h3>
+          <p class="sv-row-en" data-i18n="tc_en">Naha Sea Turtle Snorkeling</p>
+          <div class="sv-sale-note" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
+          <div class="sv-row-orig" data-i18n="bc_orig">通常 ¥12,000〜 / 人</div>
+          <div class="sv-row-price-row">
+            <span class="sv-row-price">¥7,000<span data-i18n="pp_per">〜 / 人</span></span>
+            <span class="sv-off-badge"><strong>40%</strong><small>OFF</small></span>
+          </div>
+          <ul class="sv-row-feats">
+            <li><span class="ck">✓</span><span data-i18n="tc_f1">🐢 那覇近海でウミガメと泳ぐ</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f2">初心者・お子様も安心</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f3">写真最大20枚プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f4">完全貸切・那覇エリア送迎</span></li>
+            <li><span class="ck">✓</span><span data-i18n="tc_f5">那覇宿泊の方限定プラン</span></li>
+          </ul>
+          <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
+        </div>
+      </div>
+
+      <!-- ④ スキンダイビング: テキスト 左 / 写真 右 -->
+      <div class="sv-row rev fi d4" onclick="showDet('skindiving')">
         <div class="sv-row-img-wrap">
           <div class="sv-row-img" style="background:
             linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.25) 100%),
-            url('skindiving.webp') center 40%/cover;">
+            url('https://images.unsplash.com/photo-1674786375512-0b1d38fda375?auto=format&w=900&q=80') center 40%/cover;">
           </div>
         </div>
         <div class="sv-row-body">
           <div class="sv-row-badges">
             <span class="sv-row-badge beg" data-i18n="sk_badge">初心者歓迎</span>
           </div>
-          <p class="sv-row-lbl">OUR SERVICES 03</p>
+          <p class="sv-row-lbl">OUR SERVICES 04</p>
           <h3 class="sv-row-ttl" data-i18n="sk_name">スキンダイビング</h3>
           <p class="sv-row-en" data-i18n="sk_en">Skin Diving</p>
           <div class="sv-sale-note" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
@@ -3623,39 +3656,6 @@
             <li><span class="ck">✓</span><span data-i18n="sk_f3">写真最大20枚プレゼント</span></li>
             <li><span class="ck">✓</span><span data-i18n="sk_f4">完全貸切・完全送迎</span></li>
             <li><span class="ck">✓</span><span data-i18n="sk_f5">初めての方大歓迎・素潜りの仕方一から教えます</span></li>
-          </ul>
-          <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
-        </div>
-      </div>
-
-      <!-- ④ 那覇近海ウミガメシュノーケル: テキスト 左 / 写真 右 -->
-      <div class="sv-row rev fi d4" onclick="showDet('turtle')">
-        <div class="sv-row-img-wrap">
-          <div class="sv-row-img" style="background:
-            linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.22) 100%),
-            url('https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&w=900&q=80') center 30%/cover;">
-          </div>
-        </div>
-        <div class="sv-row-body">
-          <div class="sv-row-badges">
-            <span class="sv-row-badge prem" data-i18n="tc_badge">NAHA LIMITED</span>
-            <span class="sv-row-badge beg" data-i18n="sk_badge">初心者歓迎</span>
-          </div>
-          <p class="sv-row-lbl">OUR SERVICES 04</p>
-          <h3 class="sv-row-ttl" data-i18n="tc_name">那覇近海ウミガメシュノーケル</h3>
-          <p class="sv-row-en" data-i18n="tc_en">Naha Sea Turtle Snorkeling</p>
-          <div class="sv-sale-note" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
-          <div class="sv-row-orig" data-i18n="bc_orig">通常 ¥12,000〜 / 人</div>
-          <div class="sv-row-price-row">
-            <span class="sv-row-price">¥7,000<span data-i18n="pp_per">〜 / 人</span></span>
-            <span class="sv-off-badge"><strong>40%</strong><small>OFF</small></span>
-          </div>
-          <ul class="sv-row-feats">
-            <li><span class="ck">✓</span><span data-i18n="tc_f1">🐢 那覇近海でウミガメと泳ぐ</span></li>
-            <li><span class="ck">✓</span><span data-i18n="tc_f2">初心者・お子様も安心</span></li>
-            <li><span class="ck">✓</span><span data-i18n="tc_f3">写真最大20枚プレゼント</span></li>
-            <li><span class="ck">✓</span><span data-i18n="tc_f4">完全貸切・那覇エリア送迎</span></li>
-            <li><span class="ck">✓</span><span data-i18n="tc_f5">那覇宿泊の方限定プラン</span></li>
           </ul>
           <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
         </div>
