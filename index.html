@@ -6082,7 +6082,7 @@
       + buildMonthHtml(y0, m0, busyDates)
       + buildMonthHtml(y1, m1, busyDates)
       + '</div>';
-    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
+    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-tc', 'gcal-mini-bk'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.innerHTML = html;
     });
@@ -6190,7 +6190,7 @@
   function initBookingCalendars(busyDates) {
     if (!_bkCalInited) {
       _bkCalInited = true;
-      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
+      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-tc', 'gcal-mini-bk'].forEach(function(id) {
         var container = document.getElementById(id);
         if (!container) return;
         container.addEventListener('click', function(e) {
@@ -6323,19 +6323,47 @@
     if (e.target.closest('.fg') && !e.target.classList.contains('bk-date-inp')) clearFieldError(e.target);
   });
 
+  /* キャッシュ読み書き (1時間TTL) */
+  function loadBusyCache() {
+    try {
+      var c = localStorage.getItem('gcal_busy_cache');
+      if (!c) return null;
+      var obj = JSON.parse(c);
+      if (!obj || Date.now() - obj.ts > 3600000) return null;
+      return new Set(obj.dates);
+    } catch(e) { return null; }
+  }
+  function saveBusyCache(busy) {
+    try {
+      localStorage.setItem('gcal_busy_cache', JSON.stringify({ ts: Date.now(), dates: Array.from(busy) }));
+    } catch(e) {}
+  }
+
   /* エントリポイント */
   async function initCalendar() {
     if (!GCAL_ID || GCAL_ID.trim() === '') { return; }
 
+    /* キャッシュがあれば即座に表示 */
+    var cached = loadBusyCache();
+    if (cached) {
+      _gcalBusy = cached;
+      renderMiniCalendars(cached);
+      initBookingCalendars(cached);
+    }
+
     try {
       var busy = await fetchBusyDates();
       _gcalBusy = busy;
+      saveBusyCache(busy);
       renderMiniCalendars(busy);
       initBookingCalendars(busy);
     } catch(err) {
       console.warn('Calendar fetch failed:', err);
-      renderMiniCalendars(new Set());
-      initBookingCalendars(new Set());
+      /* キャッシュがある場合はそのまま使用。ない場合のみ空セットで初期化 */
+      if (!cached) {
+        initBookingCalendars(new Set());
+        /* ローディング表示を維持（全日空きにしない） */
+      }
     }
   }
 
@@ -7379,7 +7407,7 @@
     }
     // Re-render detail extras if on a service detail page
     if (typeof renderDetExtras === 'function') {
-      const _dm = (_curView || '').match(/view-(snorkeling|skindiving|bluecave)/);
+      const _dm = (_curView || '').match(/view-(snorkeling|skindiving|bluecave|turtle)/);
       if (_dm) renderDetExtras(_dm[1]);
     }
   }
