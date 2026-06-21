@@ -7554,7 +7554,11 @@
     if (!bk) return;
     var nav = document.getElementById('main-nav');
     var navH = nav ? nav.offsetHeight : 64;
-    window.scrollTo({ top: bk.getBoundingClientRect().top + window.pageYOffset - navH - 12, behavior: 'smooth' });
+    /* タイトル(h2)を基準にすることでpaddingの影響を除外 */
+    var title = bk.querySelector('h2') || bk;
+    /* 進行中のスクロールをリセットしてから正確な位置を計算 */
+    var targetY = title.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
   }
   function showDetailBanners() {
     var btn = document.getElementById('bk-pulse-btn');
