@@ -6206,16 +6206,18 @@
           clearDateError(inp); clearFieldError(inp);
           container.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
           cell.classList.add('cal-selected');
-          /* 日付選択後、予約フォームの名前欄へスクロール（ラベルが隠れないよう.fgから計算） */
+          /* 日付選択後、ご希望のツアー欄（比較表ページ）または名前欄へスクロール */
           setTimeout(function() {
             var bkLayout2 = container.closest('.bk-layout');
             if (!bkLayout2) return;
-            var nameInp = bkLayout2.querySelector('input[name="お名前"]');
-            if (!nameInp) return;
-            var nameGroup = nameInp.closest('.fg') || nameInp;
+            var tourSel = bkLayout2.querySelector('select[name="ご希望のツアー"]');
+            var targetEl = tourSel
+              ? (tourSel.closest('.fg') || tourSel)
+              : (function(){ var n = bkLayout2.querySelector('input[name="お名前"]'); return n ? (n.closest('.fg') || n) : null; })();
+            if (!targetEl) return;
             var nav2 = document.getElementById('main-nav');
             var navH2 = nav2 ? nav2.offsetHeight : 64;
-            window.scrollTo({ top: nameGroup.getBoundingClientRect().top + window.pageYOffset - navH2 - 24, behavior: 'smooth' });
+            window.scrollTo({ top: targetEl.getBoundingClientRect().top + window.pageYOffset - navH2 - 24, behavior: 'smooth' });
           }, 150);
         });
       });
