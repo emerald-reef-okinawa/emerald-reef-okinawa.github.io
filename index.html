@@ -1246,6 +1246,10 @@
       border: 1px solid #fca5a5;
     }
     /* ===== 日付ピッカーポップアップ ===== */
+    .bk-date-backdrop {
+      position: fixed; inset: 0; z-index: 9998;
+      background: rgba(0,0,0,.4);
+    }
     .bk-date-popup {
       position: fixed; z-index: 9999;
       background: #fff; border-radius: 16px;
@@ -1316,6 +1320,10 @@
       border-color: var(--g-mid); box-shadow: 0 0 0 3px rgba(0,168,150,.12);
     }
     .fg textarea { min-height: 150px; }
+    /* モバイルでフォーカス時にiOSが自動ズームしないよう16px以上にする（予約後のズーム残り防止） */
+    @media (max-width: 600px) {
+      .fg input, .fg select, .fg textarea { font-size: 16px; }
+    }
     .f-submit {
       width: 100%;
       background: var(--g-dark);
@@ -4755,6 +4763,7 @@
               <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
               <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
               <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+              <li><span class="policy-dot">🚗</span><span data-i18n="note_9"></span></li>
             </ul>
           </div>
         </div>
@@ -5056,6 +5065,7 @@
               <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
               <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
               <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+              <li><span class="policy-dot">🚗</span><span data-i18n="note_9"></span></li>
             </ul>
           </div>
         </div>
@@ -5372,6 +5382,7 @@
               <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
               <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
               <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+              <li><span class="policy-dot">🚗</span><span data-i18n="note_9"></span></li>
             </ul>
           </div>
         </div>
@@ -5687,6 +5698,8 @@
               <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
               <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
               <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+              <li><span class="policy-dot">🚗</span><span data-i18n="note_9"></span></li>
+              <li><span class="policy-dot">🐢</span><span data-i18n="note_turtle"></span></li>
             </ul>
           </div>
         </div>
@@ -6121,18 +6134,35 @@
   function positionDatePicker(input) {
     var popup = document.getElementById('bk-date-popup');
     if (!popup) return;
+    var vpH = window.innerHeight, vpW = window.innerWidth;
+    var ph = popup.offsetHeight || 320;
+    var pw = popup.offsetWidth  || 280;
+    var backdrop = document.getElementById('bk-date-backdrop');
+    /* モバイル：画面中央に固定表示（スクロール不要・背景を暗く） */
+    if (vpW <= 600) {
+      popup.style.top  = Math.max(8, (vpH - ph) / 2) + 'px';
+      popup.style.left = Math.max(8, (vpW - pw) / 2) + 'px';
+      if (backdrop) backdrop.style.display = 'block';
+      return;
+    }
+    if (backdrop) backdrop.style.display = 'none';
+    /* デスクトップ：入力欄の下に表示。はみ出す場合は上、それも無理なら画面内に収める */
     var rect = input.getBoundingClientRect();
-    var vpH  = window.innerHeight;
     var top  = rect.bottom + 4;
-    if (top + 320 > vpH && rect.top > 320) top = rect.top - 320 - 4;
-    var left = Math.min(rect.left, window.innerWidth - 292);
-    popup.style.top  = Math.max(4, top) + 'px';
-    popup.style.left = Math.max(4, left) + 'px';
+    if (top + ph > vpH - 8) {
+      if (rect.top - ph - 4 >= 8) top = rect.top - ph - 4;
+      else top = Math.max(8, vpH - ph - 8);
+    }
+    var left = Math.min(rect.left, vpW - pw - 8);
+    popup.style.top  = Math.max(8, top) + 'px';
+    popup.style.left = Math.max(8, left) + 'px';
   }
 
   function closeDatePicker() {
     var popup = document.getElementById('bk-date-popup');
     if (popup) popup.style.display = 'none';
+    var backdrop = document.getElementById('bk-date-backdrop');
+    if (backdrop) backdrop.style.display = 'none';
     _bkPickerState.input = null;
   }
 
@@ -6146,6 +6176,15 @@
 
   function initDatePickerPopup() {
     if (document.getElementById('bk-date-popup')) return;
+    /* モバイル中央表示時の背景オーバーレイ（タップで閉じる） */
+    var backdrop = document.createElement('div');
+    backdrop.id = 'bk-date-backdrop';
+    backdrop.className = 'bk-date-backdrop';
+    backdrop.style.display = 'none';
+    backdrop.addEventListener('click', closeDatePicker);
+    document.body.appendChild(backdrop);
+    /* 日付欄はカレンダーから選ぶ専用にし、スマホでソフトキーボードを出さない（カレンダーが隠れるのを防止） */
+    document.querySelectorAll('.bk-date-inp').forEach(function(i){ i.setAttribute('readonly', 'readonly'); });
     var popup = document.createElement('div');
     popup.id = 'bk-date-popup';
     popup.className = 'bk-date-popup';
@@ -6632,6 +6671,8 @@
       note_6:'<strong>体力・ハンディキャップ</strong>：体力に自信のない方やハンディキャップをお持ちの方は、その旨を備考欄にご記入ください。',
       note_7:'<strong>服装</strong>：水着を着た状態でご集合ください。',
       note_8:'<strong>対象年齢</strong>：シュノーケル・青の洞窟 3〜65歳 / スキンダイビング 10〜59歳。お子様は保護者同伴必須です。',
+      note_9:'<strong>移動時間・駐車・渋滞</strong>：駐車場の混雑状況や道路の渋滞により、集合場所からポイントへの移動・到着にお時間がかかる場合があります。お時間に余裕を持ってご参加ください。',
+      note_turtle:'<strong>ウミガメとの遭遇について</strong>：ウミガメは野生のため、必ず会えるとは限りません。万が一出会えなかった場合でも、返金・割引等の対応はいたしかねますので、あらかじめご了承ください。',
       cancel_ttl:'キャンセルポリシー',
       ct_7d:'7日前まで', cv_7d:'無料',
       ct_6d:'6日前〜前日18時まで', cv_6d:'料金の50%',
@@ -6875,6 +6916,8 @@
       note_6:'<strong>Physical fitness / disability</strong>: If you have limited physical fitness or a disability, please note this in the remarks field when booking.',
       note_7:'<strong>Clothing</strong>: Please wear your swimsuit to the meeting point.',
       note_8:'<strong>Age limit</strong>: Snorkeling / Blue Cave: 3–65 yrs &nbsp;/&nbsp; Skin Diving: 10–59 yrs. Children must be accompanied by a guardian.',
+      note_9:'<strong>Travel time, parking &amp; traffic</strong>: Depending on parking availability and road traffic, reaching the entry point from the meeting place may take extra time. Please allow plenty of time.',
+      note_turtle:'<strong>About sea turtle encounters</strong>: Sea turtles are wild animals, so sightings cannot be guaranteed. We are unable to offer refunds or discounts if you do not encounter one. Thank you for your understanding.',
       cancel_ttl:'Cancellation Policy',
       ct_7d:'7+ days before', cv_7d:'Free',
       ct_6d:'6 days before – day-before 18:00', cv_6d:'50% fee',
@@ -7114,6 +7157,8 @@
       note_6:'<strong>体力・残障</strong>：体力不足或有残障的人士，请在备注栏注明，以便安排适当支持。',
       note_7:'<strong>服装</strong>：请穿着泳衣集合。',
       note_8:'<strong>年龄限制</strong>：浮潜・青洞 3〜65岁 / 自由潜水 10〜59岁。儿童须有监护人陪同。',
+      note_9:'<strong>移动时间・停车・堵车</strong>：因停车场拥挤或道路堵车，从集合地点前往潜点的移动・抵达可能需要较多时间，请预留充裕时间参加。',
+      note_turtle:'<strong>关于海龟邂逅</strong>：海龟为野生动物，无法保证一定能遇见。即使未能遇见，也恕不提供退款或折扣，敬请谅解。',
       cancel_ttl:'取消政策',
       ct_7d:'7天前', cv_7d:'免费',
       ct_6d:'6天前〜前一天18时', cv_6d:'费用的50%',
@@ -7353,6 +7398,8 @@
       note_6:'<strong>체력・장애</strong>：체력에 자신 없으신 분이나 장애가 있으신 분은 예약 비고란에 기재해 주세요.',
       note_7:'<strong>복장</strong>：수영복을 착용한 상태로 집합해 주세요.',
       note_8:'<strong>연령 제한</strong>：스노클링・블루케이브 3〜65세 / 스킨 다이빙 10〜59세. 어린이는 보호자 동반 필수입니다.',
+      note_9:'<strong>이동 시간・주차・교통 정체</strong>：주차장 혼잡 상황이나 도로 정체로 인해 집합 장소에서 포인트까지의 이동・도착에 시간이 걸릴 수 있습니다. 시간 여유를 두고 참가해 주세요.',
+      note_turtle:'<strong>바다거북 조우에 대하여</strong>：바다거북은 야생이므로 반드시 만날 수 있다고 보장할 수 없습니다. 만나지 못한 경우에도 환불・할인 등의 대응은 어려우니 미리 양해 부탁드립니다.',
       cancel_ttl:'취소 정책',
       ct_7d:'7일 전까지', cv_7d:'무료',
       ct_6d:'6일 전〜전날 18시까지', cv_6d:'요금의 50%',
