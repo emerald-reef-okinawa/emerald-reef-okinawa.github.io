@@ -7840,7 +7840,7 @@
        詳細ページからの予約と同じ件名・内容のメールにする */
     if (okId === 'bk-ok') {
       const tourSel = form.querySelector('[name="ご希望のツアー"]');
-      const tourMap = { 'シュノーケル': 'sn-ok', '青の洞窟': 'bc-ok', 'スキンダイビング': 'sk-ok' };
+      const tourMap = { 'シュノーケル': 'sn-ok', '青の洞窟': 'bc-ok', 'スキンダイビング': 'sk-ok', '那覇ウミガメシュノーケル': 'tc-ok' };
       okId = tourMap[tourSel ? tourSel.value : ''] || 'sn-ok';
     }
     const btn = form.querySelector('button[type="submit"]');
@@ -7851,6 +7851,7 @@
         'sn-ok': '【シュノーケル予約】EMERALD REEF OKINAWA',
         'sk-ok': '【スキンダイビング予約】EMERALD REEF OKINAWA',
         'bc-ok': '【青の洞窟予約】EMERALD REEF OKINAWA',
+        'tc-ok': '【ウミガメシュノーケル予約】EMERALD REEF OKINAWA',
         'cs-ok': '【お問い合わせ】EMERALD REEF OKINAWA'
       };
       data.append('_subject', subjects[okId] || 'EMERALD REEF OKINAWA — 新規予約');
@@ -7872,7 +7873,7 @@
     const pop = document.getElementById(popId);
     if (pop) pop.classList.add('open');
     /* GA4: 予約リクエスト送信／お問い合わせ送信を計測 */
-    const tourLabels = { 'sn-ok': 'シュノーケル', 'sk-ok': 'スキンダイビング', 'bc-ok': '青の洞窟' };
+    const tourLabels = { 'sn-ok': 'シュノーケル', 'sk-ok': 'スキンダイビング', 'bc-ok': '青の洞窟', 'tc-ok': 'ウミガメシュノーケル' };
     if (okId === 'cs-ok') track('contact_submit', {});
     else track('booking_submit', { tour: tourLabels[okId] || '' });
   }
