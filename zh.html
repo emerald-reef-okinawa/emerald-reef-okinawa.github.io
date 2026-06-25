@@ -3641,8 +3641,8 @@
         </div>
       </div>
 
-      <!-- ④ スキンダイビング: テキスト 左 / 写真 右 (COMING SOON / 一時休止中) -->
-      <div class="sv-row rev fi d4" style="cursor:default;">
+      <!-- ④ スキンダイビング: テキスト 左 / 写真 右 -->
+      <div class="sv-row rev fi d4" onclick="showDet('skindiving')">
         <div class="sv-row-img-wrap">
           <div class="sv-row-img" style="background:
             linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.25) 100%),
@@ -3670,9 +3670,8 @@
             <li><span class="ck">✓</span><span data-i18n="sk_f4">完全貸切・完全送迎</span></li>
             <li><span class="ck">✓</span><span data-i18n="sk_f5">初めての方大歓迎・素潜りの仕方一から教えます</span></li>
           </ul>
-          <button class="sv-row-btn" data-i18n="sv_detail" style="opacity:.55;pointer-events:none;" disabled>詳細を見る &amp; 予約する</button>
+          <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
         </div>
-        <div class="sv-row-cs-over" style="background:rgba(255,255,255,.82);"><span class="sv-row-cs-badge">🤿 COMING SOON</span></div>
       </div>
 
       <!-- ⑤ SUP: テキスト 左 / 写真 右 (COMING SOON) -->
@@ -4366,9 +4365,8 @@
           </div>
         </div>
 
-        <!-- スキンダイビング (COMING SOON / 一時休止中) -->
+        <!-- スキンダイビング -->
         <div class="bkp-card">
-          <div class="bkp-cs-over" style="position:absolute;inset:0;z-index:6;background:rgba(255,255,255,.80);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;"><span style="background:linear-gradient(135deg,#2d6a4f,#52b788);color:#fff;font-size:.9rem;font-weight:700;padding:11px 26px;border-radius:999px;box-shadow:0 4px 20px rgba(45,106,79,.3);letter-spacing:.06em;">🤿 COMING SOON</span></div>
           <div class="bkp-card-img">
             <span class="bkp-off-tag">40% OFF</span>
             <img src="https://images.unsplash.com/photo-1674786375512-0b1d38fda375?auto=format&w=600&q=80" alt="沖縄 スキンダイビング体験" loading="lazy">
@@ -4388,8 +4386,8 @@
               <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
             </ul>
             <div class="bkp-btns">
-              <button class="bkp-detail-btn" disabled style="opacity:.5;pointer-events:none;" data-i18n="bkp_detail">詳細を見る</button>
-              <button class="bkp-choose-btn" disabled style="opacity:.5;pointer-events:none;" data-i18n="bkp_choose">このツアーを選ぶ</button>
+              <button class="bkp-detail-btn" onclick="showDet('skindiving')" data-i18n="bkp_detail">詳細を見る</button>
+              <button class="bkp-choose-btn" onclick="selectTourForBooking('スキンダイビング')" data-i18n="bkp_choose">このツアーを選ぶ</button>
             </div>
           </div>
         </div>
@@ -4410,6 +4408,7 @@
                   <select name="ご希望のツアー" id="bk-tour-select" class="bkp-tour-active" required>
                     <option value="シュノーケル" data-i18n="sn_name">シュノーケル</option>
                     <option value="青の洞窟" data-i18n="bc_name">青の洞窟シュノーケル</option>
+                    <option value="スキンダイビング" data-i18n="sk_name">スキンダイビング</option>
                     <option value="那覇ウミガメシュノーケル" data-i18n="tc_name">那覇近海ウミガメシュノーケル</option>
                   </select>
                 </div>
@@ -6541,7 +6540,7 @@
       /* CONTACT */
       ct_lbl:'CONTACT', ct_ttl:'お問い合わせ', ct_sub:'ご質問・ご相談はお気軽にどうぞ。<br>通常24時間以内にご返信いたします。',
       lbl_name:'お名前', lbl_email:'メールアドレス', lbl_tel:'お電話番号', lbl_svc:'ご興味のあるサービス', lbl_msg:'メッセージ',
-      sel_choose:'選択してください', sel_sn:'シュノーケル', sel_sk:'スキンダイビング（準備中）', sel_sup:'SUP（準備中）', sel_other:'その他',
+      sel_choose:'選択してください', sel_sn:'シュノーケル', sel_sk:'スキンダイビング', sel_sup:'SUP（準備中）', sel_other:'その他',
       ct_send:'送信する', ct_note:'送信後、確認メールをお送りします。返信は通常24時間以内です。',
       ct_ok:'✅ メッセージを受け付けました！24時間以内にご返信いたします。',
       /* CALENDAR */
@@ -6792,7 +6791,7 @@
       bl_more:'Read more →', blog_list_btn:'📖 View All Blog Posts →', blog_list_ttl:'Blog', blog_list_sub:"Insights on Okinawa's ocean and marine experiences.", blog_back_list:'📖 View all articles',
       ct_lbl:'CONTACT', ct_ttl:'Contact Us', ct_sub:'Questions or inquiries? We\'d love to hear from you.<br>We reply within 24 hours.',
       lbl_name:'Name', lbl_email:'Email Address', lbl_tel:'Phone Number', lbl_svc:'Service of Interest', lbl_msg:'Message',
-      sel_choose:'Please select', sel_sn:'Snorkeling', sel_sk:'Skin Diving (coming soon)', sel_sup:'SUP (coming soon)', sel_other:'Other',
+      sel_choose:'Please select', sel_sn:'Snorkeling', sel_sk:'Skin Diving', sel_sup:'SUP (coming soon)', sel_other:'Other',
       ct_send:'Send Message', ct_note:'A confirmation email will be sent. We reply within 24 hours.',
       ct_ok:'✅ Message received! We will reply within 24 hours.',
       cal_ttl:'Availability Calendar', cal_sub:'Check available dates for your booking',
@@ -7033,7 +7032,7 @@
       bl_more:'阅读更多 →', blog_list_btn:'📖 查看全部博客 →', blog_list_ttl:'全部博客', blog_list_sub:'为您带来冲绳海洋和体验的相关信息。', blog_back_list:'📖 查看文章列表',
       ct_lbl:'联系我们', ct_ttl:'联系我们', ct_sub:'如有疑问请随时咨询。<br>通常24小时内回复。',
       lbl_name:'姓名', lbl_email:'电子邮件', lbl_tel:'电话号码', lbl_svc:'感兴趣的服务', lbl_msg:'留言',
-      sel_choose:'请选择', sel_sn:'浮潜', sel_sk:'自由潜水（准备中）', sel_sup:'SUP（准备中）', sel_other:'其他',
+      sel_choose:'请选择', sel_sn:'浮潜', sel_sk:'自由潜水', sel_sup:'SUP（准备中）', sel_other:'其他',
       ct_send:'发送消息', ct_note:'发送后将收到确认邮件，通常24小时内回复。',
       ct_ok:'✅ 已收到您的消息！我们将在24小时内与您联系。',
       cal_ttl:'预约日期查询', cal_sub:'请确认您希望的日期是否有空',
@@ -7274,7 +7273,7 @@
       bl_more:'더 읽기 →', blog_list_btn:'📖 블로그 목록 보기 →', blog_list_ttl:'블로그 목록', blog_list_sub:'오키나와의 바다와 체험에 관한 정보를 전달합니다.', blog_back_list:'📖 글 목록 보기',
       ct_lbl:'문의하기', ct_ttl:'문의하기', ct_sub:'질문・상담은 언제든지 편하게 해주세요.<br>보통 24시간 이내에 답변드립니다.',
       lbl_name:'이름', lbl_email:'이메일 주소', lbl_tel:'전화번호', lbl_svc:'관심 있는 서비스', lbl_msg:'메시지',
-      sel_choose:'선택해 주세요', sel_sn:'스노클링', sel_sk:'스킨 다이빙（준비 중）', sel_sup:'SUP（준비 중）', sel_other:'기타',
+      sel_choose:'선택해 주세요', sel_sn:'스노클링', sel_sk:'스킨 다이빙', sel_sup:'SUP（준비 중）', sel_other:'기타',
       ct_send:'메시지 보내기', ct_note:'발송 후 확인 메일을 보내드립니다. 답변은 보통 24시간 이내입니다.',
       ct_ok:'✅ 메시지를 받았습니다! 24시간 이내에 답변드리겠습니다.',
       cal_ttl:'예약 가능 캘린더', cal_sub:'원하시는 날짜의 예약 가능 여부를 확인하세요',
