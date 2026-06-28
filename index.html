@@ -1777,7 +1777,8 @@
       .form-row2 { grid-template-columns: 1fr; }
       .form-wrap { padding: 32px 20px; }
     }
-    @media(max-width:600px){
+    /* iPad / タブレットでは横並びナビが2行に折り返すため、ハンバーガーメニューに切替して1行で表示する */
+    @media(max-width:1200px){
       .nav-links { display: none; }
       .nav-links.open {
         display: flex; flex-direction: row; flex-wrap: wrap;
@@ -1787,6 +1788,8 @@
       }
       .nav-links.open li { list-style: none; }
       .nav-toggle { display: flex; }
+    }
+    @media(max-width:600px){
       section { padding: 64px 16px; }
       .sv-grid { grid-template-columns: 1fr; }
       .lbtn { padding: 5px 9px; font-size: .76rem; }
@@ -2211,6 +2214,8 @@
        ================================================================ */
     /* ナビバー内 LINE/WhatsApp ボタン */
     .nav-contact { display: flex; align-items: center; gap: 8px; }
+    /* タブレット以下（ハンバーガー表示時）はナビ内のLINE/WhatsAppを隠す（ヘッダーを1行に保つ／フローティングボタンで代替） */
+    @media(max-width:1200px){ .nav-contact { display: none; } }
     .nav-ct-btn {
       display: flex; align-items: center; gap: 5px;
       padding: 6px 11px; border-radius: 999px;
@@ -2223,7 +2228,6 @@
     .nav-ct-btn svg { width:15px; height:15px; flex-shrink:0; }
     .nav-ct-line { background: #06C755; }
     .nav-ct-wa   { background: #25D366; }
-    @media(max-width:860px) { .nav-contact { display: none; } }
 
     .float-contact {
       position: fixed; bottom: 24px; right: 20px; z-index: 350;
