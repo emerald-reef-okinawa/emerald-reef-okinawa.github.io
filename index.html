@@ -1156,6 +1156,11 @@
       padding: 46px 20px; text-align: center;
       font-size: .86rem; color: var(--text-soft); font-weight: 600; letter-spacing: .03em;
     }
+    .ccal-load-err {
+      background: #fff7e6; border: 1px solid #ffd591; border-radius: 8px;
+      color: #ad6800; font-size: .76rem; font-weight: 600; line-height: 1.6;
+      padding: 8px 10px; margin-bottom: 10px; text-align: center;
+    }
     .ccal-loading .ccal-ico {
       display: block; width: 32px; height: 32px; margin: 0 auto 14px;
       border: 3px solid rgba(0,168,150,.18); border-top-color: var(--g-mid);
@@ -5976,25 +5981,33 @@
     finally { clearTimeout(to); }
   }
 
-  /* 方式B: iCal + CORSプロキシ（複数を順に試行・各6秒でタイムアウト） */
+  /* 方式B: iCal + CORSプロキシ（複数を順に試行・各6.5秒でタイムアウト）
+     無料CORSプロキシは不安定なため、複数サービスへフォールバックする */
   async function fetchViaProxy() {
-    var id    = GCAL_ID.trim();
-    var enc   = id.replace('@', '%40');
-    var bust  = Date.now();
-    var base  = 'https://calendar.google.com/calendar/ical/' + enc + '/public/basic.ics';
-    var raw   = 'https://calendar.google.com/calendar/ical/' + id  + '/public/basic.ics?t=' + bust;
+    var id   = GCAL_ID.trim();
+    var bust = Date.now();
+    var raw  = 'https://calendar.google.com/calendar/ical/' + id + '/public/basic.ics?t=' + bust;
+    var enc  = encodeURIComponent(raw);
 
-    var proxies = [
-      'https://corsproxy.io/?url=' + encodeURIComponent(raw),
-      'https://corsproxy.io/?' + base + '%3Ft%3D' + bust,
-      'https://api.allorigins.win/raw?url=' + encodeURIComponent(raw),
+    /* json:true のものは {contents:"..."} 形式で返るため中身を取り出す */
+    var attempts = [
+      { url: 'https://corsproxy.io/?url=' + enc,                 json: false },
+      { url: 'https://api.allorigins.win/raw?url=' + enc,         json: false },
+      { url: 'https://api.allorigins.win/get?url=' + enc,         json: true  },
+      { url: 'https://api.codetabs.com/v1/proxy/?quest=' + enc,   json: false },
+      { url: 'https://thingproxy.freeboard.io/fetch/' + raw,      json: false },
     ];
 
-    for (var i = 0; i < proxies.length; i++) {
-      var t = await fetchTextTimeout(proxies[i], 6000);
-      if (t && t.indexOf('BEGIN:VCALENDAR') !== -1) {
-        console.log('[Calendar] proxy #' + i + ' OK, events:', (t.match(/BEGIN:VEVENT/g)||[]).length);
-        return parseIcalDates(t);
+    for (var i = 0; i < attempts.length; i++) {
+      var t = await fetchTextTimeout(attempts[i].url, 6500);
+      if (!t) continue;
+      var ics = t;
+      if (attempts[i].json) {
+        try { ics = JSON.parse(t).contents || ''; } catch (e) { ics = ''; }
+      }
+      if (ics.indexOf('BEGIN:VCALENDAR') !== -1) {
+        console.log('[Calendar] proxy #' + i + ' OK, events:', (ics.match(/BEGIN:VEVENT/g)||[]).length);
+        return parseIcalDates(ics);
       }
     }
     throw new Error('All proxies failed');
@@ -6380,6 +6393,28 @@
       return new Set(obj.dates);
     } catch(e) { return null; }
   }
+  /* TTLを無視して古いキャッシュでも返す（取得失敗時のフォールバック用） */
+  function loadBusyCacheStale() {
+    try {
+      var c = localStorage.getItem('gcal_busy_cache');
+      if (!c) return null;
+      var obj = JSON.parse(c);
+      return (obj && obj.dates) ? new Set(obj.dates) : null;
+    } catch(e) { return null; }
+  }
+  /* 取得失敗時：カレンダーに「最新の空き状況を取得できませんでした」注記を表示 */
+  function showCalLoadError() {
+    var msg = ((typeof T !== 'undefined' && T[curLang] && T[curLang].cal_load_err) || (T && T.ja && T.ja.cal_load_err))
+      || '最新の空き状況を取得できませんでした。ご予約前にお問い合わせください。';
+    ['gcal-mini-sn','gcal-mini-sk','gcal-mini-bc','gcal-mini-tc','gcal-mini-bk'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el || el.querySelector('.ccal-load-err')) return;
+      var d = document.createElement('div');
+      d.className = 'ccal-load-err';
+      d.textContent = '⚠️ ' + msg;
+      el.insertBefore(d, el.firstChild);
+    });
+  }
   function saveBusyCache(busy) {
     try {
       localStorage.setItem('gcal_busy_cache', JSON.stringify({ ts: Date.now(), dates: Array.from(busy) }));
@@ -6406,10 +6441,21 @@
       initBookingCalendars(busy);
     } catch(err) {
       console.warn('Calendar fetch failed:', err);
-      /* キャッシュがある場合はそのまま使用。ない場合のみ空セットで初期化 */
+      /* 新しいキャッシュが無い場合でも、ローディングのまま固まらせない。
+         古いキャッシュがあればそれを表示し、無ければカレンダーを描画して注記を出す。 */
       if (!cached) {
-        initBookingCalendars(new Set());
-        /* ローディング表示を維持（全日空きにしない） */
+        var stale = loadBusyCacheStale();
+        if (stale) {
+          _gcalBusy = stale;
+          renderMiniCalendars(stale);
+          initBookingCalendars(stale);
+        } else {
+          var empty = new Set();
+          _gcalBusy = empty;
+          renderMiniCalendars(empty);
+          initBookingCalendars(empty);
+          showCalLoadError();
+        }
       }
     }
   }
@@ -6549,7 +6595,7 @@
       /* CALENDAR */
       cal_ttl:'空き状況カレンダー', cal_sub:'ご希望の日程の空き状況をご確認ください',
       cal_leg_free:'空き', cal_leg_busy:'予約済み', cal_leg_event:'イベント',
-      cal_note:'希望日が見つかったらフォームにご記入ください。', cal_loading:'空き状況をチェック中',
+      cal_note:'希望日が見つかったらフォームにご記入ください。', cal_loading:'空き状況をチェック中', cal_load_err:'最新の空き状況を取得できませんでした。ご予約前にお問い合わせ・LINEでご確認ください。',
       /* FOOTER */
       ft_tagline:'沖縄の海で、最高の思い出を。<br>Snorkeling &amp; Skin Diving &amp; SUP (coming soon) — Private &amp; Fully Guided',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
@@ -6799,7 +6845,7 @@
       ct_ok:'✅ Message received! We will reply within 24 hours.',
       cal_ttl:'Availability Calendar', cal_sub:'Check available dates for your booking',
       cal_leg_free:'Available', cal_leg_busy:'Booked', cal_leg_event:'Event',
-      cal_note:'Found a date? Fill in the form to book.', cal_loading:'Checking availability',
+      cal_note:'Found a date? Fill in the form to book.', cal_loading:'Checking availability', cal_load_err:'Could not load the latest availability. Please confirm with us (contact form / LINE) before booking.',
       ft_tagline:'The best ocean memories in Okinawa.<br>Snorkeling &amp; Skin Diving &amp; SUP (coming soon) — Private &amp; Fully Guided',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
       ft_home:'Back to Home', ft_svlist:'All Services',
@@ -7040,7 +7086,7 @@
       ct_ok:'✅ 已收到您的消息！我们将在24小时内与您联系。',
       cal_ttl:'预约日期查询', cal_sub:'请确认您希望的日期是否有空',
       cal_leg_free:'可预约', cal_leg_busy:'已预约', cal_leg_event:'活动',
-      cal_note:'找到合适日期后请填写表单。', cal_loading:'正在确认空位',
+      cal_note:'找到合适日期后请填写表单。', cal_loading:'正在确认空位', cal_load_err:'无法获取最新空位情况。预约前请通过咨询表单／LINE与我们确认。',
       ft_tagline:'在冲绳的海洋留下最美好的回忆。<br>浮潜 &amp; 自由潜水 &amp; SUP（即将上线）— 私人专属全程引导',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
       ft_home:'返回主页', ft_svlist:'所有服务',
@@ -7281,7 +7327,7 @@
       ct_ok:'✅ 메시지를 받았습니다! 24시간 이내에 답변드리겠습니다.',
       cal_ttl:'예약 가능 캘린더', cal_sub:'원하시는 날짜의 예약 가능 여부를 확인하세요',
       cal_leg_free:'예약 가능', cal_leg_busy:'예약 완료', cal_leg_event:'이벤트',
-      cal_note:'날짜를 확인하셨으면 양식을 작성해 주세요.', cal_loading:'예약 상황 확인 중',
+      cal_note:'날짜를 확인하셨으면 양식을 작성해 주세요.', cal_loading:'예약 상황 확인 중', cal_load_err:'최신 예약 상황을 불러오지 못했습니다. 예약 전 문의 폼／LINE으로 확인해 주세요.',
       ft_tagline:'오키나와 바다에서 최고의 추억을.<br>스노클링 &amp; 스킨 다이빙 &amp; SUP（준비 중）— 완전 전세 완전 가이드',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
       ft_home:'홈으로 돌아가기', ft_svlist:'서비스 목록',
