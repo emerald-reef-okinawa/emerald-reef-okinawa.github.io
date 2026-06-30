@@ -5932,6 +5932,11 @@
      カレンダーは公開iCalフィード + CORSプロキシ経由で取得します（キー不要）。
      ※絶対にここへAPIキー等の秘密情報を貼り付けないこと（公開GitHubに載るため）。 */
   const GCAL_API_KEY = '';
+  /* ▼ 自前 Cloudflare Worker のURL（最も安定・推奨／任意）
+     cloudflare-worker.js をデプロイして得た https://xxxxx.workers.dev を貼り付ける。
+     設定すると最優先で使用し、失敗時のみ無料CORSプロキシにフォールバックします。
+     空のままでも無料プロキシで動作します。秘密情報ではありません（公開カレンダーの取得用）。 */
+  const GCAL_WORKER_URL = '';
   var _gcalBusy = null; /* store for language re-render */
 
   /* ================================================================
@@ -6015,7 +6020,26 @@
   }
 
   /* エントリ: 方式A(APIキー) → 失敗時は方式B(iCalプロキシ)へフォールバック */
+  /* 自前 Cloudflare Worker から取得（CORSヘッダ付きでiCalをそのまま返す想定） */
+  async function fetchViaWorker() {
+    var base = GCAL_WORKER_URL.trim();
+    var url = base + (base.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now();
+    var txt = await fetchTextTimeout(url, 7000);
+    if (!txt || txt.indexOf('BEGIN:VCALENDAR') === -1) throw new Error('worker bad response');
+    console.log('[Calendar] worker OK, events:', (txt.match(/BEGIN:VEVENT/g)||[]).length);
+    return parseIcalDates(txt);
+  }
+
   async function fetchBusyDates() {
+    /* 1) 自前 Cloudflare Worker（設定済みなら最優先・最も安定） */
+    if (GCAL_WORKER_URL && GCAL_WORKER_URL.trim() !== '') {
+      try {
+        return await fetchViaWorker();
+      } catch (err) {
+        console.warn('[Calendar] worker failed (' + err.message + ') — falling back');
+      }
+    }
+    /* 2) APIキー（通常は未使用） */
     if (GCAL_API_KEY && GCAL_API_KEY.trim() !== '') {
       try {
         return await fetchViaAPI();
@@ -6023,6 +6047,7 @@
         console.warn('[Calendar] API failed (' + err.message + ') — falling back to iCal proxy');
       }
     }
+    /* 3) 無料CORSプロキシ（フォールバック） */
     return fetchViaProxy();
   }
 
