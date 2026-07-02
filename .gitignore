@@ -31,6 +31,9 @@ tmp_*
 # ===== 開発ドキュメント =====
 PROJECT_CONTEXT.md
 
+# ===== 社内・提出用ドキュメント（サイトには公開しない） =====
+police-docs/
+
 # ===== OS生成ファイル =====
 .DS_Store
 Thumbs.db
