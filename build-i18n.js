@@ -20,7 +20,7 @@ const SRC = path.join(__dirname, 'index.html');
    （JS実行後は T[lang].page_title 等で上書きされるが、両方とも同じ言語になる） */
 const LANGS = [
   {
-    code: 'en', file: 'en.html', htmlLang: 'en', ogLocale: 'en_US',
+    code: 'en', file: 'en.html', htmlLang: 'en', ogLocale: 'en_US', brand: 'EMERALD REEF OKINAWA',
     title: 'Emerald Reef Okinawa | Private Snorkeling, Blue Cave &amp; Sea Turtle Tours',
     desc: 'Emerald Reef Okinawa runs fully private snorkeling, Blue Cave and sea turtle tours in Okinawa\'s clear emerald sea. Free hotel transfer and up to 20 photos included. Serving Naha to Onna Village.',
     keywords: 'emerald reef okinawa, okinawa snorkeling, blue cave okinawa, okinawa marine activities, skin diving okinawa, private snorkeling tour okinawa, naha snorkeling tour, sea turtle snorkeling okinawa',
@@ -28,7 +28,7 @@ const LANGS = [
     ogDesc: 'Dive into Okinawa\'s clear emerald sea. Fully private tours, free hotel transfer and up to 20 photos included. Serving Naha to Onna Village.'
   },
   {
-    code: 'zh', file: 'zh.html', htmlLang: 'zh-Hans', ogLocale: 'zh_CN',
+    code: 'zh', file: 'zh.html', htmlLang: 'zh-Hans', ogLocale: 'zh_CN', brand: '翡翠礁冲绳 Emerald Reef Okinawa',
     title: '翡翠礁冲绳 Emerald Reef Okinawa | 包场浮潜・蓝洞・海龟体验',
     desc: '翡翠礁冲绳（Emerald Reef Okinawa）在冲绳清澈的翡翠海域提供完全包场浮潜、蓝洞与海龟体验。含免费接送、最多20张照片。那霸〜恩纳村对应。',
     keywords: 'emerald reef okinawa, 冲绳浮潜, 蓝洞 冲绳, 冲绳海上活动, 自由潜水 冲绳, 包场浮潜 冲绳, 那霸浮潜, 海龟浮潜 冲绳',
@@ -36,7 +36,7 @@ const LANGS = [
     ogDesc: '畅游冲绳清澈的翡翠海域。完全包场・免费接送・最多20张照片。那霸〜恩纳村对应。'
   },
   {
-    code: 'ko', file: 'ko.html', htmlLang: 'ko', ogLocale: 'ko_KR',
+    code: 'ko', file: 'ko.html', htmlLang: 'ko', ogLocale: 'ko_KR', brand: '에메랄드 리프 오키나와 Emerald Reef Okinawa',
     title: '에메랄드 리프 오키나와 Emerald Reef Okinawa | 전세 스노클링・블루케이브・바다거북 체험',
     desc: '에메랄드 리프 오키나와(Emerald Reef Okinawa)는 오키나와의 맑은 에메랄드빛 바다에서 완전 전세 스노클링・블루케이브・바다거북 체험을 제공합니다. 무료 픽업・사진 최대 20장 포함. 나하〜온나손 대응.',
     keywords: 'emerald reef okinawa, 오키나와 스노클링, 블루케이브 오키나와, 오키나와 마린액티비티, 스킨다이빙 오키나와, 전세 스노클링 오키나와, 나하 스노클링, 바다거북 스노클링 오키나와',
@@ -97,6 +97,9 @@ for (const L of LANGS) {
     ['"inLanguage": "ja"', '"inLanguage": "' + L.htmlLang + '"', { all: true }],
     ["let curLang = localStorage.getItem('lang') || 'ja';",
       `let curLang = '${L.code}';  /* ${L.file} は常にこの言語で初期表示（build-i18n.js が設定） */`],
+    /* 最後に実行: 残りのブランド表記（og:site_name / application-name / 構造化データの name 等）を
+       その言語のブランド名に一括置換する。※必ずタイトル等の個別置換より後に置くこと。 */
+    ['エメラルドリーフ沖縄', L.brand, { all: true, required: false }],
   ];
 
   for (const [find, replace, opts] of edits) {
