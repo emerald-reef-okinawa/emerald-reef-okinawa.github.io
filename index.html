@@ -189,7 +189,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="dns-prefetch" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Raleway:wght@300;400&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Pacifico&family=Noto+Sans+JP:wght@400;700&family=Zen+Antique&family=DotGothic16&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Raleway:wght@300;400&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Pacifico&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Antique&family=DotGothic16&display=swap" rel="stylesheet">
 
   <style>
     /* ===== Reset & Variables ===== */
@@ -1603,7 +1603,7 @@
     .pt-free-note { font-size: 1.15rem; font-weight: 800; color: var(--g-main); }
     .pt-free-sub { font-size: .76rem; color: var(--text-soft); margin-top: 3px; }
     .pt-grid { margin-bottom: 0; }
-    .pc-bottom-notes { font-size: .76rem; color: var(--text-soft); margin-top: 14px; line-height: 1.7; }
+    .pc-bottom-notes { font-size: .8rem; color: var(--text-soft); font-weight: 500; margin-top: 14px; line-height: 1.7; }
     /* 人数別料金テーブル */
     .pt-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
     .pt-row {
@@ -1619,7 +1619,7 @@
     .pt-amt span { font-size: .82rem; font-weight: 500; color: var(--text-soft); }
 
     .inc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .inc-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: var(--text-soft); }
+    .inc-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: var(--text-soft); font-weight: 500; }
     .inc-ico { font-size: 1.2rem; flex-shrink: 0; }
 
     .sched {
@@ -1660,7 +1660,7 @@
     }
     .step:last-child .step-ln { display: none; }
     .step-c h4 { font-size: .88rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
-    .step-c p { font-size: .82rem; color: var(--text-soft); }
+    .step-c p { font-size: .82rem; color: var(--text-soft); font-weight: 500; }
 
     .bk-section {
       background: linear-gradient(160deg,var(--navy),var(--g-dark));
@@ -2904,12 +2904,12 @@
     .tour-detail-text-col { display:flex; flex-direction:column; gap:18px; }
     .tour-detail-photo-wrap { border-radius:20px; overflow:hidden; box-shadow:0 4px 28px rgba(0,90,80,.15); }
     .tour-detail-photo { width:100%; height:auto; min-height:260px; object-fit:cover; display:block; }
-    .tour-detail-intro { font-size:.95rem; color:var(--text); line-height:1.9; border-left:3px solid var(--g-mid); padding-left:14px; }
+    .tour-detail-intro { font-size:.95rem; color:var(--text); font-weight:500; line-height:1.9; border-left:3px solid var(--g-mid); padding-left:14px; }
     .tour-detail-list { list-style:none; display:flex; flex-direction:column; gap:0; counter-reset:detail-item; }
     .tour-detail-list li { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid rgba(0,100,80,.1); align-items:flex-start; counter-increment:detail-item; }
     .tour-detail-list li:last-child { border-bottom:none; padding-bottom:0; }
     .tour-detail-list li::before { content:counter(detail-item); font-size:2rem; font-weight:900; color:rgba(0,110,90,.13); line-height:1; min-width:38px; text-align:center; flex-shrink:0; padding-top:2px; }
-    .tour-detail-list li .li-body { flex:1; min-width:0; font-size:.87rem; color:var(--text); line-height:1.8; }
+    .tour-detail-list li .li-body { flex:1; min-width:0; font-size:.87rem; color:var(--text); font-weight:500; line-height:1.8; }
     .hl  { background:linear-gradient(transparent 55%,rgba(255,220,0,.55) 55%); font-weight:700; padding:0 1px; }
     .hl-s{ background:linear-gradient(transparent 52%,rgba(72,202,228,.45) 52%); font-weight:700; padding:0 2px; }
     @media(max-width:760px){ .tour-detail-top { grid-template-columns:1fr; } .tour-detail-photo { min-height:200px; } }
