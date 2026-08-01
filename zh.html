@@ -2108,6 +2108,21 @@
     .r-src.jln { background:#ffeaf0; color:#e0004d; }
     .rev-src-note { font-size:.75rem; color:var(--text-soft); text-align:center; margin-top:22px; line-height:1.7; }
     @media(max-width:900px){ .r-grid { grid-template-columns:1fr; max-width:560px; margin-left:auto; margin-right:auto; } }
+    /* ===== ツアーギャラリー（スライドショー） ===== */
+    #gallery { background: var(--bg); }
+    .gal-carousel { position:relative; max-width:940px; margin:36px auto 0; border-radius:22px; overflow:hidden; box-shadow:0 16px 46px rgba(0,80,70,.22); aspect-ratio:16/10; background:#08201b; }
+    .gal-track { position:absolute; inset:0; }
+    .gal-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; will-change:opacity; }
+    .gal-slide.active { opacity:1; }
+    .gal-slide img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.001); transition:transform 5.5s ease-out; }
+    .gal-slide.active img { transform:scale(1.07); }
+    .gal-arrow { position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:none; background:rgba(255,255,255,.85); color:var(--g-dark); font-size:1.7rem; line-height:1; cursor:pointer; display:grid; place-items:center; box-shadow:0 4px 14px rgba(0,0,0,.22); transition:background .2s, transform .2s; z-index:3; padding:0 0 3px; }
+    .gal-arrow:hover { background:#fff; transform:translateY(-50%) scale(1.08); }
+    .gal-arrow.prev { left:14px; } .gal-arrow.next { right:14px; }
+    .gal-dots { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:3; }
+    .gal-dot { width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.55); border:none; cursor:pointer; padding:0; transition:background .25s, width .25s; box-shadow:0 1px 4px rgba(0,0,0,.25); }
+    .gal-dot.active { background:#fff; width:24px; border-radius:5px; }
+    @media(max-width:600px){ .gal-carousel { aspect-ratio:4/5; border-radius:16px; margin-top:26px; } .gal-arrow { width:40px; height:40px; font-size:1.45rem; } .gal-arrow.prev{left:10px;} .gal-arrow.next{right:10px;} }
     /* overlay */
     .rev-cs-overlay {
       position:absolute; inset:-8px;
@@ -3916,6 +3931,31 @@
       </div>
       <div class="r-grid fi" id="reviews-grid"></div>
       <p class="rev-src-note fi" id="rev-src-note">※ アクティビティジャパン・アソビュー・じゃらんに実際に投稿されたお客様レビューです。</p>
+    </div>
+  </section>
+
+
+  <!-- Gallery: ツアー写真スライドショー -->
+  <section id="gallery">
+    <div class="container">
+      <p class="s-label fi" data-i18n="gal_lbl">GALLERY</p>
+      <h2 class="s-title fi" data-i18n="gal_ttl">ツアーギャラリー</h2>
+      <p class="s-sub fi" data-i18n="gal_sub">実際のツアーで撮影した一枚をご紹介します。</p>
+      <div class="gal-carousel fi">
+        <div class="gal-track" id="gal-track">
+          <div class="gal-slide active"><img src="gallery-1.webp" alt="沖縄の海で完全貸切シュノーケルを楽しむお客様グループ" fetchpriority="high"></div>
+          <div class="gal-slide"><img src="gallery-2.webp" alt="沖縄の透明な海で熱帯魚と泳ぐシュノーケル体験" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-3.webp" alt="青の洞窟でシュノーケルを楽しむ女性グループ" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-4.webp" alt="沖縄の海でウミガメと一緒に泳ぐお客様" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-5.webp" alt="沖縄近海を優雅に泳ぐウミガメ" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-6.webp" alt="熱帯魚への餌付け体験・目の前に集まる魚たち" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-7.webp" alt="青の洞窟でご家族みんなでシュノーケル体験" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-8.webp" alt="ご家族で参加する沖縄シュノーケルツアー" loading="lazy"></div>
+        </div>
+        <button class="gal-arrow prev" id="gal-prev" aria-label="前の写真">‹</button>
+        <button class="gal-arrow next" id="gal-next" aria-label="次の写真">›</button>
+        <div class="gal-dots" id="gal-dots"></div>
+      </div>
     </div>
   </section>
 
@@ -6550,6 +6590,7 @@
       tl6_h:'解散・お送り', tl6_p:'宿泊先までお送りします',
       /* REVIEWS */
       rev_lbl:'REVIEWS', rev_ttl:'お客様の声', rev_sub:'実際にご参加いただいたお客様のリアルな声をご紹介します。',
+    gal_lbl:'GALLERY', gal_ttl:'ツアーギャラリー', gal_sub:'実際のツアーで撮影した一枚をご紹介します。',
       rev_cs_ttl:'準備中', rev_cs_sub:'お客様のご感想・レビューを随時掲載予定です。お楽しみに！',
       rev_cs_note:'初回ご参加のお客様、ぜひ感想をお聞かせください 🙏',
       /* FEATURES */
@@ -6807,6 +6848,7 @@
       tl5_h:'Shooting', tl5_p:'Insta360 captures your memories',
       tl6_h:'Return &amp; Drop-Off', tl6_p:'Back to your accommodation',
       rev_lbl:'REVIEWS', rev_ttl:'Guest Reviews', rev_sub:'Honest words from guests who joined our tours.',
+    gal_lbl:'GALLERY', gal_ttl:'Tour Gallery', gal_sub:'Real moments captured on our tours.',
       rev_cs_ttl:'Coming Soon', rev_cs_sub:'Guest reviews will be posted here soon. Stay tuned!',
       rev_cs_note:'If you\'ve joined us, we\'d love to hear from you 🙏',
       ft_lbl:'DETAILS', ft_ttl:'Service Details', ft_sub:'Premium equipment and care for the best experience.',
@@ -7048,6 +7090,7 @@
       tl5_h:'拍摄', tl5_p:'Insta360记录珍贵回忆',
       tl6_h:'返回&送客', tl6_p:'送您回到住宿地',
       rev_lbl:'用户评价', rev_ttl:'客户好评', rev_sub:'来自真实参加者的心声。',
+    gal_lbl:'GALLERY', gal_ttl:'行程照片集', gal_sub:'为您分享实际行程中拍下的精彩瞬间。',
       rev_cs_ttl:'准备中', rev_cs_sub:'客户评价即将陆续更新，敬请期待！',
       rev_cs_note:'参加过的朋友，期待您的宝贵反馈 🙏',
       ft_lbl:'服务详情', ft_ttl:'服务详情', ft_sub:'精良装备与专业服务，带来最佳体验。',
@@ -7289,6 +7332,7 @@
       tl5_h:'촬영', tl5_p:'Insta360으로 추억 기록',
       tl6_h:'해산・귀환', tl6_p:'숙소까지 데려다 드립니다',
       rev_lbl:'고객 후기', rev_ttl:'참가자 후기', rev_sub:'실제로 참가하신 고객님들의 생생한 목소리를 소개합니다.',
+    gal_lbl:'GALLERY', gal_ttl:'투어 갤러리', gal_sub:'실제 투어에서 촬영한 한 장면을 소개합니다.',
       rev_cs_ttl:'준비 중', rev_cs_sub:'고객 후기를 순차적으로 게재 예정입니다. 기대해 주세요!',
       rev_cs_note:'참가하셨다면 소중한 후기를 남겨 주세요 🙏',
       ft_lbl:'서비스 상세', ft_ttl:'서비스 상세', ft_sub:'최고의 장비와 체제로 최고의 체험을.',
@@ -9083,6 +9127,67 @@
     const n = document.getElementById('rev-src-note'); if (n) n.textContent = revStr(REV_NOTE, lang);
   }
 
+  /* ===== ツアーギャラリー スライドショー（自動4.5秒・矢印・ドット・スワイプ） ===== */
+  function initGallery(){
+    const track = document.getElementById('gal-track');
+    if (!track) return;
+    const slides = [].slice.call(track.querySelectorAll('.gal-slide'));
+    if (slides.length < 2) return;
+    const dotsWrap = document.getElementById('gal-dots');
+    const INTERVAL = 4500;
+    let idx = 0, timer = null;
+
+    slides.forEach(function (s, i) {
+      const d = document.createElement('button');
+      d.className = 'gal-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', (i + 1) + '枚目');
+      d.addEventListener('click', function () { go(i); restart(); });
+      dotsWrap.appendChild(d);
+    });
+    const dots = [].slice.call(dotsWrap.children);
+
+    // 表示前に画像を確実に読み込む（現在＋次を先読み）
+    function preload(i) {
+      const im = slides[(i + slides.length) % slides.length].querySelector('img');
+      if (im && !im.dataset.pl) { im.dataset.pl = '1'; im.loading = 'eager'; im.setAttribute('src', im.getAttribute('src')); }
+    }
+    preload(0); preload(1);
+
+    function go(n) {
+      slides[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (n + slides.length) % slides.length;
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
+      preload(idx); preload(idx + 1);
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+    function start() { timer = setInterval(next, INTERVAL); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+
+    document.getElementById('gal-prev').addEventListener('click', function () { prev(); restart(); });
+    document.getElementById('gal-next').addEventListener('click', function () { next(); restart(); });
+
+    const car = track.parentElement;
+    car.addEventListener('mouseenter', stop);
+    car.addEventListener('mouseleave', start);
+    // タブが非表示のときは止める
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : restart(); });
+    // スワイプ操作
+    let sx = null;
+    car.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    car.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); restart(); }
+      sx = null;
+    }, { passive: true });
+
+    start();
+  }
+
   /* ---- Recommended Points ---- */
   const DET_POINTS = {
     snorkeling:[
@@ -9440,6 +9545,8 @@
     });
     const igBtn = document.getElementById('ig-follow-btn');
     if (igBtn) igBtn.href = INSTAGRAM.url;
+    // Initialize tour gallery slideshow
+    initGallery();
     // Initialize date picker popup
     initDatePickerPopup();
     // Initialize Google Calendar widget
