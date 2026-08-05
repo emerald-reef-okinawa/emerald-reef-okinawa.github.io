@@ -2138,6 +2138,9 @@
     .det-video-wrap { max-width:780px; margin:20px auto 0; border-radius:16px; overflow:hidden; box-shadow:0 12px 38px rgba(0,80,70,.2); background:#08201b; }
     .det-video-wrap.portrait { max-width:380px; }
     .det-video-wrap video { width:100%; height:auto; display:block; }
+    .det-gallery-section { padding:40px 24px 8px; }
+    .det-gallery-section .s-label, .det-gallery-section .s-title, .det-gallery-section .s-sub { text-align:center; }
+    .det-gallery-section .gal-carousel { margin-top:28px; }
     /* overlay */
     .rev-cs-overlay {
       position:absolute; inset:-8px;
@@ -4586,6 +4589,7 @@
   <div id="det-highlights-snorkeling"></div>
   <div id="det-video-snorkeling"></div>
   <div id="det-points-snorkeling"></div>
+  <div id="det-gallery-snorkeling"></div>
 
   <div class="det-body">
     <section>
@@ -4910,6 +4914,7 @@
   <div id="det-highlights-skindiving"></div>
   <div id="det-video-skindiving"></div>
   <div id="det-points-skindiving"></div>
+  <div id="det-gallery-skindiving"></div>
 
   <div class="det-body">
     <section>
@@ -5212,6 +5217,7 @@
   <div id="det-highlights-bluecave"></div>
   <div id="det-video-bluecave"></div>
   <div id="det-points-bluecave"></div>
+  <div id="det-gallery-bluecave"></div>
 
   <div class="det-body">
     <section>
@@ -5530,6 +5536,7 @@
   <div id="det-highlights-turtle"></div>
   <div id="det-video-turtle"></div>
   <div id="det-points-turtle"></div>
+  <div id="det-gallery-turtle"></div>
 
   <div class="det-body">
     <section>
@@ -9143,6 +9150,44 @@
   const DET_VIDEO_TTL = {ja:'体験動画',en:'Tour Video',zh:'体验视频',ko:'체험 영상'};
   const DET_VIDEO_NOTE = {ja:'※ こちらはシュノーケルの体験動画です。スキンダイビングの雰囲気の参考としてご覧ください。',en:'※ This is a snorkeling tour video, provided as a reference for the skin diving experience.',zh:'※ 这是浮潜的体验视频，供您参考自由潜水的体验氛围。',ko:'※ 이 영상은 스노클링 체험 영상입니다. 스킨다이빙 분위기의 참고용으로 봐 주세요.'};
 
+  /* ---- ツアーギャラリー（各プラン詳細ページ・できるだけそのツアーの写真） ---- */
+  const DET_GALLERY = {
+    snorkeling: [
+      {s:'gallery-9.webp',  a:'目の前に集まる無数の熱帯魚と餌付け体験'},
+      {s:'gallery-11.webp', a:'熱帯魚に手を差し伸べるシュノーケラー'},
+      {s:'gallery-10.webp', a:'透明な海で笑顔のシュノーケル体験'},
+      {s:'gallery-12.webp', a:'透き通ったエメラルドの海を楽しむ様子'},
+      {s:'gallery-6.webp',  a:'魚に囲まれてリーフの上をシュノーケリング'},
+      {s:'gallery-14.webp', a:'沖縄の色鮮やかなサンゴ礁'}
+    ],
+    bluecave: [
+      {s:'gallery-7.webp',  a:'青の洞窟でみんなでシュノーケル体験'},
+      {s:'bc-gal1.webp',    a:'青の洞窟に差し込む星型の光と記念撮影'},
+      {s:'gallery-13.webp', a:'青の洞窟に差し込む神秘的な光とシュノーケラー'},
+      {s:'bc-gal2.webp',    a:'ツアー中の笑顔・海の上での記念のひととき'},
+      {s:'gallery-11.webp', a:'熱帯魚に手を差し伸べるシュノーケラー'},
+      {s:'gallery-9.webp',  a:'目の前に集まる無数の熱帯魚'}
+    ],
+    turtle: [
+      {s:'gallery-5.webp',  a:'沖縄近海を優雅に泳ぐウミガメ'},
+      {s:'tt-gal1.webp',    a:'ウミガメと一緒に泳ぐシュノーケル体験'},
+      {s:'gallery-9.webp',  a:'目の前に集まる無数の熱帯魚'},
+      {s:'gallery-12.webp', a:'透き通ったエメラルドの海を楽しむ様子'},
+      {s:'gallery-6.webp',  a:'魚に囲まれてリーフの上をシュノーケリング'},
+      {s:'gallery-14.webp', a:'沖縄の色鮮やかなサンゴ礁'}
+    ],
+    skindiving: [
+      {s:'gallery-13.webp', a:'光の差し込む海を潜るスキンダイビング'},
+      {s:'sk-gal1.webp',    a:'透明度の高い海を潜るふたり'},
+      {s:'sk-gal3.webp',    a:'サンゴ礁の上を素潜りするシルエット'},
+      {s:'sk-gal2.webp',    a:'熱帯魚に囲まれて潜るスキンダイビング'},
+      {s:'gallery-12.webp', a:'透き通ったエメラルドの海を楽しむ様子'},
+      {s:'gallery-6.webp',  a:'リーフの上を潜って楽しむ'}
+    ]
+  };
+  const DET_GALLERY_TTL = {ja:'ツアーギャラリー',en:'Tour Gallery',zh:'行程相册',ko:'투어 갤러리'};
+  const DET_GALLERY_SUB = {ja:'実際のツアーで撮影した写真をご紹介します。',en:'Real photos taken during our tours.',zh:'实际行程中拍摄的照片。',ko:'실제 투어에서 촬영한 사진입니다.'};
+
   /* ===== 予約サイトに投稿された実際のお客様レビュー ===== */
   const REV_SRC = {
     aj:  {cls:'aj',  name:{ja:'アクティビティジャパン',en:'Activity Japan',zh:'Activity Japan',ko:'액티비티재팬'}},
@@ -9213,23 +9258,34 @@
   }
 
   /* ===== ツアーギャラリー スライドショー（自動4.5秒・矢印・ドット・スワイプ） ===== */
-  function initGallery(){
-    const track = document.getElementById('gal-track');
+  /* 複数のカルーセル（トップ＋各プランページ）で使い回せる汎用セットアップ。
+     key ごとにタイマーを管理し、再描画時は前回のインスタンスを破棄する。 */
+  const _carousels = {};
+  let _carVisBound = false;
+  function setupCarousel(car, key) {
+    if (!car) return;
+    const track = car.querySelector('.gal-track');
     if (!track) return;
     const slides = [].slice.call(track.querySelectorAll('.gal-slide'));
+    const dotsWrap = car.querySelector('.gal-dots');
+    // 同じ key の既存インスタンスがあれば停止（再描画時のタイマー多重起動を防ぐ）
+    if (_carousels[key]) { _carousels[key].stop(); delete _carousels[key]; }
+    if (dotsWrap) dotsWrap.innerHTML = '';
+    slides.forEach(function (s, i) { s.classList.toggle('active', i === 0); });
     if (slides.length < 2) return;
-    const dotsWrap = document.getElementById('gal-dots');
     const INTERVAL = 4500;
     let idx = 0, timer = null;
 
-    slides.forEach(function (s, i) {
-      const d = document.createElement('button');
-      d.className = 'gal-dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('aria-label', (i + 1) + '枚目');
-      d.addEventListener('click', function () { go(i); restart(); });
-      dotsWrap.appendChild(d);
-    });
-    const dots = [].slice.call(dotsWrap.children);
+    if (dotsWrap) {
+      slides.forEach(function (s, i) {
+        const d = document.createElement('button');
+        d.className = 'gal-dot' + (i === 0 ? ' active' : '');
+        d.setAttribute('aria-label', (i + 1) + '枚目');
+        d.addEventListener('click', function () { go(i); restart(); });
+        dotsWrap.appendChild(d);
+      });
+    }
+    const dots = dotsWrap ? [].slice.call(dotsWrap.children) : [];
 
     // 表示前に画像を確実に読み込む（現在＋次を先読み）
     function preload(i) {
@@ -9240,10 +9296,10 @@
 
     function go(n) {
       slides[idx].classList.remove('active');
-      dots[idx].classList.remove('active');
+      if (dots[idx]) dots[idx].classList.remove('active');
       idx = (n + slides.length) % slides.length;
       slides[idx].classList.add('active');
-      dots[idx].classList.add('active');
+      if (dots[idx]) dots[idx].classList.add('active');
       preload(idx); preload(idx + 1);
     }
     function next() { go(idx + 1); }
@@ -9252,14 +9308,12 @@
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function restart() { stop(); start(); }
 
-    document.getElementById('gal-prev').addEventListener('click', function () { prev(); restart(); });
-    document.getElementById('gal-next').addEventListener('click', function () { next(); restart(); });
+    const pv = car.querySelector('.gal-arrow.prev'), nx = car.querySelector('.gal-arrow.next');
+    if (pv) pv.addEventListener('click', function () { prev(); restart(); });
+    if (nx) nx.addEventListener('click', function () { next(); restart(); });
 
-    const car = track.parentElement;
     car.addEventListener('mouseenter', stop);
     car.addEventListener('mouseleave', start);
-    // タブが非表示のときは止める
-    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : restart(); });
     // スワイプ操作
     let sx = null;
     car.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
@@ -9270,8 +9324,17 @@
       sx = null;
     }, { passive: true });
 
+    _carousels[key] = { stop: stop, restart: restart };
+    // タブが非表示のときは全カルーセルを止める（リスナーは一度だけ登録）
+    if (!_carVisBound) {
+      _carVisBound = true;
+      document.addEventListener('visibilitychange', function () {
+        Object.keys(_carousels).forEach(function (k) { document.hidden ? _carousels[k].stop() : _carousels[k].restart(); });
+      });
+    }
     start();
   }
+  function initGallery() { setupCarousel(document.querySelector('#gallery .gal-carousel'), 'main'); }
 
   /* ---- Recommended Points ---- */
   const DET_POINTS = {
@@ -9506,6 +9569,28 @@
         '<h2 class="s-title">' + (DET_POINTS_TTL[lang]||DET_POINTS_TTL.ja) + '</h2>' +
         '<div class="points-grid">' + ptCards + '</div>' +
         '</div></section>';
+    }
+
+    /* --- Tour Gallery（プランごと・そのツアーの写真） --- */
+    const galEl = document.getElementById('det-gallery-' + svc);
+    const galData = DET_GALLERY[svc] || [];
+    if (galEl && galData.length) {
+      const slidesHtml = galData.map(function (g, i) {
+        return '<div class="gal-slide' + (i === 0 ? ' active' : '') + '"><img src="' + g.s + '" alt="' + g.a + '" loading="lazy"></div>';
+      }).join('');
+      galEl.innerHTML =
+        '<section class="det-gallery-section"><div class="container">' +
+        '<p class="s-label">GALLERY</p>' +
+        '<h2 class="s-title">' + (DET_GALLERY_TTL[lang] || DET_GALLERY_TTL.ja) + '</h2>' +
+        '<p class="s-sub">' + (DET_GALLERY_SUB[lang] || DET_GALLERY_SUB.ja) + '</p>' +
+        '<div class="gal-carousel">' +
+        '<div class="gal-track">' + slidesHtml + '</div>' +
+        '<button class="gal-arrow prev" aria-label="前の写真">‹</button>' +
+        '<button class="gal-arrow next" aria-label="次の写真">›</button>' +
+        '<div class="gal-dots"></div>' +
+        '</div>' +
+        '</div></section>';
+      setupCarousel(galEl.querySelector('.gal-carousel'), svc);
     }
 
     /* --- Creatures (sorted: ultra → rare → common) --- */
