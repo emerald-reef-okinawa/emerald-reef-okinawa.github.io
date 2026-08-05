@@ -2124,7 +2124,7 @@
     @media(max-width:600px){ .gal-carousel { aspect-ratio:4/5; border-radius:16px; margin-top:26px; } .gal-arrow { width:40px; height:40px; font-size:1.45rem; } .gal-arrow.prev{left:10px;} .gal-arrow.next{right:10px;} }
     /* ===== 体験動画（トップページ） ===== */
     #videos { background: var(--bg); }
-    .tv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:34px; }
+    .tv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:34px; max-width:900px; margin-left:auto; margin-right:auto; }
     .tv-frame { aspect-ratio:16/10; background:#08201b; border-radius:16px; overflow:hidden; box-shadow:0 10px 34px rgba(0,80,70,.16); }
     .tv-frame video { width:100%; height:100%; object-fit:contain; display:block; background:#08201b; }
     .tv-cap { text-align:center; font-size:.9rem; font-weight:700; color:var(--text); margin-top:13px; }
@@ -3612,6 +3612,10 @@
         <figure class="tv-card">
           <div class="tv-frame"><video controls preload="none" playsinline poster="vposter-snorkel.webp"><source src="video-snorkel.mp4" type="video/mp4"></video></div>
           <figcaption class="tv-cap" data-i18n="vid_cap_sn">シュノーケル</figcaption>
+        </figure>
+        <figure class="tv-card">
+          <div class="tv-frame"><video controls preload="none" playsinline poster="vposter-skindiving.webp"><source src="video-skindiving.mp4" type="video/mp4"></video></div>
+          <figcaption class="tv-cap" data-i18n="vid_cap_sk">スキンダイビング</figcaption>
         </figure>
       </div>
     </div>
@@ -6629,7 +6633,7 @@
       /* REVIEWS */
       rev_lbl:'REVIEWS', rev_ttl:'お客様の声', rev_sub:'実際にご参加いただいたお客様のリアルな声をご紹介します。',
     gal_lbl:'GALLERY', gal_ttl:'ツアーギャラリー', gal_sub:'実際のツアーで撮影した一枚をご紹介します。',
-    vid_lbl:'MOVIE', vid_ttl:'体験動画', vid_sub:'実際のツアーの様子を動画でご覧いただけます。', vid_cap_bc:'青の洞窟シュノーケル', vid_cap_tc:'ウミガメシュノーケル', vid_cap_sn:'シュノーケル',
+    vid_lbl:'MOVIE', vid_ttl:'体験動画', vid_sub:'実際のツアーの様子を動画でご覧いただけます。', vid_cap_bc:'青の洞窟シュノーケル', vid_cap_tc:'ウミガメシュノーケル', vid_cap_sn:'シュノーケル', vid_cap_sk:'スキンダイビング',
       rev_cs_ttl:'準備中', rev_cs_sub:'お客様のご感想・レビューを随時掲載予定です。お楽しみに！',
       rev_cs_note:'初回ご参加のお客様、ぜひ感想をお聞かせください 🙏',
       /* FEATURES */
@@ -6888,7 +6892,7 @@
       tl6_h:'Return &amp; Drop-Off', tl6_p:'Back to your accommodation',
       rev_lbl:'REVIEWS', rev_ttl:'Guest Reviews', rev_sub:'Honest words from guests who joined our tours.',
     gal_lbl:'GALLERY', gal_ttl:'Tour Gallery', gal_sub:'Real moments captured on our tours.',
-    vid_lbl:'MOVIE', vid_ttl:'Tour Videos', vid_sub:'Watch real footage from our tours.', vid_cap_bc:'Blue Cave Snorkeling', vid_cap_tc:'Sea Turtle Snorkeling', vid_cap_sn:'Snorkeling',
+    vid_lbl:'MOVIE', vid_ttl:'Tour Videos', vid_sub:'Watch real footage from our tours.', vid_cap_bc:'Blue Cave Snorkeling', vid_cap_tc:'Sea Turtle Snorkeling', vid_cap_sn:'Snorkeling', vid_cap_sk:'Skin Diving',
       rev_cs_ttl:'Coming Soon', rev_cs_sub:'Guest reviews will be posted here soon. Stay tuned!',
       rev_cs_note:'If you\'ve joined us, we\'d love to hear from you 🙏',
       ft_lbl:'DETAILS', ft_ttl:'Service Details', ft_sub:'Premium equipment and care for the best experience.',
@@ -7131,7 +7135,7 @@
       tl6_h:'返回&送客', tl6_p:'送您回到住宿地',
       rev_lbl:'用户评价', rev_ttl:'客户好评', rev_sub:'来自真实参加者的心声。',
     gal_lbl:'GALLERY', gal_ttl:'行程照片集', gal_sub:'为您分享实际行程中拍下的精彩瞬间。',
-    vid_lbl:'MOVIE', vid_ttl:'体验视频', vid_sub:'通过视频观看实际行程的精彩瞬间。', vid_cap_bc:'青之洞窟浮潜', vid_cap_tc:'海龟浮潜', vid_cap_sn:'浮潜',
+    vid_lbl:'MOVIE', vid_ttl:'体验视频', vid_sub:'通过视频观看实际行程的精彩瞬间。', vid_cap_bc:'青之洞窟浮潜', vid_cap_tc:'海龟浮潜', vid_cap_sn:'浮潜', vid_cap_sk:'自由潜水',
       rev_cs_ttl:'准备中', rev_cs_sub:'客户评价即将陆续更新，敬请期待！',
       rev_cs_note:'参加过的朋友，期待您的宝贵反馈 🙏',
       ft_lbl:'服务详情', ft_ttl:'服务详情', ft_sub:'精良装备与专业服务，带来最佳体验。',
@@ -7374,7 +7378,7 @@
       tl6_h:'해산・귀환', tl6_p:'숙소까지 데려다 드립니다',
       rev_lbl:'고객 후기', rev_ttl:'참가자 후기', rev_sub:'실제로 참가하신 고객님들의 생생한 목소리를 소개합니다.',
     gal_lbl:'GALLERY', gal_ttl:'투어 갤러리', gal_sub:'실제 투어에서 촬영한 한 장면을 소개합니다.',
-    vid_lbl:'MOVIE', vid_ttl:'체험 영상', vid_sub:'실제 투어의 모습을 영상으로 보실 수 있습니다.', vid_cap_bc:'블루케이브 스노클링', vid_cap_tc:'바다거북 스노클링', vid_cap_sn:'스노클링',
+    vid_lbl:'MOVIE', vid_ttl:'체험 영상', vid_sub:'실제 투어의 모습을 영상으로 보실 수 있습니다.', vid_cap_bc:'블루케이브 스노클링', vid_cap_tc:'바다거북 스노클링', vid_cap_sn:'스노클링', vid_cap_sk:'스킨다이빙',
       rev_cs_ttl:'준비 중', rev_cs_sub:'고객 후기를 순차적으로 게재 예정입니다. 기대해 주세요!',
       rev_cs_note:'참가하셨다면 소중한 후기를 남겨 주세요 🙏',
       ft_lbl:'서비스 상세', ft_ttl:'서비스 상세', ft_sub:'최고의 장비와 체제로 최고의 체험을.',
@@ -9127,7 +9131,7 @@
     snorkeling: { src:'video-snorkel.mp4',  poster:'vposter-snorkel.webp',  portrait:true },
     bluecave:   { src:'video-bluecave.mp4', poster:'vposter-bluecave.webp', portrait:false },
     turtle:     { src:'video-turtle.mp4',   poster:'vposter-turtle.webp',   portrait:false },
-    skindiving: { src:'video-snorkel.mp4',  poster:'vposter-snorkel.webp',  portrait:true, note:true }
+    skindiving: { src:'video-skindiving.mp4', poster:'vposter-skindiving.webp', portrait:true }
   };
   const DET_VIDEO_TTL = {ja:'体験動画',en:'Tour Video',zh:'体验视频',ko:'체험 영상'};
   const DET_VIDEO_NOTE = {ja:'※ こちらはシュノーケルの体験動画です。スキンダイビングの雰囲気の参考としてご覧ください。',en:'※ This is a snorkeling tour video, provided as a reference for the skin diving experience.',zh:'※ 这是浮潜的体验视频，供您参考自由潜水的体验氛围。',ko:'※ 이 영상은 스노클링 체험 영상입니다. 스킨다이빙 분위기의 참고용으로 봐 주세요.'};
