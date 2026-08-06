@@ -543,6 +543,7 @@ function getOrCreateLabel_(name) {
  * 「翌日」が予約日の予定を探し、お客様へリマインドメールを自動送信する。
  * メールには「参加を確認する」ボタン（ウェブアプリへのリンク）を入れる。
  * 二重送信防止のため、送信した予定の説明欄に目印を追記する。
+ * タイトルの冒頭が「キャンセル」の予定（例: 「キャンセル那覇シュノーケル…」）は対象外。
  * → 毎日 1 回のトリガーで実行する（createReminderTrigger）。
  */
 function processReminders() {
@@ -564,6 +565,9 @@ function processReminders() {
   let sent = 0;
   events.forEach(function (ev) {
     try {
+      // タイトル冒頭が「キャンセル」の予定はリマインドを送らない
+      if (/^\s*キャンセル/.test(ev.getTitle() || '')) return;
+
       const desc = ev.getDescription() || '';
       if (desc.indexOf(CONFIG.REMINDED_MARK) !== -1) return; // 送信済み
 
