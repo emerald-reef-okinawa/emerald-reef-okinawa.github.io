@@ -3229,17 +3229,85 @@
       }
       .fg label, .fg label span { color: var(--text) !important; }
 
-      /* Blog */
-      .blog-card { background: #0e2238 !important; }
-      .blog-card-body h3 { color: var(--text) !important; }
-      .blog-excerpt { color: var(--text-soft) !important; }
+      /* Blog（実際のクラス名は .bl-card / .bl-body。旧 .blog-card* は存在せず無効だったため修正） */
+      .bl-card { background: #0e2238 !important; }
+      .bl-body h3 { color: var(--text) !important; }
+      .bl-body p, .bl-meta { color: var(--text-soft) !important; }
+      .bl-tag, .bl-more { color: var(--text-soft) !important; }
 
-      /* Reviews */
-      .rev-card { background: #0e2238 !important; }
+      /* Reviews（実際のクラス名は .r-card。旧 .rev-card は存在せず無効だったため修正） */
+      .r-card { background: #0e2238 !important; }
 
-      /* POM / Features */
-      .pom-item { background: #0e2238 !important; }
+      /* POM / Features（実際のクラス名は .pom-card。旧 .pom-item は存在せず無効だったため修正） */
+      .pom-card { background: #0e2238 !important; }
       .ft-item { background: #0e2238 !important; }
+      .ft-item h4 { color: var(--text) !important; }
+
+      /* 見出し全般（var(--navy) 固定色のため、暗くなった背景の上で見えなくなっていたもの） */
+      .s-title,
+      .price-card h3,
+      .faq-q-txt,
+      .mini-faq-q,
+      .point-ttl,
+      .creature-name,
+      .gear-card-ttl,
+      .oki-info-col h3,
+      .oki-area-card h4,
+      .ct-alt-ttl,
+      .step-c h4,
+      .sched h3,
+      .policy-check-wrap .vc-txt, .policy-check-wrap .vc-txt strong,
+      [data-i18n="sup_soon"], [data-i18n="sup_prep"]
+      { color: var(--text) !important; }
+
+      /* ラベル・補足テキスト全般（var(--g-dark)/var(--g-main) 固定色のため見えなくなっていたもの） */
+      .chip,
+      .oki-tag:not(.ct-tag),
+      .faq-ico,
+      .tl-duration,
+      .gsn-left,
+      .gear-badge-opt,
+      .pc-age-note,
+      .p-plan-name, .pt-free-note,
+      .breadcrumb a,
+      .cancel-timing,
+      .pom-card h4,
+      .pom-card p
+      { color: var(--text-soft) !important; }
+      .sv-sale-note { color: #ff8a80 !important; }
+      /* .video-check（動画データオプション）は #fffde7 固定の常時明るいカードなので
+         var(--text-soft) にすると暗い背景想定の色になってしまう。元の暗い色を維持する */
+      .vtxt p, .vico, .vprc { color: #35564e !important; }
+
+      /* #features / #timeline / #peace-of-mind / #reviews は写真オーバーレイ・白系グラデーションが
+         常に明るいままのセクションなので、直下の見出し・補足文だけは明るい色に変えず元の暗い色を維持する
+         （カード内の見出しは各カードごとに暗く上書き済みなのでこの対象には含めない） */
+      #features .s-title,
+      #timeline .s-title,
+      #timeline .tl-duration,
+      #peace-of-mind .pom-hero-text .s-title
+      { color: var(--navy) !important; }
+      #features .s-sub,
+      #timeline .s-sub,
+      #timeline .sq-cell p,
+      #peace-of-mind .pom-hero-text .s-sub,
+      #peace-of-mind .pom-list li
+      { color: #35564e !important; }
+      .mbf-ico { color: #fff !important; }
+      #reviews { background: linear-gradient(180deg,var(--bg) 0%,var(--g-pale) 100%) !important; }
+      .cancel-fee { color: #ff8a80 !important; }
+      .cancel-fee.free { color: #69f0ae !important; }
+
+      /* プラン詳細ページ（ツアーの詳細・3つの理由・生き物図鑑・ミニFAQ）は
+         背景が #fff 固定のままだったため、常時ダークな var(--text) 文字が見えなくなっていた。
+         カードごと暗くして他コンポーネントと統一する。 */
+      .tour-detail-section,
+      .mini-faq-section,
+      .oki-area-card,
+      .points-grid .point-card,
+      .creatures-grid .creature-card
+      { background: #0e2238 !important; }
+      .creatures-section { background: var(--bg) !important; }
 
       /* Sections general */
       .gear-section,.faq-section,.rev-section { background: var(--bg) !important; }
