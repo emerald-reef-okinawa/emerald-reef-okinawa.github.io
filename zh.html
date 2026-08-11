@@ -1916,6 +1916,7 @@
        VIDEO OPTION
        ================================================================ */
     .video-opt {
+      position: relative;
       display: flex; align-items: center; gap: 14px;
       background: linear-gradient(135deg,#fffde7,#fff9c4);
       border: 2px solid #ffd54f; border-radius: var(--radius);
@@ -1924,7 +1925,34 @@
     .vico { font-size: 1.8rem; flex-shrink: 0; }
     .vtxt h4 { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
     .vtxt p { font-size: .78rem; color: var(--text-soft); line-height: 1.5; }
-    .vprc { font-size: 1.1rem; font-weight: 800; color: var(--g-dark); white-space: nowrap; flex-shrink: 0; margin-left: auto; }
+    /* 価格ブロック：通常価格に取り消し線 → 「無料」を大きく見せて“今だけ”を強調 */
+    .vprc {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      white-space: nowrap; flex-shrink: 0; margin-left: auto; text-align: center;
+    }
+    .vprc-badge {
+      font-size: .6rem; font-weight: 800; letter-spacing: .08em;
+      background: #c62828; color: #fff; padding: 3px 9px; border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(198,40,40,.35);
+      animation: vprcPulse 1.9s ease-in-out infinite;
+    }
+    @keyframes vprcPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+    .vprc-old {
+      font-size: .88rem; font-weight: 700; color: #5f6f69;
+      text-decoration: line-through; text-decoration-color: var(--sale);
+      text-decoration-thickness: 2px;
+    }
+    .vprc-free {
+      font-size: 1.5rem; font-weight: 900; color: var(--sale); line-height: 1;
+      letter-spacing: .01em;
+    }
+    @media(max-width:600px){
+      .video-opt { flex-wrap: wrap; gap: 10px 12px; padding: 16px; }
+      .vtxt { flex: 1 1 60%; min-width: 0; }
+      .vprc { flex-direction: row; align-items: center; gap: 8px; margin-left: 0; width: 100%;
+              justify-content: flex-end; border-top: 1px dashed rgba(229,57,53,.35); padding-top: 10px; }
+      .vprc-free { font-size: 1.35rem; }
+    }
 
     /* video checkbox in form */
     .video-check {
@@ -3276,8 +3304,9 @@
       { color: var(--text-soft) !important; }
       .sv-sale-note { color: #ff8a80 !important; }
       /* .video-check（動画データオプション）は #fffde7 固定の常時明るいカードなので
-         var(--text-soft) にすると暗い背景想定の色になってしまう。元の暗い色を維持する */
-      .vtxt p, .vico, .vprc { color: #35564e !important; }
+         var(--text-soft) にすると暗い背景想定の色になってしまう。元の暗い色を維持する。
+         .vprc-old / .vprc-free は自前で色を持つのでここでは触らない */
+      .vtxt p, .vico { color: #35564e !important; }
 
       /* #features / #timeline / #peace-of-mind / #reviews は写真オーバーレイ・白系グラデーションが
          常に明るいままのセクションなので、直下の見出し・補足文だけは明るい色に変えず元の暗い色を維持する
@@ -4739,7 +4768,11 @@
                   <h4 data-i18n="vid_opt_h">動画データ（今だけ無料）</h4>
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影・編集した動画データを、今だけ無料でプレゼントしています</p>
                 </div>
-                <div class="vprc">+¥2,000</div>
+                <div class="vprc">
+                  <span class="vprc-badge" data-i18n="vid_now">今だけ</span>
+                  <span class="vprc-old">+¥2,000</span>
+                  <span class="vprc-free" data-i18n="vid_free">無料</span>
+                </div>
               </div>
               <div style="margin-top:20px;">
                 <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
@@ -5042,7 +5075,11 @@
                   <h4 data-i18n="vid_opt_h">動画データ（今だけ無料）</h4>
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影・編集した動画データを、今だけ無料でプレゼントしています</p>
                 </div>
-                <div class="vprc">+¥2,000</div>
+                <div class="vprc">
+                  <span class="vprc-badge" data-i18n="vid_now">今だけ</span>
+                  <span class="vprc-old">+¥2,000</span>
+                  <span class="vprc-free" data-i18n="vid_free">無料</span>
+                </div>
               </div>
               <div style="margin-top:20px;">
                 <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
@@ -5366,7 +5403,11 @@
                   <h4 data-i18n="vid_opt_h">動画データ（今だけ無料）</h4>
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影・編集した動画データを、今だけ無料でプレゼントしています</p>
                 </div>
-                <div class="vprc">+¥2,000</div>
+                <div class="vprc">
+                  <span class="vprc-badge" data-i18n="vid_now">今だけ</span>
+                  <span class="vprc-old">+¥2,000</span>
+                  <span class="vprc-free" data-i18n="vid_free">無料</span>
+                </div>
               </div>
               <div style="margin-top:20px;">
                 <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
@@ -5685,7 +5726,11 @@
                   <h4 data-i18n="vid_opt_h">動画データ（今だけ無料）</h4>
                   <p data-i18n="vid_opt_p">Insta360 X5で撮影・編集した動画データを、今だけ無料でプレゼントしています</p>
                 </div>
-                <div class="vprc">+¥2,000</div>
+                <div class="vprc">
+                  <span class="vprc-badge" data-i18n="vid_now">今だけ</span>
+                  <span class="vprc-old">+¥2,000</span>
+                  <span class="vprc-free" data-i18n="vid_free">無料</span>
+                </div>
               </div>
               <div style="margin-top:20px;">
                 <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
@@ -6814,6 +6859,7 @@
       pr_junior_note:'※中学生以上は大人料金が適用されます。', pr_max_cap:'※1組最大6名まで。',
       pc_note:'※全機材・送迎・写真データ込みの価格です。',
       pp_per:'〜 / 人', pp_per_1:'/ 人',
+      vid_now:'今だけ', vid_free:'無料',
       vid_opt_h:'動画データ（今だけ無料）', vid_opt_p:'Insta360 X5で撮影・編集した動画データを、今だけ無料でプレゼントしています',
       /* INCLUDES */
       inc_h1:'完全送迎', inc_p1:'ホテル・宿泊先からの往復送迎',
@@ -7103,6 +7149,7 @@
       pr_junior_note:'※ Junior high & older are charged adult rate.', pr_max_cap:'※ Max 6 per group.',
       pc_note:'※ All gear, transfers & photos included.',
       pp_per_1:'/ person',
+      vid_now:'NOW ONLY', vid_free:'FREE',
       vid_opt_h:'Video Data (Free Now)', vid_opt_p:'We are gifting your edited Insta360 X5 video for free, for a limited time',
       /* INCLUDES */
       inc_h1:'Hotel Transfers', inc_p1:'Round-trip pickup from your hotel / accommodation',
@@ -7346,6 +7393,7 @@
       pr_junior_note:'※初中生以上按成人收费。', pr_max_cap:'※每组最多6人。',
       pc_note:'※含全部装备・接送・照片。',
       pp_per_1:'/ 每人',
+      vid_now:'限时', vid_free:'免费',
       vid_opt_h:'视频数据（限时免费）', vid_opt_p:'现在限时免费赠送Insta360 X5拍摄剪辑的视频数据',
       /* INCLUDES */
       inc_h1:'全程接送', inc_p1:'酒店・住宿地往返接送',
@@ -7589,6 +7637,7 @@
       pr_junior_note:'※중학생 이상 성인 요금 적용.', pr_max_cap:'※1팀 최대 6명.',
       pc_note:'※전 기자재・픽업・사진 포함 가격입니다.',
       pp_per_1:'/ 1인',
+      vid_now:'지금만', vid_free:'무료',
       vid_opt_h:'동영상 데이터（지금만 무료）', vid_opt_p:'Insta360 X5로 촬영・편집한 영상을 지금만 무료로 증정 중',
       /* INCLUDES */
       inc_h1:'완전 픽업', inc_p1:'호텔・숙소 왕복 픽업',
