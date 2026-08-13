@@ -1047,7 +1047,8 @@
       font-size: .73rem; color: var(--text-soft);
     }
     .cal-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-    .cal-dot.ok     { background: #43a047; }
+    .cal-dot.ok      { background: #43a047; }
+    .cal-dot.partial { background: #e65100; }
     .cal-dot.busy   { background: #aaa; }
     .cal-dot.event  { background: var(--g-mid); }
     .cal-setup-note {
@@ -1139,6 +1140,11 @@
       background: rgba(0,201,167,.13);
       border: 1px solid rgba(0,201,167,.22);
     }
+    /* 午前・午後のどちらか一方だけ空いている日 */
+    .ccal-cell.partial {
+      background: rgba(255,167,38,.16);
+      border: 1px solid rgba(239,108,0,.30);
+    }
     .ccal-cell.busy {
       background: rgba(170,170,170,.16);
       border: 1px solid rgba(140,140,140,.25);
@@ -1151,12 +1157,14 @@
     .ccal-dn {
       font-size: .62rem; font-weight: 600; color: var(--navy); line-height: 1;
     }
-    .ccal-dot {
-      width: 3px; height: 3px; border-radius: 50%; margin-top: 1px;
+    /* 空き状況マーク ○=終日空き / △=午前か午後のみ空き / ×=満員 */
+    .ccal-mk {
+      font-size: .6rem; font-weight: 800; line-height: 1; margin-top: 2px;
     }
-    .ccal-cell.free .ccal-dot  { background: var(--g-mid); }
-    .ccal-cell.busy .ccal-dot  { background: #aaa; }
-    .ccal-cell.past .ccal-dot  { display: none; }
+    .ccal-mk.free    { color: #00655a; }
+    .ccal-mk.partial { color: #b23c00; }
+    .ccal-mk.busy    { color: #6e6e6e; }
+    .ccal-cell.past .ccal-mk { display: none; }
     .ccal-loading {
       padding: 46px 20px; text-align: center;
       font-size: .86rem; color: var(--text-soft); font-weight: 600; letter-spacing: .03em;
@@ -1222,14 +1230,20 @@
       display: flex; align-items: center; gap: 5px;
     }
 
-    /* 予約ページカレンダー: 空き日は選択可能 */
-    .bk-cal-wrap .ccal-cell.free {
+    /* 予約ページカレンダー: 空き日（△の一部空きを含む）は選択可能 */
+    .bk-cal-wrap .ccal-cell.free,
+    .bk-cal-wrap .ccal-cell.partial {
       cursor: pointer;
       pointer-events: auto;
       transition: background .12s, transform .12s;
     }
     .bk-cal-wrap .ccal-cell.free:hover {
       background: rgba(0,201,167,.32);
+      transform: scale(1.09);
+      z-index: 1;
+    }
+    .bk-cal-wrap .ccal-cell.partial:hover {
+      background: rgba(255,167,38,.38);
       transform: scale(1.09);
       z-index: 1;
     }
@@ -1242,7 +1256,6 @@
       cursor: not-allowed;
       pointer-events: none;
     }
-    .bk-cal-wrap .ccal-cell.busy .ccal-dot { background: #aaa !important; }
     /* 選択済み日ハイライト */
     .bk-cal-wrap .ccal-cell.cal-selected {
       background: var(--g-main) !important;
@@ -1251,7 +1264,14 @@
       outline-offset: -1px;
     }
     .bk-cal-wrap .ccal-cell.cal-selected .ccal-dn { color: #fff !important; font-weight: 800; }
-    .bk-cal-wrap .ccal-cell.cal-selected .ccal-dot { background: #fff !important; }
+    .bk-cal-wrap .ccal-cell.cal-selected .ccal-mk { color: #fff !important; }
+    /* 「この日は午前のみ／午後のみ」の案内 */
+    .bk-slot-note {
+      display: none;
+      margin-top: 6px; padding: 7px 11px;
+      background: #fff8e1; border: 1px solid #ffcc80; border-radius: 7px;
+      color: #8a4b00; font-size: .76rem; font-weight: 600; line-height: 1.6;
+    }
     /* 日付入力エラー表示 */
     .bk-date-err {
       display: none;
@@ -1284,13 +1304,17 @@
     .bk-date-popup-nav button:hover { background: var(--g-mid); color: #fff; }
     .bk-date-popup .ccal-month-block { margin: 0; }
     .bk-date-popup .ccal-mhead { font-size: .9rem; padding: 4px 0 6px; }
-    /* ポップアップ内の空き日はクリック可能にする */
-    .bk-date-popup .ccal-cell.free {
+    /* ポップアップ内の空き日（△の一部空きを含む）はクリック可能にする */
+    .bk-date-popup .ccal-cell.free,
+    .bk-date-popup .ccal-cell.partial {
       cursor: pointer; pointer-events: auto;
       transition: background .12s, transform .12s;
     }
     .bk-date-popup .ccal-cell.free:hover {
       background: rgba(0,201,167,.3); transform: scale(1.06);
+    }
+    .bk-date-popup .ccal-cell.partial:hover {
+      background: rgba(255,167,38,.36); transform: scale(1.06);
     }
     /* ===== フォームバリデーションエラー ===== */
     .fg-err-msg {
@@ -3351,6 +3375,14 @@
         color: #ffe9a8 !important;
       }
 
+      /* 空き状況カレンダー（.bk-cal-wrap / 日付ピッカー）は白いカードのままなので、
+         中の文字だけ明るい色に変わると読めなくなる。暗い文字を維持する。 */
+      .bk-cal-legend .cal-leg-item { color: #35564e !important; }
+      .bk-date-popup .ccal-mhead, .bk-cal-wrap .ccal-mhead { color: var(--navy) !important; }
+      .bk-date-popup .ccal-daynames span, .bk-cal-wrap .ccal-daynames span { color: #4a5c58 !important; }
+      .bk-date-popup .ccal-daynames span:first-child, .bk-cal-wrap .ccal-daynames span:first-child { color: #c62828 !important; }
+      .bk-date-popup .ccal-daynames span:last-child, .bk-cal-wrap .ccal-daynames span:last-child { color: #2f5aa8 !important; }
+
       /* Sections general */
       .gear-section,.faq-section,.rev-section { background: var(--bg) !important; }
       section { background: var(--bg); }
@@ -4606,7 +4638,7 @@
                   <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
                   <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
                 </div>
-                <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+                <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
                 <div class="form-row2">
                   <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
                   <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -4635,8 +4667,8 @@
               <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
               <div id="gcal-mini-bk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
               <div class="bk-cal-legend">
-                <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
-                <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+                <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+                <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
               </div>
             </div>
           </div>
@@ -4864,7 +4896,7 @@
               <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
               <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
             </div>
-            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -4897,8 +4929,8 @@
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
           <div id="gcal-mini-sn" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
-            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
-            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
           </div>
         </div>
       </div>
@@ -5172,7 +5204,7 @@
               <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
               <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
             </div>
-            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="sk_pax1">1名（おひとり様プラン）</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_level">経験レベル</label><select name="経験レベル"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="lv1">完全初心者</option><option data-i18n="lv2">シュノーケル経験あり</option><option data-i18n="lv3">素潜り経験あり</option></select></div>
@@ -5205,8 +5237,8 @@
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
           <div id="gcal-mini-sk" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
-            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
-            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
           </div>
         </div>
       </div>
@@ -5498,7 +5530,7 @@
               <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
               <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
             </div>
-            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -5528,8 +5560,8 @@
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
           <div id="gcal-mini-bc" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
-            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
-            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
           </div>
         </div>
       </div>
@@ -5821,7 +5853,7 @@
               <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
               <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
             </div>
-            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00">8:00</option><option value="9:00">9:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="相談したい" data-i18n="sel_consult">相談したい</option></select></div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -5851,8 +5883,8 @@
           <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
           <div id="gcal-mini-tc" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
           <div class="bk-cal-legend">
-            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">空き</span></span>
-            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">予約済み</span></span>
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
           </div>
         </div>
       </div>
@@ -6166,14 +6198,27 @@
     var r = await fetch(url, { cache: 'no-cache' });
     if (!r.ok) throw new Error('API error ' + r.status);
     var data  = await r.json();
-    var busy  = new Set();
+    var busy  = new Map();
     (data.items || []).forEach(function(item) {
-      if (item.start) {
-        var ds = (item.start.date || item.start.dateTime || '').substring(0, 10).replace(/-/g,'');
-        if (ds) busy.add(ds);
+      if (!item.start) return;
+      /* 終日予定は date、時刻ありは dateTime（例 2026-08-11T08:00:00+09:00） */
+      if (item.start.date) {
+        var ad = item.start.date.replace(/-/g, '');
+        busy.set(ad, Object.assign(busy.get(ad) || {am:false,pm:false,full:false}, {full:true}));
+        return;
       }
+      var dt = item.start.dateTime || '';
+      if (!dt) return;
+      /* dateTime はカレンダーのタイムゾーン(Asia/Tokyo)のオフセット付きなので、
+         文字列の時刻部分がそのまま日本時間になる */
+      var ds  = dt.substring(0, 10).replace(/-/g, '');
+      var hh  = +dt.substring(11, 13), mi = +dt.substring(14, 16);
+      var kind = slotOfTime(hh, mi);
+      var cur = busy.get(ds) || {am:false,pm:false,full:false};
+      cur[kind] = true;
+      busy.set(ds, cur);
     });
-    console.log('[Calendar] API mode, events:', busy.size);
+    console.log('[Calendar] API mode, days:', busy.size);
     return busy;
   }
 
@@ -6253,33 +6298,103 @@
     return fetchViaProxy();
   }
 
-  /* iCalテキストを解析して予定のある日付セットを返す (YYYYMMDD形式) */
+  /* ================================================================
+     予約枠（1日3枠）
+       午前の部 = 8:00 / 9:00   … どちらかに予約が入ったら午前は満了
+       午後の部 = 13:00
+     8:00・9:00・13:00 以外の時刻に予定が入っている日は、枠に当てはめられない
+     ため終日受付停止（＝×）にする。終日予定・複数日にまたがる予定も同じ扱い。
+     ================================================================ */
+  const SLOT_TIMES = { am: ['8:00', '9:00'], pm: ['13:00'] };
+
+  function _pad2(n) { return String(n).padStart(2, '0'); }
+
+  /* 時刻(JST)から枠を判定。枠に当てはまらなければ 'full'（終日ブロック） */
+  function slotOfTime(hh, mi) {
+    if (mi !== 0) return 'full';
+    if (hh === 8 || hh === 9) return 'am';
+    if (hh === 13) return 'pm';
+    return 'full';
+  }
+
+  /* iCalテキストを解析し、日付ごとの埋まり具合を返す
+     Map<'YYYYMMDD', {am:bool, pm:bool, full:bool}> */
   function parseIcalDates(text) {
-    const busy = new Set();
+    const slots = new Map();
+    function mark(ds, kind) {
+      var cur = slots.get(ds) || { am: false, pm: false, full: false };
+      cur[kind] = true;
+      slots.set(ds, cur);
+    }
+    /* inclusiveEnd=true なら終了日そのものも含める。
+       終日予定の DTEND は「翌日」を指す排他的な値なので false のまま使う。 */
+    function markRange(sDs, eDs, kind, inclusiveEnd) {
+      var cur = new Date(+sDs.substr(0,4), +sDs.substr(4,2)-1, +sDs.substr(6,2));
+      var end = new Date(+eDs.substr(0,4), +eDs.substr(4,2)-1, +eDs.substr(6,2));
+      if (inclusiveEnd || cur.getTime() === end.getTime()) end.setDate(end.getDate()+1);
+      while (cur < end) {
+        mark(cur.getFullYear() + _pad2(cur.getMonth()+1) + _pad2(cur.getDate()), kind);
+        cur.setDate(cur.getDate()+1);
+      }
+    }
     const blocks = text.split('BEGIN:VEVENT');
     blocks.slice(1).forEach(function(block) {
       var ei = block.indexOf('END:VEVENT');
       var evt = block.substring(0, ei);
-      /* DTSTART:YYYYMMDD または DTSTART;TZID=...:YYYYMMDDTHHMMSS に対応 */
-      var sm = evt.match(/DTSTART[^:]*:(\d{8})/);
-      var em = evt.match(/DTEND[^:]*:(\d{8})/);
+      /* DTSTART;VALUE=DATE:YYYYMMDD（終日）/ DTSTART;TZID=...:YYYYMMDDTHHMMSS /
+         DTSTART:YYYYMMDDTHHMMSSZ（UTC）のいずれにも対応 */
+      var sm = evt.match(/DTSTART([^:\r\n]*):(\d{8}(?:T\d{6}Z?)?)/);
+      var em = evt.match(/DTEND([^:\r\n]*):(\d{8}(?:T\d{6}Z?)?)/);
       if (!sm) return;
-      var s = sm[1];
-      var e = em ? em[1] : s;
-      /* 開始から終了-1日まで全日をbusyに */
-      var cur = new Date(+s.substr(0,4), +s.substr(4,2)-1, +s.substr(6,2));
-      var end = new Date(+e.substr(0,4), +e.substr(4,2)-1, +e.substr(6,2));
-      if (cur.getTime() === end.getTime()) end.setDate(end.getDate()+1);
-      while (cur < end) {
-        busy.add(
-          cur.getFullYear() +
-          String(cur.getMonth()+1).padStart(2,'0') +
-          String(cur.getDate()).padStart(2,'0')
-        );
-        cur.setDate(cur.getDate()+1);
+      var sVal = sm[2];
+      var eVal = em ? em[2] : sVal;
+
+      /* 終日予定（時刻なし）→ 期間中を終日ブロック */
+      if (sVal.indexOf('T') === -1) {
+        markRange(sVal.substr(0,8), eVal.substr(0,8), 'full');
+        return;
       }
+
+      /* 時刻あり。UTC(Z)表記なら日本時間へ直す */
+      var ds = sVal.substr(0,8);
+      var hh = +sVal.substr(9,2), mi = +sVal.substr(11,2);
+      if (/Z$/.test(sVal)) {
+        var jd = new Date(Date.UTC(+ds.substr(0,4), +ds.substr(4,2)-1, +ds.substr(6,2), hh, mi) + 9*3600*1000);
+        ds = jd.getUTCFullYear() + _pad2(jd.getUTCMonth()+1) + _pad2(jd.getUTCDate());
+        hh = jd.getUTCHours(); mi = jd.getUTCMinutes();
+      }
+      /* 日をまたぐ予定は終日ブロック */
+      var eDs = eVal.substr(0,8);
+      if (/Z$/.test(eVal)) {
+        var ehh = +eVal.substr(9,2), emi = +eVal.substr(11,2);
+        var ejd = new Date(Date.UTC(+eDs.substr(0,4), +eDs.substr(4,2)-1, +eDs.substr(6,2), ehh, emi) + 9*3600*1000);
+        eDs = ejd.getUTCFullYear() + _pad2(ejd.getUTCMonth()+1) + _pad2(ejd.getUTCDate());
+      }
+      if (eDs > ds) { markRange(ds, eDs, 'full', true); return; }
+
+      mark(ds, slotOfTime(hh, mi));
     });
-    return busy;
+    return slots;
+  }
+
+  /* その日の状態を返す: 'free'（○終日空き）/ 'partial'（△午前か午後のみ）/ 'busy'（×受付不可） */
+  function dayState(slots, ds) {
+    if (!slots) return 'free';
+    var s = slots.get ? slots.get(ds) : slots[ds];
+    if (!s) return 'free';
+    if (s.full) return 'busy';
+    if (s.am && s.pm) return 'busy';
+    if (s.am || s.pm) return 'partial';
+    return 'free';
+  }
+
+  /* その日に予約できる開始時刻の配列を返す */
+  function openTimesOn(slots, ds) {
+    var st = dayState(slots, ds);
+    if (st === 'busy') return [];
+    if (st === 'free') return SLOT_TIMES.am.concat(SLOT_TIMES.pm);
+    var s = slots.get ? slots.get(ds) : slots[ds];
+    return s.am ? SLOT_TIMES.pm.slice() : SLOT_TIMES.am.slice();
   }
 
   /* 1ヶ月分のカレンダーHTMLを生成 */
@@ -6306,15 +6421,17 @@
       var ds = year + String(month+1).padStart(2,'0') + String(d).padStart(2,'0');
       var isToday = (ds === todayStr);
       var isPast  = (ds < todayStr);
-      var isBusy  = busyDates.has(ds);
+      var st      = dayState(busyDates, ds); /* free / partial / busy */
       var cls = 'ccal-cell';
-      if (isPast)    cls += ' past';
-      else if (isBusy) cls += ' busy';
-      else           cls += ' free';
+      if (isPast) cls += ' past';
+      else        cls += ' ' + st;
       if (isToday)   cls += ' today';
       h += '<div class="' + cls + '" data-date="' + ds + '">';
       h += '<span class="ccal-dn">' + d + '</span>';
-      if (!isPast) h += '<span class="ccal-dot"></span>';
+      if (!isPast) {
+        var mk = (st === 'free') ? '○' : (st === 'partial') ? '△' : '×';
+        h += '<span class="ccal-mk ' + st + '">' + mk + '</span>';
+      }
       h += '</div>';
     }
     h += '</div></div>'; /* grid + month-block */
@@ -6373,7 +6490,7 @@
   function renderDatePickerMonth() {
     var popup = document.getElementById('bk-date-popup');
     if (!popup) return;
-    var busy = (typeof _gcalBusy !== 'undefined' && _gcalBusy) ? _gcalBusy : new Set();
+    var busy = (typeof _gcalBusy !== 'undefined' && _gcalBusy) ? _gcalBusy : new Map();
     popup.querySelector('.bk-date-popup-cal').innerHTML =
       buildMonthHtml(_bkPickerState.year, _bkPickerState.month, busy);
     popup.style.display = 'block';
@@ -6452,7 +6569,7 @@
       if (e.target.classList.contains('bk-date-inp')) { openDatePicker(e.target); return; }
       var pop = document.getElementById('bk-date-popup');
       if (!pop || pop.style.display === 'none') return;
-      var cell = e.target.closest('.ccal-cell.free[data-date]');
+      var cell = e.target.closest('.ccal-cell.free[data-date], .ccal-cell.partial[data-date]');
       if (cell && pop.contains(cell)) {
         var ds  = cell.getAttribute('data-date');
         var iso = ds.substring(0,4) + '-' + ds.substring(4,6) + '-' + ds.substring(6,8);
@@ -6460,6 +6577,7 @@
           _bkPickerState.input.value = iso;
           clearDateError(_bkPickerState.input);
           clearFieldError(_bkPickerState.input);
+          applySlotOptions(_bkPickerState.input, ds);
         }
         closeDatePicker();
         return;
@@ -6482,7 +6600,7 @@
         var container = document.getElementById(id);
         if (!container) return;
         container.addEventListener('click', function(e) {
-          var cell = e.target.closest('.ccal-cell.free[data-date]');
+          var cell = e.target.closest('.ccal-cell.free[data-date], .ccal-cell.partial[data-date]');
           if (!cell) return;
           var ds  = cell.getAttribute('data-date');
           var iso = ds.substring(0,4) + '-' + ds.substring(4,6) + '-' + ds.substring(6,8);
@@ -6492,6 +6610,7 @@
           if (!inp) return;
           inp.value = iso;
           clearDateError(inp); clearFieldError(inp);
+          applySlotOptions(inp, ds);
           container.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
           cell.classList.add('cal-selected');
           /* 日付選択後、ご希望のツアー欄（比較表ページ）または名前欄へスクロール */
@@ -6526,7 +6645,7 @@
         if (!inp.value) { if (errDiv) errDiv.style.display = 'none'; return; }
         var ds = inp.value.replace(/-/g, '');
         var busy = inp._busyDates;
-        if (busy && busy.has(ds)) {
+        if (busy && dayState(busy, ds) === 'busy') {
           inp.value = '';
           if (errDiv) {
             errDiv.textContent = (T[curLang]||T.ja).date_busy_err || '⚠️ この日程は空きがありません。別の日をお選びください。';
@@ -6534,8 +6653,10 @@
           }
           var layout = inp.closest('.bk-layout');
           if (layout) layout.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
+          applySlotOptions(inp, null);
         } else {
           if (errDiv) errDiv.style.display = 'none';
+          applySlotOptions(inp, ds);
         }
       });
     }
@@ -6544,6 +6665,41 @@
   function clearDateError(input) {
     var err = input.parentNode.querySelector('.bk-date-err');
     if (err) err.style.display = 'none';
+  }
+
+  /* 選んだ日付に合わせて「ご希望時間」の選択肢を絞り込む。
+     午前(8:00/9:00)が埋まっていれば午前を、午後(13:00)が埋まっていれば午後を選べなくする。
+     ds が null のときは全解除（日付未選択の状態に戻す）。 */
+  function applySlotOptions(input, ds) {
+    var layout = input.closest('.bk-layout') || input.closest('form');
+    if (!layout) return;
+    var sel = layout.querySelector('select[name="ご希望時間"]');
+    if (!sel) return;
+    var open = ds ? openTimesOn(input._busyDates, ds) : SLOT_TIMES.am.concat(SLOT_TIMES.pm);
+    var t = (typeof T !== 'undefined' && T[curLang]) ? T[curLang] : (T ? T.ja : {});
+    /* 選択肢のテキストは data-i18n が管理しているので触らず、可否だけ切り替える */
+    [].forEach.call(sel.options, function(op) {
+      if (!op.value) return;                      /* プレースホルダ */
+      op.disabled = (open.indexOf(op.value) === -1);
+    });
+    /* すでに選ばれている時間が埋まっていたら選択を解除 */
+    if (sel.value && open.indexOf(sel.value) === -1) sel.value = '';
+    /* 一部空きの日は「午前のみ/午後のみ」の案内を出す */
+    var note = layout.querySelector('.bk-slot-note');
+    if (!note) {
+      note = document.createElement('div');
+      note.className = 'bk-slot-note';
+      var fg = sel.closest('.fg');
+      if (fg) fg.appendChild(note); else sel.parentNode.appendChild(note);
+    }
+    if (ds && open.length && open.length < 3) {
+      note.textContent = (open.indexOf('13:00') !== -1)
+        ? (t.slot_pm_only || '⚠️ この日は午前がすでに埋まっています。午後の部（13:00）のみご予約いただけます。')
+        : (t.slot_am_only || '⚠️ この日は午後がすでに埋まっています。午前の部（8:00・9:00）のみご予約いただけます。');
+      note.style.display = 'block';
+    } else {
+      note.style.display = 'none';
+    }
   }
 
   /* ================================================================
@@ -6612,22 +6768,29 @@
   });
 
   /* キャッシュ読み書き (1時間TTL) */
+  /* 枠(午前/午後)対応でキャッシュ形式が変わったため、キー名も切り替えて旧データと混ざらないようにする */
+  var GCAL_CACHE_KEY = 'gcal_slot_cache_v2';
+  function _cacheToMap(obj) {
+    if (!obj || !obj.days) return null;
+    var m = new Map();
+    Object.keys(obj.days).forEach(function(k){ m.set(k, obj.days[k]); });
+    return m;
+  }
   function loadBusyCache() {
     try {
-      var c = localStorage.getItem('gcal_busy_cache');
+      var c = localStorage.getItem(GCAL_CACHE_KEY);
       if (!c) return null;
       var obj = JSON.parse(c);
       if (!obj || Date.now() - obj.ts > 3600000) return null;
-      return new Set(obj.dates);
+      return _cacheToMap(obj);
     } catch(e) { return null; }
   }
   /* TTLを無視して古いキャッシュでも返す（取得失敗時のフォールバック用） */
   function loadBusyCacheStale() {
     try {
-      var c = localStorage.getItem('gcal_busy_cache');
+      var c = localStorage.getItem(GCAL_CACHE_KEY);
       if (!c) return null;
-      var obj = JSON.parse(c);
-      return (obj && obj.dates) ? new Set(obj.dates) : null;
+      return _cacheToMap(JSON.parse(c));
     } catch(e) { return null; }
   }
   /* 取得失敗時：カレンダーに「最新の空き状況を取得できませんでした」注記を表示 */
@@ -6645,7 +6808,9 @@
   }
   function saveBusyCache(busy) {
     try {
-      localStorage.setItem('gcal_busy_cache', JSON.stringify({ ts: Date.now(), dates: Array.from(busy) }));
+      var days = {};
+      busy.forEach(function(v, k){ days[k] = v; });
+      localStorage.setItem(GCAL_CACHE_KEY, JSON.stringify({ ts: Date.now(), days: days }));
     } catch(e) {}
   }
 
@@ -6678,7 +6843,7 @@
           renderMiniCalendars(stale);
           initBookingCalendars(stale);
         } else {
-          var empty = new Set();
+          var empty = new Map();
           _gcalBusy = empty;
           renderMiniCalendars(empty);
           initBookingCalendars(empty);
@@ -6824,7 +6989,11 @@
       ct_ok:'✅ メッセージを受け付けました！24時間以内にご返信いたします。',
       /* CALENDAR */
       cal_ttl:'空き状況カレンダー', cal_sub:'ご希望の日程の空き状況をご確認ください',
-      cal_leg_free:'空き', cal_leg_busy:'予約済み', cal_leg_event:'イベント',
+      slot_800:'8:00（午前の部）', slot_900:'9:00（午前の部）', slot_1300:'13:00（午後の部）',
+      cal_leg_partial:'△ 午前か午後のみ',
+      slot_am_only:'⚠️ この日は午後がすでに埋まっています。午前の部（8:00・9:00）のみご予約いただけます。',
+      slot_pm_only:'⚠️ この日は午前がすでに埋まっています。午後の部（13:00）のみご予約いただけます。',
+      cal_leg_free:'○ 空き', cal_leg_busy:'× 満員', cal_leg_event:'イベント',
       cal_note:'希望日が見つかったらフォームにご記入ください。', cal_loading:'空き状況をチェック中', cal_load_err:'最新の空き状況を取得できませんでした。ご予約前にお問い合わせ・LINEでご確認ください。',
       /* FOOTER */
       ft_tagline:'沖縄の海で、最高の思い出を。<br>Snorkeling &amp; Skin Diving &amp; SUP (coming soon) — Private &amp; Fully Guided',
@@ -7077,7 +7246,11 @@
       ct_send:'Send Message', ct_note:'A confirmation email will be sent. We reply within 24 hours.',
       ct_ok:'✅ Message received! We will reply within 24 hours.',
       cal_ttl:'Availability Calendar', cal_sub:'Check available dates for your booking',
-      cal_leg_free:'Available', cal_leg_busy:'Booked', cal_leg_event:'Event',
+      slot_800:'8:00 (Morning)', slot_900:'9:00 (Morning)', slot_1300:'13:00 (Afternoon)',
+      cal_leg_partial:'△ Morning or afternoon only',
+      slot_am_only:'⚠️ The afternoon is already booked on this date. Only the morning slots (8:00 / 9:00) are available.',
+      slot_pm_only:'⚠️ The morning is already booked on this date. Only the afternoon slot (13:00) is available.',
+      cal_leg_free:'○ Available', cal_leg_busy:'× Full', cal_leg_event:'Event',
       cal_note:'Found a date? Fill in the form to book.', cal_loading:'Checking availability', cal_load_err:'Could not load the latest availability. Please confirm with us (contact form / LINE) before booking.',
       ft_tagline:'The best ocean memories in Okinawa.<br>Snorkeling &amp; Skin Diving &amp; SUP (coming soon) — Private &amp; Fully Guided',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
@@ -7321,7 +7494,11 @@
       ct_send:'发送消息', ct_note:'发送后将收到确认邮件，通常24小时内回复。',
       ct_ok:'✅ 已收到您的消息！我们将在24小时内与您联系。',
       cal_ttl:'预约日期查询', cal_sub:'请确认您希望的日期是否有空',
-      cal_leg_free:'可预约', cal_leg_busy:'已预约', cal_leg_event:'活动',
+      slot_800:'8:00（上午場）', slot_900:'9:00（上午場）', slot_1300:'13:00（下午場）',
+      cal_leg_partial:'△ 僅上午或下午',
+      slot_am_only:'⚠️ 這天下午已被預約，僅可預約上午場（8:00・9:00）。',
+      slot_pm_only:'⚠️ 這天上午已被預約，僅可預約下午場（13:00）。',
+      cal_leg_free:'○ 可預約', cal_leg_busy:'× 已額滿', cal_leg_event:'活动',
       cal_note:'找到合适日期后请填写表单。', cal_loading:'正在确认空位', cal_load_err:'无法获取最新空位情况。预约前请通过咨询表单／LINE与我们确认。',
       ft_tagline:'在冲绳的海洋留下最美好的回忆。<br>浮潜 &amp; 自由潜水 &amp; SUP（即将上线）— 私人专属全程引导',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
@@ -7565,7 +7742,11 @@
       ct_send:'메시지 보내기', ct_note:'발송 후 확인 메일을 보내드립니다. 답변은 보통 24시간 이내입니다.',
       ct_ok:'✅ 메시지를 받았습니다! 24시간 이내에 답변드리겠습니다.',
       cal_ttl:'예약 가능 캘린더', cal_sub:'원하시는 날짜의 예약 가능 여부를 확인하세요',
-      cal_leg_free:'예약 가능', cal_leg_busy:'예약 완료', cal_leg_event:'이벤트',
+      slot_800:'8:00（오전부）', slot_900:'9:00（오전부）', slot_1300:'13:00（오후부）',
+      cal_leg_partial:'△ 오전 또는 오후만',
+      slot_am_only:'⚠️ 이 날은 오후가 이미 예약되었습니다. 오전부(8:00・9:00)만 예약 가능합니다.',
+      slot_pm_only:'⚠️ 이 날은 오전이 이미 예약되었습니다. 오후부(13:00)만 예약 가능합니다.',
+      cal_leg_free:'○ 예약 가능', cal_leg_busy:'× 마감', cal_leg_event:'이벤트',
       cal_note:'날짜를 확인하셨으면 양식을 작성해 주세요.', cal_loading:'예약 상황 확인 중', cal_load_err:'최신 예약 상황을 불러오지 못했습니다. 예약 전 문의 폼／LINE으로 확인해 주세요.',
       ft_tagline:'오키나와 바다에서 최고의 추억을.<br>스노클링 &amp; 스킨 다이빙 &amp; SUP（준비 중）— 완전 전세 완전 가이드',
       ft_copy:'© 2024 EMERALD REEF OKINAWA. All rights reserved.',
