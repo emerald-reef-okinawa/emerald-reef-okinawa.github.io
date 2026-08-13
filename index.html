@@ -6192,7 +6192,7 @@
       + '&timeMin='    + encodeURIComponent(tMin)
       + '&timeMax='    + encodeURIComponent(tMax)
       + '&singleEvents=true&maxResults=100'
-      + '&fields=items(start,end)';
+      + '&fields=items(start,end,summary)';
 
     var r = await fetch(url, { cache: 'no-cache' });
     if (!r.ok) throw new Error('API error ' + r.status);
@@ -6200,6 +6200,7 @@
     var busy  = new Map();
     (data.items || []).forEach(function(item) {
       if (!item.start) return;
+      if (isCancelledTitle(item.summary)) return; /* キャンセル済みは空き扱い */
       /* 終日予定は date、時刻ありは dateTime（例 2026-08-11T08:00:00+09:00） */
       if (item.start.date) {
         var ad = item.start.date.replace(/-/g, '');
@@ -6308,6 +6309,14 @@
 
   function _pad2(n) { return String(n).padStart(2, '0'); }
 
+  /* タイトルが「キャンセル」始まりならキャンセル済み＝空き扱い。
+     確認ボタンで付く「✅ 」や、iCalのエスケープ（\, \; など）が前に来ても拾えるようにする。 */
+  function isCancelledTitle(title) {
+    if (!title) return false;
+    var t = String(title).replace(/\\([,;\\])/g, '$1').replace(/^[\s✅✔☑◯○●\-–—]+/, '');
+    return /^キャンセル/.test(t);
+  }
+
   /* 時刻(JST)から枠を判定。枠に当てはまらなければ 'full'（終日ブロック） */
   function slotOfTime(hh, mi) {
     if (mi !== 0) return 'full';
@@ -6336,10 +6345,16 @@
         cur.setDate(cur.getDate()+1);
       }
     }
-    const blocks = text.split('BEGIN:VEVENT');
+    /* iCalは75文字で折り返され、続きの行が半角スペース/タブ始まりになる（RFC 5545）。
+       先に連結しておかないと、長いタイトルの判定や項目の抽出が途中で切れてしまう。 */
+    const blocks = text.replace(/\r?\n[ \t]/g, '').split('BEGIN:VEVENT');
     blocks.slice(1).forEach(function(block) {
       var ei = block.indexOf('END:VEVENT');
       var evt = block.substring(0, ei);
+      /* タイトルが「キャンセル」で始まる予定はキャンセル済みなので空き扱いにする
+         （前日リマインドをスキップする GAS 側と同じ運用ルール） */
+      var sum = evt.match(/(?:^|\n)SUMMARY[^:\r\n]*:([^\r\n]*)/);
+      if (sum && isCancelledTitle(sum[1])) return;
       /* DTSTART;VALUE=DATE:YYYYMMDD（終日）/ DTSTART;TZID=...:YYYYMMDDTHHMMSS /
          DTSTART:YYYYMMDDTHHMMSSZ（UTC）のいずれにも対応 */
       var sm = evt.match(/DTSTART([^:\r\n]*):(\d{8}(?:T\d{6}Z?)?)/);
