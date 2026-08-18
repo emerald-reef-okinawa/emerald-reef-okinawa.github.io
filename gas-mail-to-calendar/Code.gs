@@ -692,7 +692,7 @@ function buildReminderJa_(info, url) {
         '・当日、体調がすぐれない場合（寝不足・二日酔い等を含む）は、無理をなさらずお早めにご連絡ください。<br>' +
         '・集合（お迎え）時間に遅れる場合は、必ずご連絡をお願いいたします。<br>' +
         '・貴重品の管理はお客様ご自身でお願いいたします。</p>' +
-      '<p style="font-size:13px;color:#555;">天候等で変更がある場合は当店よりご連絡いたします。ご不明点はお気軽にどうぞ。</p>' +
+      '<p style="font-size:13px;color:#555;">天候などでキャンセルとなる場合は当店よりご連絡いたします。ご不明点はお気軽にご連絡ください。</p>' +
       signatureHtmlJa_() +
     '</div>';
   const text = [
@@ -742,7 +742,7 @@ function buildReminderEn_(info, url) {
         '- If you are not feeling well on the day (including lack of sleep or a hangover), please do not push yourself and contact us early.<br>' +
         '- If you will be late for pickup, please be sure to let us know.<br>' +
         '- Please look after your own valuables.</p>' +
-      '<p style="font-size:13px;color:#555;">If anything changes due to weather, we will contact you. Feel free to reach out with any questions.</p>' +
+      '<p style="font-size:13px;color:#555;">If the tour has to be cancelled due to weather, we will contact you. Please feel free to get in touch with any questions.</p>' +
       signatureHtmlEn_() +
     '</div>';
   const text = [
