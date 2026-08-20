@@ -2289,7 +2289,9 @@
       opacity: 0; transition: opacity .3s, background .3s;
     }
     .ig-post:hover .ig-overlay { opacity: 1; background: rgba(0,0,0,.38); }
-    .ig-follow-wrap { text-align: center; }
+    /* behold のウィジェットは外部スクリプトが描画するため、こちら側から下余白を
+       付けられない。フォローボタン側に余白を持たせて投稿画像と離す。 */
+    .ig-follow-wrap { text-align: center; margin-top: 36px; }
     .btn-ig {
       background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
       color: #fff; box-shadow: 0 4px 22px rgba(238,42,123,.35);
