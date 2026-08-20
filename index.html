@@ -1838,7 +1838,12 @@
       /* About: horizontal scroll on mobile */
       .about-grid {
         display: flex; flex-direction: row;
-        overflow-x: auto; gap: 14px; padding-bottom: 14px;
+        /* overflow-x だけを指定すると overflow-y は visible ではなく auto に計算され、
+           わずかな高さの余りぶんだけ縦にも動いてしまう（横スワイプが斜めになる原因）。
+           hidden を明示して縦の遊びを消す。touch-action: pan-x は、カード上から始めた
+           縦スワイプでページが動かなくなるため使わない。 */
+        overflow-x: auto; overflow-y: hidden;
+        gap: 14px; padding-bottom: 14px;
         scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
       }
