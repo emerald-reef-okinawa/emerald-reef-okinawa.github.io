@@ -195,6 +195,12 @@
   <style>
     /* ===== Reset & Variables ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* 各 <img> には実寸を width/height 属性で持たせ、読み込み前に場所を確保している
+       （レイアウトシフト対策）。ただし属性の height をそのまま採用すると、CSS 側で
+       高さを指定していない画像（.sq-img のように aspect-ratio だけ持つもの等）が
+       実寸の高さで表示されてしまう。この最小詳細度の規則で高さを auto に戻し、
+       個別のクラス指定（height:100% 等）はそのまま優先させる。 */
+    img { height: auto; }
 
     :root {
       --g-dark:    #005F52;
@@ -1752,7 +1758,9 @@
     }
     .blog-hook-txt { font-size: .97rem; color: var(--text-soft); line-height: 1.95; margin: 0 0 20px; }
     .blog-hook-img { width: 100%; border-radius: 12px; overflow: hidden; margin: 0 0 20px; }
-    .blog-hook-img img { width: 100%; display: block; }
+    /* CMSで差し替え可能なため実寸を属性で持てない。読み込み前に領域を確保して
+       レイアウトシフトを防ぐ（ブログカード .bl-img-wrap と同じ考え方）。 */
+    .blog-hook-img img { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
     .blog-hook-div { border: none; border-top: 2px solid rgba(0,168,150,.15); margin: 32px 0 0; }
     /* TOC */
     .blog-toc { max-width: 760px; margin: 0 auto; padding: 28px 24px 0; }
@@ -2159,6 +2167,10 @@
     .r-src.asv { background:#e7f5ff; color:#0b7fd4; }
     .r-src.jln { background:#ffeaf0; color:#e0004d; }
     .rev-src-note { font-size:.75rem; color:var(--text-soft); text-align:center; margin-top:22px; line-height:1.7; }
+    /* 口コミは初期3件のみ表示し、残りは「もっと見る」で展開する（.fi は opacity:0 なので付けない） */
+    .rev-more-wrap { text-align:center; margin-top:26px; }
+    .rev-more-wrap[hidden] { display:none; }
+    #rev-more-btn { border-color:var(--coral); color:var(--coral); font-size:.92rem; padding:12px 32px; }
     @media(max-width:900px){ .r-grid { grid-template-columns:1fr; max-width:560px; margin-left:auto; margin-right:auto; } }
     /* ===== ツアーギャラリー（スライドショー） ===== */
     #gallery { background: var(--bg); }
@@ -3531,7 +3543,7 @@
   <div class="loader-shimmer"></div>
 
   <!-- 右→左へ流れる子供たち -->
-  <img class="loader-fish" src="loader-swim.webp" alt="swimming" fetchpriority="high">
+  <img class="loader-fish" src="loader-swim.webp" width="400" height="320" alt="swimming" fetchpriority="high">
 
   <div class="loader-bubbles">
     <span class="lb"></span><span class="lb"></span>
@@ -3552,7 +3564,7 @@
 <!-- ===== NAV ===== -->
 <nav id="main-nav">
   <div class="nav-logo" onclick="goHome()">
-    <img src="logo.webp" alt="EMERALD REEF OKINAWA" id="nav-logo"
+    <img src="logo.webp" width="300" height="300" alt="EMERALD REEF OKINAWA" id="nav-logo"
          onerror="this.style.display='none'">
     <span class="nav-logo-txt">EMERALD REEF OKINAWA</span>
   </div>
@@ -3655,7 +3667,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">01</span>
-              <img class="a-img" src="about-family.webp" alt="家族で楽しむ沖縄シュノーケル体験" loading="lazy">
+              <img class="a-img" src="about-family.webp" width="400" height="320" alt="家族で楽しむ沖縄シュノーケル体験" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3669,7 +3681,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">02</span>
-              <img class="a-img" src="about-car.webp" alt="那覇〜恩納村ホテル無料送迎" loading="lazy">
+              <img class="a-img" src="about-car.webp" width="400" height="320" alt="那覇〜恩納村ホテル無料送迎" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3683,7 +3695,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">03</span>
-              <img class="a-img" src="about-camera.webp" alt="水中写真データを無料でプレゼント" loading="lazy">
+              <img class="a-img" src="about-camera.webp" width="400" height="321" alt="水中写真データを無料でプレゼント" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3697,7 +3709,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">04</span>
-              <img class="a-img" src="about-sameday.webp" alt="当日・前日予約OK カレンダー" loading="lazy">
+              <img class="a-img" src="about-sameday.webp" width="1536" height="1024" alt="当日・前日予約OK カレンダー" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3711,7 +3723,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">05</span>
-              <img class="a-img" src="about-feeding.webp" alt="沖縄シュノーケル熱帯魚への餌付け体験" loading="lazy">
+              <img class="a-img" src="about-feeding.webp" width="1401" height="1123" alt="沖縄シュノーケル熱帯魚への餌付け体験" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3725,7 +3737,7 @@
           <div class="a-flip-inner">
             <div class="a-front">
               <span class="a-num">06</span>
-              <img class="a-img" src="about-shower.webp" alt="完備のシャワー・更衣テント" loading="lazy">
+              <img class="a-img" src="about-shower.webp" width="1402" height="1122" alt="完備のシャワー・更衣テント" loading="lazy">
               <span class="a-hint">▷ PUSH TO READ</span>
             </div>
             <div class="a-back">
@@ -3985,37 +3997,37 @@
         <div class="sq-row">
           <div class="sq-cell">
             <div class="sq-num sq-c1">01</div>
-            <img class="sq-img" src="tl-pickup.webp" alt="ホテルまでお迎え無料送迎" loading="lazy">
+            <img class="sq-img" src="tl-pickup.webp" width="800" height="640" alt="ホテルまでお迎え無料送迎" loading="lazy">
             <h4 data-i18n="tl1_h">集合</h4>
             <p data-i18n="tl1_p">ホテルまでお迎えに伺います</p>
           </div>
           <div class="sq-cell">
             <div class="sq-num sq-c2">02</div>
-            <img class="sq-img" src="tl-beach.webp" alt="沖縄シュノーケルビーチへ到着" loading="lazy">
+            <img class="sq-img" src="tl-beach.webp" width="800" height="640" alt="沖縄シュノーケルビーチへ到着" loading="lazy">
             <h4 data-i18n="tl2_h">ビーチ</h4>
             <p data-i18n="tl2_p">送迎車でスポットへ出発</p>
           </div>
           <div class="sq-cell">
             <div class="sq-num sq-c3">03</div>
-            <img class="sq-img" src="tl-lecture.webp" alt="シュノーケル機材の使い方説明" loading="lazy">
+            <img class="sq-img" src="tl-lecture.webp" width="800" height="640" alt="シュノーケル機材の使い方説明" loading="lazy">
             <h4 data-i18n="tl3_h">説明</h4>
             <p data-i18n="tl3_p">機材の使い方を丁寧にご説明</p>
           </div>
           <div class="sq-cell">
             <div class="sq-num sq-c4">04</div>
-            <img class="sq-img" src="tl-swim.webp" alt="ガイドと一緒に沖縄の海でシュノーケル体験" loading="lazy">
+            <img class="sq-img" src="tl-swim.webp" width="800" height="640" alt="ガイドと一緒に沖縄の海でシュノーケル体験" loading="lazy">
             <h4 data-i18n="tl4_h">体験</h4>
             <p data-i18n="tl4_p">ガイドが隣で常にサポート！</p>
           </div>
           <div class="sq-cell">
             <div class="sq-num sq-c5">05</div>
-            <img class="sq-img" src="tl-photo.webp" alt="Insta360で水中撮影・思い出を記録" loading="lazy">
+            <img class="sq-img" src="tl-photo.webp" width="800" height="640" alt="Insta360で水中撮影・思い出を記録" loading="lazy">
             <h4 data-i18n="tl5_h">撮影</h4>
             <p data-i18n="tl5_p">Insta360で思い出を記録</p>
           </div>
           <div class="sq-cell">
             <div class="sq-num sq-c6">06</div>
-            <img class="sq-img" src="tl-goal.webp" alt="ツアー終了・宿泊先までお送り" loading="lazy">
+            <img class="sq-img" src="tl-goal.webp" width="800" height="640" alt="ツアー終了・宿泊先までお送り" loading="lazy">
             <h4 data-i18n="tl6_h">解散・お送り</h4>
             <p data-i18n="tl6_p">宿泊先までお送りします</p>
           </div>
@@ -4081,7 +4093,7 @@
       <div class="tgt-photo-row fi">
         <!-- Left: family photo -->
         <div class="tgt-photo">
-          <img src="family.webp" alt="ご家族3人が沖縄の海の洞窟でシュノーケル体験を楽しむ様子" style="object-position:50% 80%;" loading="lazy">
+          <img src="family.webp" width="1000" height="1778" alt="ご家族3人が沖縄の海の洞窟でシュノーケル体験を楽しむ様子" style="object-position:50% 80%;" loading="lazy">
         </div>
         <!-- Center: chips -->
         <div class="tgt-chips-col">
@@ -4098,7 +4110,7 @@
         </div>
         <!-- Right: students photo -->
         <div class="tgt-photo">
-          <img src="students.webp" alt="女子大学生3人が沖縄でウミガメと一緒にシュノーケル" style="object-position:50% 42%;" loading="lazy">
+          <img src="students.webp" width="1100" height="825" alt="女子大学生3人が沖縄でウミガメと一緒にシュノーケル" style="object-position:50% 42%;" loading="lazy">
         </div>
       </div>
     </div>
@@ -4118,6 +4130,9 @@
         <div class="rev-sum-cnt" id="rev-sum-cnt">予約サイト3社・5件のレビュー（すべて★5.0）</div>
       </div>
       <div class="r-grid fi" id="reviews-grid"></div>
+      <div class="rev-more-wrap" id="rev-more-wrap" hidden>
+        <button class="btn btn-outline" id="rev-more-btn" type="button" aria-expanded="false" aria-controls="reviews-grid" onclick="toggleReviews()">もっと見る</button>
+      </div>
       <p class="rev-src-note fi" id="rev-src-note">※ アクティビティジャパン・アソビュー・じゃらんに実際に投稿されたお客様レビューです。</p>
     </div>
   </section>
@@ -4131,16 +4146,16 @@
       <p class="s-sub fi" data-i18n="gal_sub">実際のツアーで撮影した一枚をご紹介します。</p>
       <div class="gal-carousel fi">
         <div class="gal-track" id="gal-track">
-          <div class="gal-slide active"><img src="gallery-5.webp" alt="沖縄近海を優雅に泳ぐウミガメ" fetchpriority="high"></div>
-          <div class="gal-slide"><img src="gallery-6.webp" alt="熱帯魚への餌付け体験・目の前に集まる魚たち" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-7.webp" alt="青の洞窟でご家族みんなでシュノーケル体験" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-8.webp" alt="ご家族で参加する沖縄シュノーケルツアー" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-9.webp" alt="目の前に集まる無数の熱帯魚と餌付け体験" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-10.webp" alt="透明な海で笑顔のシュノーケル体験" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-11.webp" alt="熱帯魚に手を差し伸べるシュノーケラー" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-12.webp" alt="透き通ったエメラルドの海を楽しむ女性" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-13.webp" alt="青の洞窟に差し込む神秘的な光とシュノーケラー" loading="lazy"></div>
-          <div class="gal-slide"><img src="gallery-14.webp" alt="沖縄の色鮮やかなサンゴ礁" loading="lazy"></div>
+          <div class="gal-slide active"><img src="gallery-5.webp" width="1500" height="1125" alt="沖縄近海を優雅に泳ぐウミガメ" fetchpriority="high"></div>
+          <div class="gal-slide"><img src="gallery-6.webp" width="1500" height="1125" alt="熱帯魚への餌付け体験・目の前に集まる魚たち" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-7.webp" width="1500" height="1326" alt="青の洞窟でご家族みんなでシュノーケル体験" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-8.webp" width="1500" height="1125" alt="ご家族で参加する沖縄シュノーケルツアー" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-9.webp" width="1500" height="1125" alt="目の前に集まる無数の熱帯魚と餌付け体験" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-10.webp" width="1500" height="1125" alt="透明な海で笑顔のシュノーケル体験" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-11.webp" width="1500" height="1125" alt="熱帯魚に手を差し伸べるシュノーケラー" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-12.webp" width="1500" height="1125" alt="透き通ったエメラルドの海を楽しむ女性" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-13.webp" width="1500" height="1125" alt="青の洞窟に差し込む神秘的な光とシュノーケラー" loading="lazy"></div>
+          <div class="gal-slide"><img src="gallery-14.webp" width="1500" height="1125" alt="沖縄の色鮮やかなサンゴ礁" loading="lazy"></div>
         </div>
         <button class="gal-arrow prev" id="gal-prev" aria-label="前の写真">‹</button>
         <button class="gal-arrow next" id="gal-next" aria-label="次の写真">›</button>
@@ -4317,7 +4332,7 @@
       <div class="oki-map-layout fi">
         <!-- Okinawa Map Image -->
         <div class="oki-map-col">
-          <img src="okinawa-map.webp" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map.webp" width="900" height="900" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <!-- Legend -->
           <div class="oki-legend">
             <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_covered">無料送迎対応エリア（南部・中部）</span></div>
@@ -4414,7 +4429,7 @@
 
   <footer>
     <div class="ft-logo">
-      <img src="logo.webp" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
+      <img src="logo.webp" width="300" height="300" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
       <div class="ft-logo-txt">EMERALD REEF OKINAWA</div>
     </div>
     <div class="ft-links">
@@ -4506,7 +4521,7 @@
           <span class="bkp-pop-badge" data-i18n="bkp_popular">人気No.1</span>
           <div class="bkp-card-img">
             <span class="bkp-off-tag">40% OFF</span>
-            <img src="snorkeling.webp" alt="沖縄シュノーケル体験" loading="lazy">
+            <img src="snorkeling.webp" width="1280" height="960" alt="沖縄シュノーケル体験" loading="lazy">
           </div>
           <div class="bkp-card-body">
             <div class="bkp-card-name" data-i18n="sn_name">シュノーケル</div>
@@ -4533,7 +4548,7 @@
         <div class="bkp-card">
           <div class="bkp-card-img">
             <span class="bkp-off-tag">42% OFF</span>
-            <img src="bc-coral.webp" alt="沖縄 青の洞窟シュノーケル" loading="lazy">
+            <img src="bc-coral.webp" width="1200" height="900" alt="沖縄 青の洞窟シュノーケル" loading="lazy">
           </div>
           <div class="bkp-card-body">
             <div class="bkp-card-name" data-i18n="bc_name">青の洞窟シュノーケル</div>
@@ -4560,7 +4575,7 @@
         <div class="bkp-card">
           <div class="bkp-card-img">
             <span class="bkp-off-tag">42% OFF</span>
-            <img src="skindiving.webp" alt="那覇近海ウミガメシュノーケル" loading="lazy">
+            <img src="skindiving.webp" width="1280" height="960" alt="那覇近海ウミガメシュノーケル" loading="lazy">
           </div>
           <div class="bkp-card-body">
             <div class="bkp-card-name" data-i18n="tc_name">那覇近海ウミガメシュノーケル</div>
@@ -4690,7 +4705,7 @@
   <!-- Footer -->
   <footer>
     <div class="ft-logo">
-      <img src="logo.webp" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
+      <img src="logo.webp" width="300" height="300" alt="EMERALD REEF OKINAWA" loading="lazy" onerror="this.style.display='none'">
       <div class="ft-logo-txt">EMERALD REEF OKINAWA</div>
     </div>
     <div class="ft-links">
@@ -4842,7 +4857,7 @@
             </div>
           </div>
           <div class="sched-img-col">
-            <img src="pixel-snorkeling.webp" alt="沖縄シュノーケル体験イメージ" class="sched-pixel-img" loading="lazy">
+            <img src="pixel-snorkeling.webp" width="1402" height="1122" alt="沖縄シュノーケル体験イメージ" class="sched-pixel-img" loading="lazy">
           </div>
         </div>
       </div>
@@ -4944,7 +4959,7 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map-bc.webp" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-bc.webp" width="900" height="900" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
             <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_central">無料送迎対応エリア（中部）</span></div>
           </div>
@@ -5026,7 +5041,7 @@
 
   <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
-    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5150,7 +5165,7 @@
             </div>
           </div>
           <div class="sched-img-col">
-            <img src="pixel-skindiving.webp" alt="沖縄スキンダイビング体験イメージ" class="sched-pixel-img" loading="lazy">
+            <img src="pixel-skindiving.webp" width="1402" height="1122" alt="沖縄スキンダイビング体験イメージ" class="sched-pixel-img" loading="lazy">
           </div>
         </div>
       </div>
@@ -5252,7 +5267,7 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map-bc.webp" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-bc.webp" width="900" height="900" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
             <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_central">無料送迎対応エリア（中部）</span></div>
           </div>
@@ -5334,7 +5349,7 @@
 
   <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
-    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5476,7 +5491,7 @@
             </div>
           </div>
           <div class="sched-img-col">
-            <img src="pixel-bluecave.webp" alt="沖縄青の洞窟シュノーケル体験イメージ" class="sched-pixel-img" loading="lazy">
+            <img src="pixel-bluecave.webp" width="1402" height="1122" alt="沖縄青の洞窟シュノーケル体験イメージ" class="sched-pixel-img" loading="lazy">
           </div>
         </div>
       </div>
@@ -5575,7 +5590,7 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map-bc.webp" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-bc.webp" width="900" height="900" alt="沖縄本島 那覇〜恩納村 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
             <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_covered">無料送迎対応エリア（中部）</span></div>
           </div>
@@ -5659,7 +5674,7 @@
 
   <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
-    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -5900,7 +5915,7 @@
       <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
       <div class="oki-map-layout">
         <div class="oki-map-col">
-          <img src="okinawa-map-naha.webp" alt="沖縄 那覇エリア 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <img src="okinawa-map-naha.webp" width="1254" height="1254" alt="沖縄 那覇エリア 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
           <div class="oki-legend">
             <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_naha">無料送迎対応エリア（那覇）</span></div>
           </div>
@@ -5983,7 +5998,7 @@
 
   <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
   <footer>
-    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
@@ -6025,7 +6040,7 @@
     </div>
   </section>
   <footer>
-    <div class="ft-logo"><img src="logo.webp" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
     <div class="ft-links">
       <a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a>
       <a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a>
@@ -9634,11 +9649,40 @@
   const REV_SUM = {ja:'予約サイト3社・11件のレビュー（すべて★5.0）',en:'11 reviews across 3 booking sites (all 5.0★)',zh:'3家预约网站・11则评价（全部5.0★）',ko:'예약 사이트 3곳・리뷰 11건(모두 5.0★)'};
   const REV_NOTE = {ja:'※ アクティビティジャパン・アソビュー・じゃらんに実際に投稿されたお客様レビューです。',en:'※ Real customer reviews posted on Activity Japan, asoview and Jalan.',zh:'※ 实际发布于Activity Japan、asoview、Jalan的顾客评价。',ko:'※ 액티비티재팬・아소뷰・자란에 실제로 게시된 고객 리뷰입니다.'};
   function revStr(v, lang){ return (v && typeof v === 'object') ? (v[lang] || v.ja) : v; }
+  /* 初期表示件数。件数が増えるほどページが縦に伸びるため、残りは「もっと見る」で展開する。 */
+  const REV_INIT = 3;
+  let revExpanded = false;
+  const REV_MORE = {
+    ja:function(n){ return 'あと' + n + '件の口コミを見る'; },
+    en:function(n){ return 'Show ' + n + ' more reviews'; },
+    zh:function(n){ return '查看其余' + n + '则评价'; },
+    ko:function(n){ return '리뷰 ' + n + '건 더 보기'; },
+  };
+  const REV_LESS = {ja:'閉じる', en:'Show less', zh:'收起', ko:'접기'};
+  function toggleReviews(){
+    revExpanded = !revExpanded;
+    renderReviews();
+    /* 閉じたときは口コミ欄の先頭へ戻す（ページ下部に取り残されないように） */
+    if (!revExpanded) {
+      const sec = document.getElementById('reviews');
+      if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  }
   function renderReviews(){
     const grid = document.getElementById('reviews-grid');
     if (!grid) return;
     const lang = typeof curLang !== 'undefined' ? curLang : 'ja';
-    grid.innerHTML = REVIEWS.map(function(r){
+    const shown = revExpanded ? REVIEWS : REVIEWS.slice(0, REV_INIT);
+    const rest = REVIEWS.length - REV_INIT;
+    const wrap = document.getElementById('rev-more-wrap');
+    const btn = document.getElementById('rev-more-btn');
+    if (wrap && btn) {
+      wrap.hidden = rest <= 0;
+      btn.textContent = revExpanded ? (REV_LESS[lang] || REV_LESS.ja)
+                                    : (REV_MORE[lang] || REV_MORE.ja)(rest);
+      btn.setAttribute('aria-expanded', String(revExpanded));
+    }
+    grid.innerHTML = shown.map(function(r){
       const src = REV_SRC[r.src];
       return '<div class="r-card">' +
         '<div class="r-stars">★★★★★</div>' +
