@@ -659,9 +659,24 @@ function parseEventInfo_(ev) {
     email: getDescVal_(desc, 'email'),
     tour: getDescVal_(desc, 'ご希望のツアー'),
     people: getDescVal_(desc, '参加人数'),
+    /* お迎え先＝予約時にいただいた「宿泊先」。前日メールの集合場所として使う */
+    place: getDescVal_(desc, '宿泊先'),
     dateStr: Utilities.formatDate(start, 'Asia/Tokyo', 'yyyy-MM-dd'),
     timeStr: Utilities.formatDate(start, 'Asia/Tokyo', 'HH:mm'),
   };
+}
+
+/**
+ * 宿泊先が実際の場所として使えるか判定する。
+ * 「（記載なし）」「未定」など、お迎え先が確定していない値は false を返す。
+ */
+function hasPickupPlace_(place) {
+  if (!place) return false;
+  var t = String(place).replace(/[\s　]/g, '');
+  if (!t) return false;
+  if (/^[（(]?(記載なし|なし|未定|不明|-|－)[)）]?$/.test(t)) return false;
+  if (t.indexOf('未定') !== -1) return false;
+  return true;
 }
 
 /** 説明欄テキストから「ラベル: 値」の値を取り出す */
@@ -682,6 +697,7 @@ function buildReminderJa_(info, url) {
     '<div style="font-family:\'Hiragino Sans\',\'Yu Gothic\',sans-serif;max-width:560px;margin:0 auto;color:#1a2a2a;line-height:1.75;">' +
       '<p>' + n + ' 様</p>' +
       '<p>いよいよ明日、<b>' + t + '</b> のツアー当日です！<br>スタッフ一同、お会いできるのを楽しみにしております。</p>' +
+      meetBoxJa_(info) +
       detailTableJa_(info) +
       warnBoxHtml_(true) +
       '<p>お手数ですが、下記ボタンから<b>ご参加の確認</b>をお願いいたします。</p>' +
@@ -699,10 +715,17 @@ function buildReminderJa_(info, url) {
     info.name + ' 様', '',
     'いよいよ明日、' + info.tour + ' のツアー当日です！',
     'お会いできるのを楽しみにしております。', '',
+    '━━━━━━━━━━━━━━━━━━',
+    '■ 集合時間（お迎え）: ' + info.timeStr + '　' + info.dateStr + '（明日）',
+    '■ 集合場所（お迎え先）: ' + (hasPickupPlace_(info.place)
+      ? info.place + '\n　　ロビー・エントランスまでお迎えにあがります。'
+      : '未確定です\n　　このメールへのご返信、または LINE でご宿泊先をお知らせください。'),
+    '━━━━━━━━━━━━━━━━━━', '',
     '【ご予約内容】',
     '　ツアー   : ' + info.tour,
     '　日付     : ' + info.dateStr + '（明日）',
     '　集合時間 : ' + info.timeStr,
+    '　集合場所 : ' + (hasPickupPlace_(info.place) ? info.place : '未確定（ご連絡ください）'),
     '　参加人数 : ' + info.people, '',
     '★★ 注意事項 ★★',
     '沖縄は時期・時間帯により道路の渋滞や駐車場の満車が発生し、',
@@ -732,6 +755,7 @@ function buildReminderEn_(info, url) {
     '<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#1a2a2a;line-height:1.75;">' +
       '<p>Dear ' + n + ',</p>' +
       '<p>Your <b>' + t + '</b> tour is <b>tomorrow</b>!<br>We are looking forward to seeing you.</p>' +
+      meetBoxEn_(info) +
       detailTableEn_(info, tourEn) +
       warnBoxHtml_(false) +
       '<p>Please confirm your attendance using the button below.</p>' +
@@ -749,10 +773,17 @@ function buildReminderEn_(info, url) {
     'Dear ' + info.name + ',', '',
     'Your ' + tourEn + ' tour is tomorrow!',
     'We are looking forward to seeing you.', '',
+    '======================',
+    '* PICKUP TIME  : ' + info.timeStr + '   ' + info.dateStr + ' (tomorrow)',
+    '* PICKUP PLACE : ' + (hasPickupPlace_(info.place)
+      ? info.place + '\n                 We will meet you at the lobby / entrance.'
+      : 'Not yet confirmed\n                 Please reply to this email or message us on LINE with your hotel.'),
+    '======================', '',
     '[Your Reservation]',
     ' Tour          : ' + tourEn,
     ' Date          : ' + info.dateStr + ' (tomorrow)',
     ' Meeting time  : ' + info.timeStr,
+    ' Pickup        : ' + (hasPickupPlace_(info.place) ? info.place : 'Not yet confirmed — please let us know'),
     ' Guests        : ' + info.people, '',
     '** Important notes **',
     'In Okinawa, traffic congestion and full parking lots are common',
@@ -824,11 +855,54 @@ function buttonHtml_(url, label) {
     label + '</a></p>';
 }
 
+/**
+ * 集合時間・集合場所だけを大きく見せる枠。
+ * 前日メールで最も知りたい2点なので、明細表とは別に先頭へ置く。
+ */
+function meetBoxJa_(info) {
+  var placeHtml = hasPickupPlace_(info.place)
+    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>' +
+      '<div style="font-size:12px;color:#00756a;margin-top:2px;">ロビー・エントランスまでお迎えにあがります</div>'
+    : '<div style="font-size:15px;font-weight:bold;color:#c62828;line-height:1.6;">お迎え先が未確定です</div>' +
+      '<div style="font-size:12px;color:#555;margin-top:2px;">このメールへのご返信、または LINE でご宿泊先をお知らせください。</div>';
+  return '<table role="presentation" style="width:100%;border-collapse:collapse;background:#E8F7F2;border:2px solid #00A896;border-radius:12px;margin:18px 0;">' +
+    '<tr><td style="padding:14px 18px 10px;">' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">⏰ 集合時間（お迎え）</div>' +
+      '<div style="font-size:26px;font-weight:bold;color:#003D35;line-height:1.25;">' + esc_(info.timeStr) + '</div>' +
+      '<div style="font-size:12px;color:#00756a;">' + esc_(info.dateStr) + '（明日）</div>' +
+    '</td></tr>' +
+    '<tr><td style="padding:10px 18px 15px;border-top:1px dashed rgba(0,168,150,.45);">' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">📍 集合場所（お迎え先）</div>' +
+      placeHtml +
+    '</td></tr>' +
+    '</table>';
+}
+
+function meetBoxEn_(info) {
+  var placeHtml = hasPickupPlace_(info.place)
+    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>' +
+      '<div style="font-size:12px;color:#00756a;margin-top:2px;">We will meet you at the lobby / entrance.</div>'
+    : '<div style="font-size:15px;font-weight:bold;color:#c62828;line-height:1.6;">Pickup location not yet confirmed</div>' +
+      '<div style="font-size:12px;color:#555;margin-top:2px;">Please reply to this email or message us on LINE with your hotel.</div>';
+  return '<table role="presentation" style="width:100%;border-collapse:collapse;background:#E8F7F2;border:2px solid #00A896;border-radius:12px;margin:18px 0;">' +
+    '<tr><td style="padding:14px 18px 10px;">' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">⏰ PICKUP TIME</div>' +
+      '<div style="font-size:26px;font-weight:bold;color:#003D35;line-height:1.25;">' + esc_(info.timeStr) + '</div>' +
+      '<div style="font-size:12px;color:#00756a;">' + esc_(info.dateStr) + ' (tomorrow)</div>' +
+    '</td></tr>' +
+    '<tr><td style="padding:10px 18px 15px;border-top:1px dashed rgba(0,168,150,.45);">' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">📍 PICKUP LOCATION</div>' +
+      placeHtml +
+    '</td></tr>' +
+    '</table>';
+}
+
 function detailTableJa_(info) {
   return '<table style="width:100%;border-collapse:collapse;background:#F0FBF8;border-radius:10px;margin:16px 0;">' +
     rowHtml_('ツアー', esc_(info.tour)) +
     rowHtml_('日付', esc_(info.dateStr) + '（明日）') +
     rowHtml_('集合時間', esc_(info.timeStr)) +
+    rowHtml_('集合場所', hasPickupPlace_(info.place) ? esc_(info.place) : '未確定（ご連絡ください）') +
     rowHtml_('参加人数', esc_(info.people)) +
     '</table>';
 }
@@ -838,6 +912,7 @@ function detailTableEn_(info, tourEn) {
     rowHtml_('Tour', esc_(tourEn)) +
     rowHtml_('Date', esc_(info.dateStr) + ' (tomorrow)') +
     rowHtml_('Meeting time', esc_(info.timeStr)) +
+    rowHtml_('Pickup', hasPickupPlace_(info.place) ? esc_(info.place) : 'Not yet confirmed — please let us know') +
     rowHtml_('Guests', esc_(info.people)) +
     '</table>';
 }
