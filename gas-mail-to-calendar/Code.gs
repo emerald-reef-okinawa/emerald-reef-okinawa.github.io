@@ -718,7 +718,7 @@ function buildReminderJa_(info, url) {
     '━━━━━━━━━━━━━━━━━━',
     '■ 集合時間（お迎え）: ' + info.timeStr + '　' + info.dateStr + '（明日）',
     '■ 集合場所（お迎え先）: ' + (hasPickupPlace_(info.place)
-      ? info.place + '\n　　ロビー・エントランスまでお迎えにあがります。'
+      ? info.place
       : '未確定です\n　　このメールへのご返信、または LINE でご宿泊先をお知らせください。'),
     '━━━━━━━━━━━━━━━━━━', '',
     '【ご予約内容】',
@@ -776,7 +776,7 @@ function buildReminderEn_(info, url) {
     '======================',
     '* PICKUP TIME  : ' + info.timeStr + '   ' + info.dateStr + ' (tomorrow)',
     '* PICKUP PLACE : ' + (hasPickupPlace_(info.place)
-      ? info.place + '\n                 We will meet you at the lobby / entrance.'
+      ? info.place
       : 'Not yet confirmed\n                 Please reply to this email or message us on LINE with your hotel.'),
     '======================', '',
     '[Your Reservation]',
@@ -861,8 +861,7 @@ function buttonHtml_(url, label) {
  */
 function meetBoxJa_(info) {
   var placeHtml = hasPickupPlace_(info.place)
-    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>' +
-      '<div style="font-size:12px;color:#00756a;margin-top:2px;">ロビー・エントランスまでお迎えにあがります</div>'
+    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>'
     : '<div style="font-size:15px;font-weight:bold;color:#c62828;line-height:1.6;">お迎え先が未確定です</div>' +
       '<div style="font-size:12px;color:#555;margin-top:2px;">このメールへのご返信、または LINE でご宿泊先をお知らせください。</div>';
   return '<table role="presentation" style="width:100%;border-collapse:collapse;background:#E8F7F2;border:2px solid #00A896;border-radius:12px;margin:18px 0;">' +
@@ -880,8 +879,7 @@ function meetBoxJa_(info) {
 
 function meetBoxEn_(info) {
   var placeHtml = hasPickupPlace_(info.place)
-    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>' +
-      '<div style="font-size:12px;color:#00756a;margin-top:2px;">We will meet you at the lobby / entrance.</div>'
+    ? '<div style="font-size:17px;font-weight:bold;color:#003D35;line-height:1.5;">' + esc_(info.place) + '</div>'
     : '<div style="font-size:15px;font-weight:bold;color:#c62828;line-height:1.6;">Pickup location not yet confirmed</div>' +
       '<div style="font-size:12px;color:#555;margin-top:2px;">Please reply to this email or message us on LINE with your hotel.</div>';
   return '<table role="presentation" style="width:100%;border-collapse:collapse;background:#E8F7F2;border:2px solid #00A896;border-radius:12px;margin:18px 0;">' +
