@@ -1278,6 +1278,13 @@
       background: #fff8e1; border: 1px solid #ffcc80; border-radius: 7px;
       color: #8a4b00; font-size: .76rem; font-weight: 600; line-height: 1.6;
     }
+    /* 宿泊先欄の下に出す送迎範囲の案内（範囲外のご予約が続いたため常時表示） */
+    .bk-area-note {
+      margin-top: 6px; padding: 7px 11px;
+      background: var(--g-pale, #eef8f4); border: 1px solid var(--g-mid, #0B8A6B);
+      border-radius: 7px;
+      color: var(--g-dark, #0A3D2E); font-size: .76rem; font-weight: 600; line-height: 1.6;
+    }
     /* 日付入力エラー表示 */
     .bk-date-err {
       display: none;
@@ -4665,7 +4672,7 @@
                   <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
                   <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
                 </div>
-                <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+                <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_central">🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。</div></div>
                 <label class="video-check">
                   <input type="checkbox" name="video" value="yes">
                   <div class="vc-txt">🎬 <strong data-i18n="vid_opt">動画データ 🎁今だけ無料プレゼント中！(通常+¥2,000)</strong><br><span data-i18n="vid_desc">Insta360（アクションカメラ）で撮影・編集した動画データを今だけ無料でプレゼント</span></div>
@@ -4923,7 +4930,7 @@
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
             </div>
-            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_central">🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。</div></div>
             <label class="video-check">
               <input type="checkbox" name="video" value="yes">
               <div class="vc-txt">
@@ -5231,7 +5238,7 @@
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="sk_pax1">1名（おひとり様プラン）</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_level">経験レベル</label><select name="経験レベル"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="lv1">完全初心者</option><option data-i18n="lv2">シュノーケル経験あり</option><option data-i18n="lv3">素潜り経験あり</option></select></div>
             </div>
-            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_central">🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。</div></div>
             <label class="video-check">
               <input type="checkbox" name="video" value="yes">
               <div class="vc-txt">
@@ -5557,7 +5564,7 @@
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
             </div>
-            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_central">🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。</div></div>
             <label class="video-check">
               <input type="checkbox" name="video" value="yes">
               <div class="vc-txt">🎬 <strong data-i18n="vid_opt">動画データ 🎁今だけ無料プレゼント中！(通常+¥2,000)</strong><br><span data-i18n="vid_desc">Insta360（アクションカメラ）で撮影・編集した動画データを今だけ無料でプレゼント</span></div>
@@ -5882,7 +5889,7 @@
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
             </div>
-            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"></div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_naha">🚗 送迎範囲：那覇市内のホテル・宿泊先（国際通り・空港周辺も対応）。範囲外の場合は事前にご相談ください。</div></div>
             <label class="video-check">
               <input type="checkbox" name="video" value="yes">
               <div class="vc-txt">🎬 <strong data-i18n="vid_opt">動画データ 🎁今だけ無料プレゼント中！(通常+¥2,000)</strong><br><span data-i18n="vid_desc">Insta360（アクションカメラ）で撮影・編集した動画データを今だけ無料でプレゼント</span></div>
@@ -6349,6 +6356,20 @@
     return !!t && t.value === TURTLE_TOUR;
   }
 
+  /* 宿泊先欄の下の送迎範囲の案内を、選ばれているツアーに合わせて書き替える。
+     プラン詳細ページはツアーが固定なので実質そのまま、共通フォームだけが切り替わる。
+     data-i18n も付け替えて、言語を切り替えても正しい文言が出るようにする。 */
+  function updateAreaNote(scope) {
+    if (!scope) return;
+    var note = scope.querySelector('.bk-area-note');
+    if (!note) return;
+    var t = scope.querySelector('[name="ご希望のツアー"]');
+    var key = (t && t.value === TURTLE_TOUR) ? 'area_note_naha' : 'area_note_central';
+    note.setAttribute('data-i18n', key);
+    var dict = (typeof T !== 'undefined' && T[curLang]) ? T[curLang] : (typeof T !== 'undefined' ? T.ja : null);
+    if (dict && dict[key]) note.textContent = dict[key];
+  }
+
   function _pad2(n) { return String(n).padStart(2, '0'); }
 
   /* タイトルが「キャンセル」始まりならキャンセル済み＝空き扱い。
@@ -6712,6 +6733,7 @@
         if (!sel.name || sel.name !== 'ご希望のツアー') return;
         var scope = sel.closest('.bk-layout') || sel.closest('form');
         if (!scope) return;
+        updateAreaNote(scope);
         var dateInp = scope.querySelector('.bk-date-inp');
         if (!dateInp) return;
         var ds2 = dateInp.value ? dateInp.value.replace(/-/g, '') : '';
@@ -7149,7 +7171,7 @@
       /* MAP */
       map_lbl:'SERVICE AREA', map_ttl:'無料送迎対応エリア', map_sub:'沖縄本島の那覇〜中部リゾートエリアを幅広くカバー。ホテル・宿泊先まで無料でお迎えに伺います。',
       map_h3:'🚗 無料送迎対応エリア一覧',
-      area_naha_h:'🏙️ 那覇エリア', area_naha_desc:'那覇市内のホテル・宿泊先から送迎いたします。国際通り・空港周辺も対応。',
+      area_naha_h:'🏙️ 那覇エリア', area_naha_desc:'那覇市内のホテル・宿泊先から送迎いたします。国際通り・空港周辺も対応。', area_note_central:'🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。', area_note_naha:'🚗 送迎範囲：那覇市内のホテル・宿泊先（国際通り・空港周辺も対応）。範囲外の場合は事前にご相談ください。',
       area_central_h:'🌊 中部リゾートエリア', area_central_desc:'恩納村・読谷村・北谷町・沖縄市など中部エリアのホテルからも送迎いたします。',
       area_consult_strong:'上記以外のエリアも対応できる場合があります。',
       area_consult_p:'宿泊場所がリストにない場合もお気軽にご相談ください。可能な限り対応いたします。',
@@ -7445,7 +7467,7 @@
       /* MAP */
       map_lbl:'SERVICE AREA', map_ttl:'Free Transfer Area', map_sub:'We cover Naha to the central resort areas of Okinawa Island — free hotel pickup included.',
       map_h3:'🚗 Free Transfer Coverage',
-      area_naha_h:'🏙️ Naha Area', area_naha_desc:'Hotel pickup from central Naha, Kokusai-dori, and the airport area.',
+      area_naha_h:'🏙️ Naha Area', area_naha_desc:'Hotel pickup from central Naha, Kokusai-dori, and the airport area.', area_note_central:'🚗 Pickup area: Onna, Yomitan, Chatan, Okinawa City and the central resort area. Please ask us first if you are staying outside this area.', area_note_naha:'🚗 Pickup area: hotels in Naha City (Kokusai-dori and the airport area included). Please ask us first if you are staying outside this area.',
       area_central_h:'🌊 Central Resort Area', area_central_desc:'We also pick up from Onna-son, Yomitan, Chatan, and Okinawa City resort hotels.',
       area_consult_strong:'Other areas may also be available.',
       area_consult_p:'If your hotel is not listed, please feel free to ask — we\'ll do our best to accommodate.',
@@ -7695,7 +7717,7 @@
       /* MAP */
       map_lbl:'服务区域', map_ttl:'免费接送区域', map_sub:'覆盖那霸至中部度假区，提供免费酒店接送服务。',
       map_h3:'🚗 免费接送区域一览',
-      area_naha_h:'🏙️ 那霸地区', area_naha_desc:'从那霸市内的酒店接送。国际通周边及机场周边均可对应。',
+      area_naha_h:'🏙️ 那霸地区', area_naha_desc:'从那霸市内的酒店接送。国际通周边及机场周边均可对应。', area_note_central:'🚗 接送范围：恩纳村・读谷村・北谷町・冲绳市等中部地区。住宿地超出范围时请事先咨询。', area_note_naha:'🚗 接送范围：那霸市内的酒店・住宿地（含国际通・机场周边）。住宿地超出范围时请事先咨询。',
       area_central_h:'🌊 中部度假区', area_central_desc:'恩纳村・读谷村・北谷町・冲绳市等中部酒店也可接送。',
       area_consult_strong:'以上区域外也可能对应。',
       area_consult_p:'若您的住宿未在列表中，欢迎随时咨询，我们将尽力安排。',
@@ -7945,7 +7967,7 @@
       /* MAP */
       map_lbl:'서비스 지역', map_ttl:'무료 픽업 대응 지역', map_sub:'나하부터 중부 리조트 지역까지 대응. 호텔까지 무료 픽업 포함.',
       map_h3:'🚗 무료 픽업 대응 지역 목록',
-      area_naha_h:'🏙️ 나하 지역', area_naha_desc:'나하 시내 호텔에서 픽업합니다. 국제거리・공항 주변도 대응.',
+      area_naha_h:'🏙️ 나하 지역', area_naha_desc:'나하 시내 호텔에서 픽업합니다. 국제거리・공항 주변도 대응.', area_note_central:'🚗 픽업 범위：온나손・요미탄손・차탄초・오키나와시 등 중부 지역. 범위를 벗어나는 경우 미리 문의해 주세요.', area_note_naha:'🚗 픽업 범위：나하 시내 호텔・숙소(국제거리・공항 주변 포함). 범위를 벗어나는 경우 미리 문의해 주세요.',
       area_central_h:'🌊 중부 리조트 지역', area_central_desc:'온나손・요미탄・차탄・오키나와시 등 중부 호텔에서도 픽업합니다.',
       area_consult_strong:'위 지역 외에도 대응 가능한 경우가 있습니다.',
       area_consult_p:'호텔이 목록에 없는 경우에도 편하게 상담해 주세요. 최대한 대응해 드립니다.',
