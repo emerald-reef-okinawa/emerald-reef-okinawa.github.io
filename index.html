@@ -4659,7 +4659,7 @@
                   <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
                   <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
                 </div>
-                <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
+                <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="10:00" data-i18n="slot_1000">10:00</option><option value="11:00" data-i18n="slot_1100">11:00</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
                 <div class="form-row2">
                   <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
                   <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -5876,7 +5876,7 @@
               <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
               <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
             </div>
-            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="9:00" data-i18n="slot_900t">9:00</option><option value="10:00" data-i18n="slot_1000">10:00</option><option value="11:00" data-i18n="slot_1100">11:00</option></select></div>
             <div class="form-row2">
               <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="pax1">1名</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
               <div class="fg"><label data-i18n="lbl_child">お子様の有無</label><select name="お子様の有無"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="ch_no">いない</option><option data-i18n="ch_yes">いる（年齢を備考に記載）</option></select></div>
@@ -6331,6 +6331,23 @@
      ================================================================ */
   const SLOT_TIMES = { am: ['8:00', '9:00'], pm: ['13:00'] };
 
+  /* 那覇ウミガメだけは別ルール。
+     那覇まで往復するため半日では回らず、同じ日に他のツアーを入れられない。
+     そのため枠は 9:00 / 10:00 / 11:00 の3つで、
+     その日に予定が1件でもあれば（午前・午後を問わず）受付停止にする。 */
+  const TURTLE_TOUR = '那覇ウミガメシュノーケル';
+  const TURTLE_SLOT_TIMES = ['9:00', '10:00', '11:00'];
+
+  /* この入力欄／フォームが那覇ウミガメのものかを判定する。
+     プラン詳細ページは hidden、共通の予約フォームは select で持っている。 */
+  function isTurtleForm(el) {
+    if (!el) return false;
+    var scope = el.closest ? (el.closest('.bk-layout') || el.closest('form')) : null;
+    if (!scope) return false;
+    var t = scope.querySelector('[name="ご希望のツアー"]');
+    return !!t && t.value === TURTLE_TOUR;
+  }
+
   function _pad2(n) { return String(n).padStart(2, '0'); }
 
   /* タイトルが「キャンセル」始まりならキャンセル済み＝空き扱い。
@@ -6416,10 +6433,12 @@
   }
 
   /* その日の状態を返す: 'free'（○終日空き）/ 'partial'（△午前か午後のみ）/ 'busy'（×受付不可） */
-  function dayState(slots, ds) {
+  function dayState(slots, ds, turtle) {
     if (!slots) return 'free';
     var s = slots.get ? slots.get(ds) : slots[ds];
     if (!s) return 'free';
+    /* ウミガメは1日1組。予定が入っていれば午前・午後を問わず受付停止 */
+    if (turtle) return (s.full || s.am || s.pm) ? 'busy' : 'free';
     if (s.full) return 'busy';
     if (s.am && s.pm) return 'busy';
     if (s.am || s.pm) return 'partial';
@@ -6427,8 +6446,9 @@
   }
 
   /* その日に予約できる開始時刻の配列を返す */
-  function openTimesOn(slots, ds) {
-    var st = dayState(slots, ds);
+  function openTimesOn(slots, ds, turtle) {
+    var st = dayState(slots, ds, turtle);
+    if (turtle) return st === 'busy' ? [] : TURTLE_SLOT_TIMES.slice();
     if (st === 'busy') return [];
     if (st === 'free') return SLOT_TIMES.am.concat(SLOT_TIMES.pm);
     var s = slots.get ? slots.get(ds) : slots[ds];
@@ -6436,7 +6456,7 @@
   }
 
   /* 1ヶ月分のカレンダーHTMLを生成 */
-  function buildMonthHtml(year, month, busyDates) {
+  function buildMonthHtml(year, month, busyDates, turtle) {
     var _cl = typeof curLang !== 'undefined' ? curLang : 'ja';
     var MN = {ja:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],zh:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],ko:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']}[_cl]||['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
     var DN = {ja:['日','月','火','水','木','金','土'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],zh:['日','一','二','三','四','五','六'],ko:['일','월','화','수','목','금','토']}[_cl]||['日','月','火','水','木','金','土'];
@@ -6459,7 +6479,7 @@
       var ds = year + String(month+1).padStart(2,'0') + String(d).padStart(2,'0');
       var isToday = (ds === todayStr);
       var isPast  = (ds < todayStr);
-      var st      = dayState(busyDates, ds); /* free / partial / busy */
+      var st      = dayState(busyDates, ds, turtle); /* free / partial / busy */
       var cls = 'ccal-cell';
       if (isPast) cls += ' past';
       else        cls += ' ' + st;
@@ -6495,14 +6515,21 @@
     var now = new Date();
     var y0 = now.getFullYear(), m0 = now.getMonth();
     var y1 = m0 === 11 ? y0+1 : y0, m1 = (m0+1) % 12;
-    var html = '<div class="ccal-months">'
-      + buildMonthHtml(y0, m0, busyDates)
-      + buildMonthHtml(y1, m1, busyDates)
-      + '</div>';
-    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-tc', 'gcal-mini-bk'].forEach(function(id) {
+    function monthsFor(turtle) {
+      return '<div class="ccal-months">'
+        + buildMonthHtml(y0, m0, busyDates, turtle)
+        + buildMonthHtml(y1, m1, busyDates, turtle)
+        + '</div>';
+    }
+    var html = monthsFor(false);
+    /* gcal-mini-tc は那覇ウミガメのページ。1日1組なので専用の判定で描く */
+    var htmlTurtle = monthsFor(true);
+    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.innerHTML = html;
     });
+    var tc = document.getElementById('gcal-mini-tc');
+    if (tc) tc.innerHTML = htmlTurtle;
   }
 
   /* ================================================================
@@ -6530,7 +6557,8 @@
     if (!popup) return;
     var busy = (typeof _gcalBusy !== 'undefined' && _gcalBusy) ? _gcalBusy : new Map();
     popup.querySelector('.bk-date-popup-cal').innerHTML =
-      buildMonthHtml(_bkPickerState.year, _bkPickerState.month, busy);
+      buildMonthHtml(_bkPickerState.year, _bkPickerState.month, busy,
+                     isTurtleForm(_bkPickerState.input));
     popup.style.display = 'block';
   }
 
@@ -6676,6 +6704,30 @@
     });
     if (!_bkValInited) {
       _bkValInited = true;
+      /* 共通フォームでツアーを選び直したら、枠と選択済みの日付を判定し直す。
+         ウミガメへ切り替えた瞬間に、他ツアーなら空きだった日が埋まりになることがある。 */
+      document.addEventListener('change', function(e) {
+        var sel = e.target;
+        if (!sel.name || sel.name !== 'ご希望のツアー') return;
+        var scope = sel.closest('.bk-layout') || sel.closest('form');
+        if (!scope) return;
+        var dateInp = scope.querySelector('.bk-date-inp');
+        if (!dateInp) return;
+        var ds2 = dateInp.value ? dateInp.value.replace(/-/g, '') : '';
+        var busy2 = dateInp._busyDates;
+        if (ds2 && busy2 && dayState(busy2, ds2, isTurtleForm(dateInp)) === 'busy') {
+          dateInp.value = '';
+          var ed = dateInp.parentNode.querySelector('.bk-date-err');
+          if (ed) {
+            ed.textContent = (T[curLang]||T.ja).date_busy_err || '⚠️ この日程は空きがありません。別の日をお選びください。';
+            ed.style.display = 'block';
+          }
+          scope.querySelectorAll('.ccal-cell.cal-selected').forEach(function(c){ c.classList.remove('cal-selected'); });
+          applySlotOptions(dateInp, null);
+        } else {
+          applySlotOptions(dateInp, ds2 || null);
+        }
+      });
       document.addEventListener('change', function(e) {
         var inp = e.target;
         if (!inp.classList.contains('bk-date-inp')) return;
@@ -6683,7 +6735,7 @@
         if (!inp.value) { if (errDiv) errDiv.style.display = 'none'; return; }
         var ds = inp.value.replace(/-/g, '');
         var busy = inp._busyDates;
-        if (busy && dayState(busy, ds) === 'busy') {
+        if (busy && dayState(busy, ds, isTurtleForm(inp)) === 'busy') {
           inp.value = '';
           if (errDiv) {
             errDiv.textContent = (T[curLang]||T.ja).date_busy_err || '⚠️ この日程は空きがありません。別の日をお選びください。';
@@ -6713,7 +6765,9 @@
     if (!layout) return;
     var sel = layout.querySelector('select[name="ご希望時間"]');
     if (!sel) return;
-    var open = ds ? openTimesOn(input._busyDates, ds) : SLOT_TIMES.am.concat(SLOT_TIMES.pm);
+    var turtle = isTurtleForm(input);
+    var all = turtle ? TURTLE_SLOT_TIMES : SLOT_TIMES.am.concat(SLOT_TIMES.pm);
+    var open = ds ? openTimesOn(input._busyDates, ds, turtle) : all.slice();
     var t = (typeof T !== 'undefined' && T[curLang]) ? T[curLang] : (T ? T.ja : {});
     /* 選択肢のテキストは data-i18n が管理しているので触らず、可否だけ切り替える */
     [].forEach.call(sel.options, function(op) {
@@ -7027,7 +7081,7 @@
       ct_ok:'✅ メッセージを受け付けました！24時間以内にご返信いたします。',
       /* CALENDAR */
       cal_ttl:'空き状況カレンダー', cal_sub:'ご希望の日程の空き状況をご確認ください',
-      slot_800:'8:00（午前の部）', slot_900:'9:00（午前の部）', slot_1300:'13:00（午後の部）',
+      slot_800:'8:00（午前の部）', slot_900:'9:00（午前の部）', slot_1300:'13:00（午後の部）', slot_900t:'9:00', slot_1000:'10:00', slot_1100:'11:00',
       cal_leg_partial:'△ 午前か午後のみ',
       slot_am_only:'⚠️ この日は午後がすでに埋まっています。午前の部（8:00・9:00）のみご予約いただけます。',
       slot_pm_only:'⚠️ この日は午前がすでに埋まっています。午後の部（13:00）のみご予約いただけます。',
@@ -7286,7 +7340,7 @@
       ct_send:'Send Message', ct_note:'A confirmation email will be sent. We reply within 24 hours.',
       ct_ok:'✅ Message received! We will reply within 24 hours.',
       cal_ttl:'Availability Calendar', cal_sub:'Check available dates for your booking',
-      slot_800:'8:00 (Morning)', slot_900:'9:00 (Morning)', slot_1300:'13:00 (Afternoon)',
+      slot_800:'8:00 (Morning)', slot_900:'9:00 (Morning)', slot_1300:'13:00 (Afternoon)', slot_900t:'9:00', slot_1000:'10:00', slot_1100:'11:00',
       cal_leg_partial:'△ Morning or afternoon only',
       slot_am_only:'⚠️ The afternoon is already booked on this date. Only the morning slots (8:00 / 9:00) are available.',
       slot_pm_only:'⚠️ The morning is already booked on this date. Only the afternoon slot (13:00) is available.',
@@ -7536,7 +7590,7 @@
       ct_send:'发送消息', ct_note:'发送后将收到确认邮件，通常24小时内回复。',
       ct_ok:'✅ 已收到您的消息！我们将在24小时内与您联系。',
       cal_ttl:'预约日期查询', cal_sub:'请确认您希望的日期是否有空',
-      slot_800:'8:00（上午場）', slot_900:'9:00（上午場）', slot_1300:'13:00（下午場）',
+      slot_800:'8:00（上午場）', slot_900:'9:00（上午場）', slot_1300:'13:00（下午場）', slot_900t:'9:00', slot_1000:'10:00', slot_1100:'11:00',
       cal_leg_partial:'△ 僅上午或下午',
       slot_am_only:'⚠️ 這天下午已被預約，僅可預約上午場（8:00・9:00）。',
       slot_pm_only:'⚠️ 這天上午已被預約，僅可預約下午場（13:00）。',
@@ -7786,7 +7840,7 @@
       ct_send:'메시지 보내기', ct_note:'발송 후 확인 메일을 보내드립니다. 답변은 보통 24시간 이내입니다.',
       ct_ok:'✅ 메시지를 받았습니다! 24시간 이내에 답변드리겠습니다.',
       cal_ttl:'예약 가능 캘린더', cal_sub:'원하시는 날짜의 예약 가능 여부를 확인하세요',
-      slot_800:'8:00（오전부）', slot_900:'9:00（오전부）', slot_1300:'13:00（오후부）',
+      slot_800:'8:00（오전부）', slot_900:'9:00（오전부）', slot_1300:'13:00（오후부）', slot_900t:'9:00', slot_1000:'10:00', slot_1100:'11:00',
       cal_leg_partial:'△ 오전 또는 오후만',
       slot_am_only:'⚠️ 이 날은 오후가 이미 예약되었습니다. 오전부(8:00・9:00)만 예약 가능합니다.',
       slot_pm_only:'⚠️ 이 날은 오전이 이미 예약되었습니다. 오후부(13:00)만 예약 가능합니다.',
