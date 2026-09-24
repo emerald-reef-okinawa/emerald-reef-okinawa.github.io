@@ -138,6 +138,12 @@
               "itemOffered": {"@type": "Service", "name": "スキンダイビング"},
               "price": "9000",
               "priceCurrency": "JPY"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {"@type": "Service", "name": "魚突き体験"},
+              "price": "10000",
+              "priceCurrency": "JPY"
             }
           ]
         }
@@ -2314,6 +2320,11 @@
         linear-gradient(rgba(0,0,0,.30) 0%, rgba(0,0,0,.16) 100%),
         url('bc-coral.webp') center 55%/cover no-repeat;
     }
+    .det-hero.sp {
+      background:
+        linear-gradient(rgba(0,0,0,.42) 0%, rgba(0,0,0,.22) 100%),
+        url('https://images.unsplash.com/photo-1743656620385-5afe20b69b9d?auto=format&w=1400&q=80') center 45%/cover no-repeat;
+    }
     .det-hero.tc {
       background:
         linear-gradient(rgba(0,0,0,.32) 0%, rgba(0,0,0,.18) 100%),
@@ -3929,7 +3940,40 @@
         </div>
       </div>
 
-      <!-- ⑤ SUP: テキスト 左 / 写真 右 (COMING SOON) -->
+      <!-- ⑤ 魚突き体験: 写真 左 / テキスト 右 -->
+      <div class="sv-row fi d5" onclick="showDet('spearfishing')">
+        <div class="sv-row-img-wrap">
+          <div class="sv-row-img" style="background:
+            linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.02) 55%,rgba(0,0,0,.25) 100%),
+            url('https://images.unsplash.com/photo-1614440317989-798a6dcf408b?auto=format&w=900&q=80') center 40%/cover;">
+          </div>
+        </div>
+        <div class="sv-row-body">
+          <div class="sv-row-badges">
+            <span class="sv-row-badge beg" data-i18n="sp_badge">初挑戦歓迎</span>
+          </div>
+          <p class="sv-row-lbl">OUR SERVICES 05</p>
+          <h3 class="sv-row-ttl" data-i18n="sp_name">魚突き体験</h3>
+          <p class="sv-row-en" data-i18n="sp_en">Spearfishing</p>
+          <div class="sv-sale-note" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
+          <div class="sv-row-orig" data-i18n="sp_orig">通常 ¥16,000〜 / 人</div>
+          <div class="sv-row-price-row">
+            <span class="sv-row-price">¥10,000<span data-i18n="pp_per">〜 / 人</span></span>
+            <span class="sv-off-badge"><strong>38%</strong><small>OFF</small></span>
+          </div>
+          <ul class="sv-row-feats">
+            <li><span class="ck">✓</span><span data-i18n="sp_f1">手銛（やす）で魚を狙うスピアフィッシング</span></li>
+            <li><span class="ck">✓</span><span data-i18n="sp_f6">1日1組限定の完全貸切</span></li>
+            <li><span class="ck">✓</span><span data-i18n="sp_f2">潜り方・銛の扱いをゼロから指導</span></li>
+            <li><span class="ck">✓</span><span data-i18n="sp_f3">写真データ無料プレゼント</span></li>
+            <li><span class="ck">✓</span><span data-i18n="sp_f4">ホテル送迎付き・手ぶらOK</span></li>
+            <li><span class="ck">✓</span><span data-i18n="sp_f5">対象年齢 12〜60歳（中学生以上）</span></li>
+          </ul>
+          <button class="sv-row-btn" data-i18n="sv_detail">詳細を見る &amp; 予約する</button>
+        </div>
+      </div>
+
+      <!-- ⑥ SUP: テキスト 左 / 写真 右 (COMING SOON) -->
       <div class="sv-row fi d5" style="cursor:default;">
         <div class="sv-row-img-wrap">
           <div class="sv-row-img" style="background:linear-gradient(135deg,#2d6a4f,#52b788);"></div>
@@ -3938,7 +3982,7 @@
           <div class="sv-row-badges">
             <span class="sv-row-badge soon">COMING SOON</span>
           </div>
-          <p class="sv-row-lbl">OUR SERVICES 05</p>
+          <p class="sv-row-lbl">OUR SERVICES 06</p>
           <h3 class="sv-row-ttl">SUP</h3>
           <p class="sv-row-en">Stand Up Paddleboard</p>
           <div class="sv-row-price-row">
@@ -4633,6 +4677,31 @@
             </div>
           </div>
         </div>
+        <div class="bkp-card">
+          <div class="bkp-card-img">
+            <span class="bkp-off-tag">38% OFF</span>
+            <img src="https://images.unsplash.com/photo-1614440317989-798a6dcf408b?auto=format&w=600&q=80" alt="沖縄 魚突き体験（スピアフィッシング）" loading="lazy">
+          </div>
+          <div class="bkp-card-body">
+            <div class="bkp-card-name" data-i18n="sp_name">魚突き体験</div>
+            <div class="bkp-card-en" data-i18n="sp_en">Spearfishing</div>
+            <div class="bkp-price">¥10,000<small data-i18n="pp_per">〜 / 人</small></div>
+            <div class="bkp-orig" data-i18n="sp_orig">通常 ¥16,000〜 / 人</div>
+            <div class="bkp-divline"></div>
+            <div class="bkp-spec"><span class="lbl" data-i18n="bkp_level">難易度</span><span class="val bkp-stars"><span class="on">★★★</span></span></div>
+            <div class="bkp-spec"><span class="lbl" data-i18n="bkp_duration">所要時間</span><span class="val">約3〜4h</span></div>
+            <div class="bkp-rec"><strong data-i18n="bkp_rec_lbl">こんな方に</strong><span data-i18n="bkp_sp_rec">もっとアクティブに楽しみたい方に。素潜りで深い海へ。ウミガメ遭遇のチャンスも。</span></div>
+            <ul class="bkp-feats">
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_spear">手銛の使い方を一から指導</span></li>
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_photo">写真データ無料プレゼント</span></li>
+              <li><span class="ck">✓</span><span data-i18n="bkp_feat_transfer">完全貸切・完全送迎</span></li>
+            </ul>
+            <div class="bkp-btns">
+              <button class="bkp-detail-btn" onclick="showDet('spearfishing')" data-i18n="bkp_detail">詳細を見る</button>
+              <button class="bkp-choose-btn" onclick="selectTourForBooking('魚突き')" data-i18n="bkp_choose">このツアーを選ぶ</button>
+            </div>
+          </div>
+        </div>
 
       </div>
 
@@ -4651,6 +4720,7 @@
                     <option value="シュノーケル" data-i18n="sn_name">シュノーケル</option>
                     <option value="青の洞窟" data-i18n="bc_name">青の洞窟シュノーケル</option>
                     <option value="スキンダイビング" data-i18n="sk_name">スキンダイビング</option>
+                    <option value="魚突き" data-i18n="sp_name">魚突き体験</option>
                     <option value="那覇ウミガメシュノーケル" data-i18n="tc_name">那覇近海ウミガメシュノーケル</option>
                   </select>
                 </div>
@@ -5355,6 +5425,309 @@
     <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
   </footer>
 </div><!-- /view-skindiving -->
+
+<div id="view-spearfishing" class="view">
+  <div class="back-bar">
+    <div class="back-inner">
+      <div class="breadcrumb">
+        <a onclick="goHome()" data-i18n="bc_home">ホーム</a> /
+        <a onclick="goHomeJump('services')" data-i18n="bc_sv">サービス</a> /
+        <span data-i18n="bc_sp">魚突き体験</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="det-hero sp">
+    <div class="det-hero-tag" data-i18n="sp_badge">初挑戦歓迎</div>
+    <h1 data-i18n="sp_name">魚突き体験</h1>
+    <p data-i18n="sp_det_sub">Spearfishing — 手銛ひとつで挑む、狩りの海</p>
+    <div class="cta-row">
+      <a href="#sp-bk" class="btn btn-primary" data-i18n="det_book_now">今すぐ予約する</a>
+    </div>
+  </div>
+
+  <div id="det-slider-spearfishing"></div>
+  <div id="det-highlights-spearfishing"></div>
+  <div id="det-video-spearfishing"></div>
+  <div id="det-points-spearfishing"></div>
+  <div id="det-gallery-spearfishing"></div>
+
+  <div class="det-body">
+    <section>
+      <div class="container">
+        <div class="det-grid">
+          <div>
+            <h2 class="s-title" style="text-align:left;font-size:1.5rem;" data-i18n="det_price_ttl">料金プラン</h2>
+            <div style="height:12px;"></div>
+            <div class="price-card">
+              <h3 data-i18n="pc_ttl">💴 料金（人数別）</h3>
+              <div class="sale-banner">
+                <div class="sb-body">
+                  <div class="sb-label" data-i18n="sale_label">🎉 開店記念セール開催中！</div>
+                  <div class="sb-sub"  data-i18n="sale_sub">期間限定・全プランが最大割引</div>
+                </div>
+                <div class="sb-badge">
+                  <div class="sb-pct">38<span class="sb-sym">%</span></div>
+                  <div class="sb-off">OFF</div>
+                </div>
+              </div>
+              <div class="pt-grid">
+                <div class="pt-row">
+                  <div class="pt-lbl" data-i18n="pr_1pax">1名</div>
+                  <div class="pt-amt"><small class="pt-orig">通常 ¥21,000</small>¥13,000</div>
+                </div>
+                <div class="pt-row">
+                  <div class="pt-lbl" data-i18n="pr_2pax">2名</div>
+                  <div class="pt-amt"><small class="pt-orig">通常 ¥18,000 / 人</small>¥11,000<span data-i18n="pr_pp"> / 人</span></div>
+                </div>
+                <div class="pt-row highlight">
+                  <div class="pt-lbl" data-i18n="pr_3plus">3名以上</div>
+                  <div class="pt-amt"><small class="pt-orig">通常 ¥16,000 / 人</small>¥10,000<span data-i18n="pr_pp"> / 人</span></div>
+                </div>
+              </div>
+              <div class="pc-bottom-notes">
+                <span data-i18n="pc_note">※全機材・送迎・写真データ込みの価格です。</span><br>
+                <span data-i18n="age_note_sp">🏊 対象年齢：12〜60歳（中学生以上）</span><br>
+                <span data-i18n="sp_max_cap">※1組最大4名まで。</span>
+              </div>
+              <!-- Video option -->
+              <div class="video-opt">
+                <div class="vico">🎬</div>
+                <div class="vtxt">
+                  <h4 data-i18n="vid_opt_h">動画データ（今だけ無料）</h4>
+                  <p data-i18n="vid_opt_p">Insta360（アクションカメラ）で撮影・編集した動画データを、今だけ無料でプレゼントしています</p>
+                </div>
+                <div class="vprc">
+                  <span class="vprc-badge" data-i18n="vid_now">今だけ</span>
+                  <span class="vprc-old">+¥2,000</span>
+                  <span class="vprc-free" data-i18n="vid_free">無料</span>
+                </div>
+              </div>
+              <div style="margin-top:20px;">
+                <button onclick="scrollToBkForm()" class="det-book-btn" data-i18n="det_book_now">今すぐ予約する</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="s-title" style="text-align:left;font-size:1.5rem;" data-i18n="det_inc_ttl">含まれるもの</h2>
+            <div style="height:12px;"></div>
+            <ul class="inc-list">
+              <li><span class="inc-ico">🚗</span><div><strong data-i18n="inc_h1">完全送迎</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p1">ホテル・宿泊先からの往復送迎</span></div></li>
+              <li><span class="inc-ico">🎿</span><div><strong data-i18n="inc_h2">全機材レンタル</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="sp_inc_p2">マスク・フィン</span></div></li>
+              <li><span class="inc-ico">📸</span><div><strong data-i18n="inc_h3">写真データ無料プレゼント</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p3">Insta360（アクションカメラ）撮影写真を後日メールにてお送りします</span></div></li>
+              <li><span class="inc-ico">🎬</span><div><strong data-i18n="inc_h4">動画データ（今だけ無料）</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p4">編集した動画データも今だけ無料でプレゼント</span></div></li>
+              <li><span class="inc-ico">👨‍🏫</span><div><strong data-i18n="sp_inc_h5">手銛レクチャー</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="sp_inc_p5">構え方・狙い方・安全な扱い方をゼロから指導</span></div></li>
+              <li><span class="inc-ico">🔒</span><div><strong data-i18n="inc_h6">完全貸切</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p6">あなたのグループだけの専用ツアー</span></div></li>
+              <li><span class="inc-ico">🚿</span><div><strong data-i18n="inc_h_shower">プライベートシャワー・更衣スペース</strong><br><span style="font-size:.82rem;color:var(--text-soft);" data-i18n="inc_p_shower">シャワーと専用更衣テントをご用意しています</span></div></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:48px;"></div>
+
+        <div class="sched sched-with-img">
+          <div class="sched-steps-col">
+            <h3 data-i18n="det_sched_ttl">当日の流れ</h3>
+            <div class="tl-duration" data-i18n="tl_duration" style="margin:10px 0 18px;justify-content:flex-start;">⏱ 所要時間：約3〜4時間程度</div>
+            <div class="steps">
+              <div class="step"><div class="step-n">1</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s1_h">お迎え</h4><p data-i18n="sp_s1_p">ホテル・宿泊先にお迎えに上がります。</p></div></div>
+              <div class="step"><div class="step-n">2</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s2_h">器材フィッティング</h4><p data-i18n="sp_s2_p">マスク・フィン・手銛のサイズと扱い方を確認します。</p></div></div>
+              <div class="step"><div class="step-n">3</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s3_h">安全レクチャー（30分）</h4><p data-i18n="sp_s3_p">潜り方の基本と、手銛の安全な使い方・ハンドサインを練習します。</p></div></div>
+              <div class="step"><div class="step-n">4</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s4_h">浅瀬での練習</h4><p data-i18n="sp_s4_p">浅い場所で潜降と狙いの練習をしてから本番に臨みます。</p></div></div>
+              <div class="step"><div class="step-n">5</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s5_h">魚突き体験（60〜90分）</h4><p data-i18n="sp_s5_p">ガイドと一緒にポイントへ。水中写真も撮影します。</p></div></div>
+              <div class="step"><div class="step-n">6</div><div class="step-ln"></div><div class="step-c"><h4 data-i18n="sp_s6_h">シャワー・お送り</h4><p data-i18n="sp_s6_p">シャワーと着替えのあと、ホテルへお送りします。写真は後日メールでお届けします。</p></div></div>
+            </div>
+          </div>
+          <div class="sched-img-col">
+            <img src="pixel-skindiving.webp" width="1402" height="1122" alt="沖縄 魚突き体験イメージ" class="sched-pixel-img" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="det-creatures-spearfishing"></div>
+  <!-- Gear / What to Bring -->
+  <section class="gear-section">
+    <div class="container">
+      <p class="s-label">WHAT TO BRING</p>
+      <h2 class="s-title" data-i18n="gear_ttl">当日の服装と持ち物</h2>
+      <div class="gear-grid">
+        <div class="gear-card">
+          <div class="gear-icon">👙</div>
+          <h3 class="gear-card-ttl" data-i18n="gear_wear_ttl">服装</h3>
+          <ul class="gear-list">
+            <li data-i18n="gear_wear_1">水着・ビーチサンダル</li>
+            <li data-i18n="gear_wear_2">水着は着た状態でご参加ください</li>
+          </ul>
+        </div>
+        <div class="gear-card">
+          <div class="gear-icon">🎒</div>
+          <h3 class="gear-card-ttl" data-i18n="gear_items_ttl">持ち物</h3>
+          <ul class="gear-list">
+            <li><span class="gear-badge" data-i18n="gear_req">必須</span><span data-i18n="gear_items_req">飲み物、タオル</span></li>
+            <li><span class="gear-badge gear-badge-opt" data-i18n="gear_opt">必要な方は</span><span data-i18n="gear_items_opt">日焼け止め、酔い止めなど</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="gear-shower-note" data-i18n-html="gear_shower">🚿 <strong>シャワー・更衣スペースあり</strong> — プライベートなシャワーと専用更衣テントをご用意。公共施設の混雑なし、快適にお着替えいただけます。</div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <div class="bk-section" id="sp-bk">
+    <div class="container">
+      <p class="s-label" style="color:var(--g-light);">BOOKING</p>
+      <h2 class="s-title" data-i18n="sp_bk_ttl">魚突き体験 予約フォーム</h2>
+      <div class="bk-sameday-note" data-i18n="bk_sameday_note">当日・前日のご予約も大歓迎！空き状況はお気軽にお問い合わせください</div>
+      <p class="s-sub" data-i18n="bk_sub">以下のフォームにご記入ください。確認後、24時間以内にご連絡いたします。</p>
+      <div class="bk-layout">
+        <div class="form-wrap">
+          <form novalidate onsubmit="submitForm(event,'sp-ok')">
+            <input type="hidden" name="ご希望のツアー" value="魚突き">
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_name">お名前</span><span class="req">*</span></label><input type="text" name="お名前" placeholder="山田 太郎" data-i18n-placeholder="ph_name" required></div>
+              <div class="fg"><label><span data-i18n="lbl_email">メールアドレス</span><span class="req">*</span></label><input type="email" name="email" placeholder="example@email.com" required></div>
+            </div>
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_tel">お電話番号</span><span class="req">*</span></label><input type="tel" name="電話番号" placeholder="090-0000-0000" required></div>
+              <div class="fg"><label><span data-i18n="lbl_date">ご希望日</span><span class="req">*</span></label><input type="text" name="ご希望日" class="bk-date-inp" data-i18n-placeholder="date_ph" placeholder="例：2026-06-15" autocomplete="off" required></div>
+            </div>
+            <div class="fg"><label><span data-i18n="lbl_time">ご希望時間</span><span class="req">*</span></label><select name="ご希望時間" required><option value="" data-i18n="sel_choose">-- 選択してください --</option><option value="8:00" data-i18n="slot_800">8:00（午前の部）</option><option value="9:00" data-i18n="slot_900">9:00（午前の部）</option><option value="13:00" data-i18n="slot_1300">13:00（午後の部）</option></select></div>
+            <div class="form-row2">
+              <div class="fg"><label><span data-i18n="lbl_pax">参加人数</span><span class="req">*</span></label><select name="参加人数" required><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="sp_pax1">1名（おひとり様プラン）</option><option data-i18n="pax2">2名</option><option data-i18n="pax3">3名</option><option data-i18n="pax4">4名</option><option data-i18n="pax5">5名以上</option></select></div>
+              <div class="fg"><label data-i18n="lbl_level">経験レベル</label><select name="経験レベル"><option value="" data-i18n="sel_choose2">選択</option><option data-i18n="lv1">完全初心者</option><option data-i18n="lv2">シュノーケル経験あり</option><option data-i18n="lv3">素潜り経験あり</option></select></div>
+            </div>
+            <div class="fg"><label data-i18n="lbl_hotel">宿泊先・送迎場所</label><input type="text" name="宿泊先" placeholder="例：那覇市○○ホテル" data-i18n-placeholder="ph_hotel"><div class="bk-area-note" data-i18n="area_note_central">🚗 送迎範囲：恩納村・読谷村・北谷町・沖縄市など中部エリア。範囲外の場合は事前にご相談ください。</div></div>
+            <label class="video-check" style="display:none">
+              <input type="checkbox" name="video" value="yes">
+              <div class="vc-txt">
+                🎬 <strong data-i18n="vid_opt">動画データ 🎁今だけ無料プレゼント中！(通常+¥2,000)</strong><br>
+                <span data-i18n="vid_desc">Insta360（アクションカメラ）で撮影・編集した動画データを今だけ無料でプレゼント</span>
+              </div>
+            </label>
+            <div class="fg"><label><span data-i18n="lbl_other_req">備考</span><span class="req">*</span></label><textarea name="備考" placeholder="アレルギー、体調面での配慮事項など" data-i18n-placeholder="ph_notes" required></textarea></div>
+            <div class="fg">
+              <label class="policy-check-wrap">
+                <input type="checkbox" name="policy_agree" value="yes" required>
+                <div class="vc-txt">
+                  <strong data-i18n="agree_notes_h">注意事項を確認しました（必須）</strong><br>
+                  <span data-i18n="agree_notes_p">参加前のご注意・キャンセルポリシーを確認し、同意の上で予約します</span>
+                </div>
+              </label>
+            </div>
+            <button type="submit" class="f-submit" data-i18n="bk_submit">予約リクエストを送信する</button>
+            <p class="f-note" data-i18n="bk_note">送信後、確認メールをお送りします。24時間以内にご連絡します。</p>
+            <div class="f-success" id="sp-ok"><p data-i18n="bk_ok">✅ 予約リクエストを受け付けました！24時間以内に確認のご連絡をいたします。</p></div>
+          </form>
+        </div>
+        <!-- 右: ミニ空き状況カレンダー -->
+        <div class="bk-cal-wrap">
+          <div class="bk-cal-head">📅 <span data-i18n="cal_ttl">空き状況カレンダー</span></div>
+          <div id="gcal-mini-sp" class="cal-iframe-wrap"><div class="ccal-loading"><span class="ccal-ico"></span><span data-i18n="cal_loading">空き状況をチェック中</span><span class="ccal-dots"></span></div></div>
+          <div class="bk-cal-legend">
+            <span class="cal-leg-item"><span class="cal-dot ok"></span><span data-i18n="cal_leg_free">○ 空き</span></span><span class="cal-leg-item"><span class="cal-dot partial"></span><span data-i18n="cal_leg_partial">△ 午前か午後のみ</span></span>
+            <span class="cal-leg-item"><span class="cal-dot busy"></span><span data-i18n="cal_leg_busy">× 満員</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Area Map — Skin Diving -->
+  <div class="area-section">
+    <div class="container">
+      <p class="s-label" style="text-align:left;">SERVICE AREA</p>
+      <h2 class="s-title" style="text-align:left;font-size:1.5rem;margin-bottom:28px;" data-i18n="det_area_ttl">対応エリア・送迎範囲</h2>
+      <div class="oki-map-layout">
+        <div class="oki-map-col">
+          <img src="okinawa-map-bc.webp" width="900" height="900" alt="沖縄本島 中部 無料送迎エリアマップ" class="oki-map-img" loading="lazy">
+          <div class="oki-legend">
+            <div class="oki-legend-item"><span class="oki-legend-dot" style="background:#f5a623;"></span><span data-i18n="area_leg_central">無料送迎対応エリア（中部）</span></div>
+          </div>
+        </div>
+        <div class="oki-info-col">
+          <div class="oki-area-cards">
+            <div class="oki-area-card central">
+              <h4 data-i18n="area_central_h">🌊 中部リゾートエリア</h4>
+              <p data-i18n="area_central_desc">恩納村・読谷村・北谷町・沖縄市など中部エリアのホテルからも送迎いたします。</p>
+              <div class="oki-tags">
+                <span class="oki-tag ct-tag">恩納村</span><span class="oki-tag ct-tag">読谷村</span><span class="oki-tag ct-tag">北谷町</span><span class="oki-tag ct-tag">沖縄市</span>
+              </div>
+            </div>
+          </div>
+          <div class="oki-consult-box">
+            💬 <strong data-i18n="area_consult_strong">上記以外のエリアも対応できる場合があります。</strong><br>
+            <span data-i18n="area_consult_p">宿泊場所がリストにない場合もお気軽にご相談ください。可能な限り対応いたします。</span>
+          </div>
+          <div class="oki-time-note">
+            🕐 <span data-i18n="area_time">お客様のご希望の時間帯に送迎いたします（完全プライベートツアー）。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notices & Cancellation Policy — Skin Diving -->
+  <section class="policy-section fi">
+    <div class="container">
+      <p class="s-label" style="text-align:left;">IMPORTANT INFO</p>
+      <div class="policy-grid">
+        <div class="policy-card">
+          <div class="policy-card-head">
+            <span class="policy-icon">⚠️</span>
+            <h3 class="policy-card-ttl" data-i18n="notes_ttl">参加前のご注意</h3>
+          </div>
+          <div class="policy-body">
+            <ul class="policy-list">
+              <li><span class="policy-dot">🏥</span><span data-i18n="note_1"></span></li>
+              <li><span class="policy-dot">🍺</span><span data-i18n="note_2"></span></li>
+              <li><span class="policy-dot">🌊</span><span data-i18n="note_3"></span></li>
+              <li><span class="policy-dot">📋</span><span data-i18n="note_4"></span></li>
+              <li><span class="policy-dot">👴</span><span data-i18n="note_5"></span></li>
+              <li><span class="policy-dot">🙋</span><span data-i18n="note_6"></span></li>
+              <li><span class="policy-dot">👗</span><span data-i18n="note_7"></span></li>
+              <li><span class="policy-dot">👶</span><span data-i18n="note_8"></span></li>
+              <li><span class="policy-dot">🚗</span><span data-i18n="note_9"></span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="policy-card">
+          <div class="policy-card-head">
+            <span class="policy-icon">📋</span>
+            <h3 class="policy-card-ttl" data-i18n="cancel_ttl">キャンセルポリシー</h3>
+          </div>
+          <div class="policy-body">
+            <div class="cancel-table">
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_7d">7日前まで</div>
+                <div class="cancel-fee free" data-i18n="cv_7d">無料</div>
+              </div>
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_6d">6日前〜前日18時まで</div>
+                <div class="cancel-fee" data-i18n="cv_6d">料金の50%</div>
+              </div>
+              <div class="cancel-row">
+                <div class="cancel-timing" data-i18n="ct_od">前日18時〜当日・無連絡</div>
+                <div class="cancel-fee" data-i18n="cv_od">料金の100%</div>
+              </div>
+            </div>
+            <div class="cancel-weather" data-i18n="cancel_weather">🌀 悪天候・海況不良による中止は全額返金または無料日程変更にて対応いたします。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="det-faq-spearfishing"></div>
+
+  <div class="wave" style="background:var(--g-dark);"><svg viewBox="0 0 1440 60" style="height:60px;" preserveAspectRatio="none"><path d="M0,38 C480,52 960,10 1440,38 L1440,60 L0,60Z" fill="#003D35"/></svg></div>
+  <footer>
+    <div class="ft-logo"><img src="logo.webp" width="300" height="300" alt="" loading="lazy" onerror="this.style.display='none'"><div class="ft-logo-txt">EMERALD REEF OKINAWA</div></div>
+    <div class="ft-links"><a onclick="goHome()" data-i18n="ft_home">ホームへ戻る</a><a onclick="goHomeJump('services')" data-i18n="ft_svlist">サービス一覧</a><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></div>
+    <p class="ft-copy">© 2024 EMERALD REEF OKINAWA. All rights reserved.</p>
+  </footer>
+</div><!-- /view-spearfishing -->
 
 
 <!-- ================================================================
@@ -6517,7 +6890,7 @@
     var html = monthsFor(false);
     /* gcal-mini-tc は那覇ウミガメのページ。1日1組なので専用の判定で描く */
     var htmlTurtle = monthsFor(true);
-    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
+    ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-sp', 'gcal-mini-bc', 'gcal-mini-bk'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.innerHTML = html;
     });
@@ -6655,7 +7028,7 @@
   function initBookingCalendars(busyDates) {
     if (!_bkCalInited) {
       _bkCalInited = true;
-      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-bc', 'gcal-mini-tc', 'gcal-mini-bk'].forEach(function(id) {
+      ['gcal-mini-sn', 'gcal-mini-sk', 'gcal-mini-sp', 'gcal-mini-bc', 'gcal-mini-tc', 'gcal-mini-bk'].forEach(function(id) {
         var container = document.getElementById(id);
         if (!container) return;
         container.addEventListener('click', function(e) {
@@ -6883,7 +7256,7 @@
   function showCalLoadError() {
     var msg = ((typeof T !== 'undefined' && T[curLang] && T[curLang].cal_load_err) || (T && T.ja && T.ja.cal_load_err))
       || '最新の空き状況を取得できませんでした。ご予約前にお問い合わせください。';
-    ['gcal-mini-sn','gcal-mini-sk','gcal-mini-bc','gcal-mini-tc','gcal-mini-bk'].forEach(function(id){
+    ['gcal-mini-sn','gcal-mini-sk','gcal-mini-sp','gcal-mini-bc','gcal-mini-tc','gcal-mini-bk'].forEach(function(id){
       var el = document.getElementById(id);
       if (!el || el.querySelector('.ccal-load-err')) return;
       var d = document.createElement('div');
@@ -7199,6 +7572,39 @@
       sk_area_naha_p:'那覇市内のホテル・宿泊先から送迎いたします。那覇エリアからアクセスできるスキンダイビングスポットをご案内します。',
       sk_area_yomitan_p:'中部〜北部リゾートエリアへの送迎に対応しています。ウミガメに出会える珊瑚礁スポットへご案内します。',
       sk_area_island_p:'橋でつながった離島（古宇利島・浜比嘉島・伊計島など）でのスキンダイビングも可能です。本島を超える透明度で、素潜りの醍醐味を存分に体感できます。',
+      sp_badge:'初挑戦歓迎',
+      sp_name:'魚突き体験',
+      sp_en:'Spearfishing',
+      sp_orig:'通常 ¥16,000〜 / 人',
+      sp_det_sub:'Spearfishing — 手銛ひとつで挑む、狩りの海',
+      sp_f1:'手銛（やす）で魚を狙うスピアフィッシング',
+      sp_f2:'潜り方・銛の扱いをゼロから指導',
+      sp_f3:'写真データ無料プレゼント',
+      sp_f4:'ホテル送迎付き・手ぶらOK',
+      sp_f5:'対象年齢 12〜60歳（中学生以上）',
+      sp_f6:'1日1組限定の完全貸切',
+      sp_inc_p2:'マスク・フィン・手銛（やす）',
+      sp_inc_h5:'手銛レクチャー',
+      sp_inc_p5:'構え方・狙い方・安全な扱い方をゼロから指導',
+      sp_s1_h:'お迎え',
+      sp_s1_p:'ホテル・宿泊先にお迎えに上がります。',
+      sp_s2_h:'器材フィッティング',
+      sp_s2_p:'マスク・フィン・手銛のサイズと扱い方を確認します。',
+      sp_s3_h:'安全レクチャー（30分）',
+      sp_s3_p:'潜り方の基本と、手銛の安全な使い方・ハンドサインを練習します。',
+      sp_s4_h:'浅瀬での練習',
+      sp_s4_p:'浅い場所で潜降と狙いの練習をしてから本番に臨みます。',
+      sp_s5_h:'魚突き体験（60〜90分）',
+      sp_s5_p:'ガイドと一緒にポイントへ。水中写真も撮影します。',
+      sp_s6_h:'シャワー・お送り',
+      sp_s6_p:'シャワーと着替えのあと、ホテルへお送りします。写真は後日メールでお届けします。',
+      sp_bk_ttl:'魚突き体験 予約フォーム',
+      sp_max_cap:'※1組最大4名まで。',
+      age_note_sp:'🏊 対象年齢：12〜60歳（中学生以上）',
+      bc_sp:'魚突き体験',
+      sp_pax1:'1名（おひとり様プラン）',
+      bkp_sp_rec:'釣り・アウトドア好き／シュノーケルの次に挑戦したい方',
+      bkp_feat_spear:'手銛の使い方を一から指導',
       /* POLICY SECTION */
       notes_ttl:'参加前のご注意',
       note_1:'<strong>健康・体調</strong>：心臓疾患・てんかん・高血圧・喘息などの持病をお持ちの方、妊娠中の方はご参加いただけません。ご不安な方は事前にご相談ください。',
@@ -7400,6 +7806,39 @@
       sk_area_naha_p:'We offer transfers from hotels in Naha city. We guide you to skin diving spots accessible from the Naha area.',
       sk_area_yomitan_p:'We cover central and northern resort areas. We guide you to coral reef spots where you may encounter sea turtles.',
       sk_area_island_p:'Skin diving at bridge-connected islands (Kouri, Hamahiga, Ikei, etc.) is also possible. Experience freediving with crystal-clear waters surpassing the mainland.',
+      sp_badge:'First-Timers Welcome',
+      sp_name:'Spearfishing',
+      sp_en:'Spearfishing',
+      sp_orig:'Regular ¥16,000~ / person',
+      sp_det_sub:'Spearfishing — hunting with a hand spear, one breath at a time',
+      sp_f1:'Hunt fish with a hand spear (yasu)',
+      sp_f2:'Diving and spear technique taught from scratch',
+      sp_f3:'Free photo data',
+      sp_f4:'Hotel pickup included, nothing to bring',
+      sp_f5:'Ages 12-60 (junior high and up)',
+      sp_f6:'One group per day, fully private',
+      sp_inc_p2:'Mask, fins &amp; hand spear',
+      sp_inc_h5:'Hand Spear Lesson',
+      sp_inc_p5:'Stance, aiming and safe handling, taught from scratch',
+      sp_s1_h:'Pickup',
+      sp_s1_p:'We collect you from your hotel or accommodation.',
+      sp_s2_h:'Gear Fitting',
+      sp_s2_p:'We fit your mask and fins and check how to handle the spear.',
+      sp_s3_h:'Safety Briefing (30 min)',
+      sp_s3_p:'Diving basics, safe spear handling and hand signals.',
+      sp_s4_h:'Practice in the Shallows',
+      sp_s4_p:'Practise descending and aiming in shallow water first.',
+      sp_s5_h:'Spearfishing (60-90 min)',
+      sp_s5_p:'Head out to the spot with your guide. We take underwater photos too.',
+      sp_s6_h:'Shower &amp; Drop-off',
+      sp_s6_p:'Shower and change, then we drive you back. Photos follow by email.',
+      sp_bk_ttl:'Spearfishing Booking Form',
+      sp_max_cap:'*Up to 4 people per group.',
+      age_note_sp:'🏊 Ages: 12-60 (junior high school and up)',
+      bc_sp:'Spearfishing',
+      sp_pax1:'1 person (Solo Plan)',
+      bkp_sp_rec:'Anglers and outdoor lovers, or snorkelers ready for the next step',
+      bkp_feat_spear:'Spear technique taught from scratch',
       /* PRICE CARDS */
       pc_ttl:'💴 Pricing (by group size)',
       pr_1pax:'1 person', pr_2pax:'2 persons', pr_3plus:'3+ persons', pr_pp:' / person',
@@ -7649,6 +8088,39 @@
       sk_area_naha_p:'提供那霸市内酒店・住宿地的接送。带您前往可从那霸地区前往的自由潜水景点。',
       sk_area_yomitan_p:'可接送至中部～北部度假地区。带您前往可邂逅海龟的珊瑚礁景点。',
       sk_area_island_p:'也可在有桥相连的离岛（古宇利岛・浜比嘉岛・伊计岛等）进行自由潜水。超越本岛的透明度，尽情体验潜水的乐趣。',
+      sp_badge:'欢迎初次挑战',
+      sp_name:'鱼叉捕鱼体验',
+      sp_en:'Spearfishing',
+      sp_orig:'原价 ¥16,000起 / 人',
+      sp_det_sub:'Spearfishing — 用一支手叉挑战的狩猎之海',
+      sp_f1:'用手叉瞄准鱼的鱼叉捕鱼',
+      sp_f2:'从潜水方式到鱼叉使用，从零开始指导',
+      sp_f3:'照片数据免费赠送',
+      sp_f4:'含酒店接送・空手参加OK',
+      sp_f5:'对象年龄 12〜60岁（初中生以上）',
+      sp_f6:'每天仅限1组的完全包场',
+      sp_inc_p2:'面镜・脚蹼・手叉',
+      sp_inc_h5:'手叉讲解',
+      sp_inc_p5:'从持叉方式、瞄准到安全使用，从零开始指导',
+      sp_s1_h:'接您',
+      sp_s1_p:'我们会到酒店・住宿地接您。',
+      sp_s2_h:'器材调整',
+      sp_s2_p:'确认面镜、脚蹼的尺寸与手叉的使用方式。',
+      sp_s3_h:'安全讲解（30分钟）',
+      sp_s3_p:'练习潜水基本动作、手叉的安全使用方法与手势信号。',
+      sp_s4_h:'浅滩练习',
+      sp_s4_p:'先在浅处练习下潜与瞄准，再进入正式体验。',
+      sp_s5_h:'鱼叉捕鱼体验（60〜90分钟）',
+      sp_s5_p:'和向导一起前往地点。同时拍摄水下照片。',
+      sp_s6_h:'淋浴・送回',
+      sp_s6_p:'淋浴换装后送您回酒店。照片会在日后以邮件寄送。',
+      sp_bk_ttl:'鱼叉捕鱼体验 预约表单',
+      sp_max_cap:'※每组最多4人。',
+      age_note_sp:'🏊 对象年龄：12〜60岁（初中生以上）',
+      bc_sp:'鱼叉捕鱼体验',
+      sp_pax1:'1人（单人方案）',
+      bkp_sp_rec:'喜欢钓鱼・户外的人／浮潜之后想挑战下一步的人',
+      bkp_feat_spear:'从零开始指导手叉的使用',
       /* PRICE CARDS */
       pc_ttl:'💴 收费标准（按人数）',
       pr_1pax:'1人', pr_2pax:'2人', pr_3plus:'3人以上', pr_pp:' / 人',
@@ -7898,6 +8370,39 @@
       sk_area_naha_p:'나하 시내 호텔・숙소에서 픽업합니다. 나하 지역에서 접근 가능한 스킨 다이빙 스팟으로 안내합니다.',
       sk_area_yomitan_p:'중부〜북부 리조트 지역 픽업에 대응합니다. 바다거북을 만날 수 있는 산호초 스팟으로 안내합니다.',
       sk_area_island_p:'다리로 연결된 섬（고우리 섬・하마히가 섬・이케이 섬 등）에서도 스킨 다이빙 가능합니다. 본섬을 뛰어넘는 투명도로 자유 잠수의 묘미를 만끽하세요.',
+      sp_badge:'첫 도전 환영',
+      sp_name:'작살 물고기잡이 체험',
+      sp_en:'Spearfishing',
+      sp_orig:'정가 ¥16,000~ / 인',
+      sp_det_sub:'Spearfishing — 손작살 하나로 도전하는 사냥의 바다',
+      sp_f1:'손작살로 물고기를 노리는 스피어피싱',
+      sp_f2:'잠수법・작살 다루는 법을 처음부터 지도',
+      sp_f3:'사진 데이터 무료 증정',
+      sp_f4:'호텔 픽업 포함・빈손 OK',
+      sp_f5:'대상 연령 12〜60세(중학생 이상)',
+      sp_f6:'하루 한 팀 한정 완전 전세',
+      sp_inc_p2:'마스크・핀・손작살',
+      sp_inc_h5:'손작살 레슨',
+      sp_inc_p5:'자세・조준・안전한 취급을 처음부터 지도',
+      sp_s1_h:'픽업',
+      sp_s1_p:'호텔・숙소로 모시러 갑니다.',
+      sp_s2_h:'장비 피팅',
+      sp_s2_p:'마스크・핀 사이즈와 작살 다루는 법을 확인합니다.',
+      sp_s3_h:'안전 레슨(30분)',
+      sp_s3_p:'잠수 기본과 작살의 안전한 사용법・수신호를 연습합니다.',
+      sp_s4_h:'얕은 곳에서 연습',
+      sp_s4_p:'얕은 곳에서 하강과 조준을 연습한 뒤 본 체험으로.',
+      sp_s5_h:'작살 물고기잡이(60〜90분)',
+      sp_s5_p:'가이드와 함께 포인트로. 수중 사진도 촬영합니다.',
+      sp_s6_h:'샤워・배웅',
+      sp_s6_p:'샤워와 환복 후 호텔까지 모셔다드립니다. 사진은 나중에 이메일로 보내드립니다.',
+      sp_bk_ttl:'작살 물고기잡이 체험 예약 폼',
+      sp_max_cap:'※한 팀 최대 4명까지.',
+      age_note_sp:'🏊 대상 연령: 12〜60세(중학생 이상)',
+      bc_sp:'작살 물고기잡이',
+      sp_pax1:'1명(1인 플랜)',
+      bkp_sp_rec:'낚시・아웃도어를 좋아하는 분／스노클링 다음 단계에 도전하고 싶은 분',
+      bkp_feat_spear:'작살 사용법을 처음부터 지도',
       /* PRICE CARDS */
       pc_ttl:'💴 요금（인원별）',
       pr_1pax:'1인', pr_2pax:'2인', pr_3plus:'3인 이상', pr_pp:' / 인',
@@ -8020,7 +8525,7 @@
     }
     // Re-render detail extras if on a service detail page
     if (typeof renderDetExtras === 'function') {
-      const _dm = (_curView || '').match(/view-(snorkeling|skindiving|bluecave|turtle)/);
+      const _dm = (_curView || '').match(/view-(snorkeling|skindiving|spearfishing|bluecave|turtle)/);
       if (_dm) renderDetExtras(_dm[1]);
     }
   }
@@ -9756,6 +10261,21 @@
         {ja:'<span class="hl-s">水深5〜10m</span>付近の珊瑚礁の世界は<span class="hl">圧倒的な美しさ</span>。カラフルな熱帯魚が舞い、沖縄の海の豊かさを全身で感じることができます。',en:'The coral reef world at <span class="hl-s">5–10 m depth</span> is <span class="hl">overwhelmingly beautiful</span>. Colorful tropical fish dance all around — you\'ll feel the full richness of Okinawa\'s ocean.',zh:'<span class="hl-s">水深5~10米</span>的珊瑚礁世界<span class="hl">美得令人窒息</span>。彩色热带鱼翩翩起舞，让您全身心感受冲绳海洋的丰富魅力。',ko:'<span class="hl-s">수심 5~10m</span> 근처의 산호초 세계는 <span class="hl">압도적인 아름다움</span>. 알록달록한 열대어가 춤을 추고, 오키나와 바다의 풍요로움을 온몸으로 느낄 수 있습니다.'}
       ]
     },
+    spearfishing: {
+      photo: 'https://images.unsplash.com/photo-1778343215246-7b46a7cd30ae?auto=format&w=900&q=80',
+      intro: {
+        ja: '手銛（やす）を持って潜り、自分の力で魚を狙う——<span class="hl">シュノーケルとはひと味違う</span>、狩猟本能をくすぐる沖縄の海の楽しみ方です。<span class="hl-s">1日1組限定の完全貸切</span>なので、周りを気にせず納得いくまで挑戦できます。',
+        en: 'Dive with a hand spear and take a fish by your own effort — <span class="hl">a different thrill from snorkeling</span>, and a very old way of enjoying the Okinawan sea. With <span class="hl-s">one group per day, fully private</span>, you can keep trying at your own pace.',
+        zh: '帶著手叉下潛，靠自己的力量瞄準魚——<span class="hl">和浮潛截然不同</span>，喚醒狩獵本能的沖繩玩海方式。<span class="hl-s">每天僅限1組的完全包場</span>，不必顧慮旁人，可以盡情挑戰到滿意為止。',
+        ko: '손작살을 들고 잠수해 자신의 힘으로 물고기를 노린다——<span class="hl">스노클링과는 다른</span>, 사냥 본능을 자극하는 오키나와 바다의 즐기는 법입니다. <span class="hl-s">하루 한 팀 한정 완전 전세</span>라 주위를 신경 쓰지 않고 만족할 때까지 도전할 수 있어요.'
+      },
+      points: [
+        {ja:'手銛の構え方・狙い方・安全な扱い方を、ガイドが基本から指導します',en:'Your guide teaches stance, aiming and safe handling of the hand spear from the basics',zh:'嚮導會從基礎開始指導手叉的持法、瞄準與安全使用',ko:'손작살의 자세・조준・안전한 취급을 가이드가 기본부터 지도합니다'},
+        {ja:'息の止め方・耳抜き・潜り方まで、陸上→浅瀬→本番と段階を踏んで練習します',en:'Breath-hold, equalising and descending are practised step by step: on land, in the shallows, then for real',zh:'從憋氣、平衡耳壓到下潛，依陸上→淺灘→正式體驗循序漸進地練習',ko:'숨 참기・이퀄라이징・잠수까지 육상→얕은 곳→실전으로 단계를 밟아 연습합니다'},
+        {ja:'対象年齢は12〜60歳（中学生以上）。1組最大4名までの少人数制です',en:'Ages 12-60 (junior high and up), with a maximum of four people per group',zh:'對象年齡12〜60歲（國中生以上），每組最多4人的小班制',ko:'대상 연령은 12〜60세(중학생 이상). 한 팀 최대 4명까지의 소수 정예입니다'},
+        {ja:'水中での姿はガイドがアクションカメラで撮影。写真データは無料でお渡しします',en:'Your guide films you underwater with an action camera, and the photo data is yours free',zh:'嚮導會用運動相機拍下您在水中的身影，照片資料免費贈送',ko:'물속 모습은 가이드가 액션캠으로 촬영. 사진 데이터는 무료로 드립니다'}
+      ]
+    },
     turtle: {
       photo: 'det-turtle.webp',
       intro: {
@@ -10170,6 +10690,11 @@
         body:{ja:'水深5〜10m付近の珊瑚礁の世界は、シュノーケルとはひと味違う圧倒的な美しさ。ウミガメが生息するスポットへもご案内します。出会えるかどうかは自然次第ですが、その感動は一生の宝物になるはずです！',en:'The coral reef world at 5–10 m depth offers breathtaking beauty that\'s a whole step beyond snorkeling. We\'ll guide you to known sea turtle habitats too. Whether you spot one depends on nature, but the experience itself will stay with you for life!',zh:'水深5~10米的珊瑚礁世界，有着远超浮潜的震撼美感。我们也会带您前往海龟栖息地。能否相遇全凭自然，但那份感动将成为您一生的珍贵宝藏！',ko:'수심 5~10m 근처의 산호초 세계는 스노클링과는 차원이 다른 압도적인 아름다움. 바다거북이 서식하는 스팟으로도 안내해 드립니다. 만날 수 있을지는 자연 나름이지만, 그 감동은 평생의 보물이 될 거예요！'}
       }
     ],
+    spearfishing:[
+      {photo:'https://images.unsplash.com/photo-1766002469870-91607f068b97?auto=format&w=800&q=80',ttl:{ja:'「獲ったどー！」を、本当に体験できる',en:'The moment you actually land one',zh:'真正體驗「抓到了！」的瞬間',ko:'"잡았다!"를 진짜로 체험할 수 있다'},body:{ja:'狙いを定めて一突き。魚を仕留める瞬間の緊張感と達成感は、シュノーケルでは味わえない特別な体験です。見た目より難しいからこそ、獲れたときの喜びは格別です。',en:'Take aim, and thrust. The tension and satisfaction of landing a fish is something snorkeling simply cannot give you. It is harder than it looks, which is exactly why success feels so good.',zh:'瞄準後一擊。捕獲魚的瞬間所帶來的緊張與成就感，是浮潛無法體會的特別經驗。正因為比看起來更難，成功時的喜悅才格外強烈。',ko:'조준하고 한 번의 찌르기. 물고기를 잡는 순간의 긴장감과 성취감은 스노클링에서는 맛볼 수 없는 특별한 경험입니다. 보기보다 어렵기 때문에 잡았을 때의 기쁨은 각별해요.'}},
+      {photo:'https://images.unsplash.com/photo-1743656619958-68d85790bdb4?auto=format&w=800&q=80',ttl:{ja:'素潜りが初めてでも大丈夫',en:'First time freediving? No problem',zh:'第一次素潛也沒問題',ko:'소잠수가 처음이어도 괜찮습니다'},body:{ja:'魚突きの前に、まず潜り方から。呼吸の仕方、耳抜き、ジャックナイフ（潜降）まで、陸上と浅瀬で練習してから本番に進みます。「素潜りは初めて」という方も参加されているプランです。',en:'Before any spearfishing, we start with how to dive: breathing, equalising and the jackknife descent, practised on land and in the shallows before you go for real. Plenty of guests arrive having never freedived at all.',zh:'在魚叉捕魚之前，先從潛水方式學起。呼吸法、平衡耳壓、jackknife（下潛）都會先在陸上與淺灘練習，再進入正式體驗。也有許多「第一次素潛」的客人參加。',ko:'작살잡이 전에 먼저 잠수법부터. 호흡법, 이퀄라이징, 잭나이프(하강)까지 육상과 얕은 곳에서 연습한 뒤 실전으로 나아갑니다. "소잠수는 처음"이라는 분도 참가하시는 플랜이에요.'}},
+      {photo:'https://images.unsplash.com/photo-1525826212383-92e29530133e?auto=format&w=800&q=80',ttl:{ja:'1日1組限定。自分のペースで納得いくまで',en:'One group a day — go at your own pace',zh:'每天僅限1組，照自己的步調玩到滿意',ko:'하루 한 팀 한정. 내 페이스로 만족할 때까지'},body:{ja:'完全貸切なので、周りを気にせず何度でも挑戦できます。グループのレベルに合わせてレクチャーの時間配分も調整。お一人様のご参加も歓迎です。ホテルまでの送迎付きで、濡れたままご乗車いただけます。',en:'Because the tour is fully private, you can try again and again without worrying about anyone else, and we adjust how long we spend teaching to suit your group. Solo guests are welcome. Hotel pickup is included, and you can ride back still wet.',zh:'完全包場，不必顧慮旁人，可以反覆挑戰，也能依照團隊程度調整講解的時間分配。也歡迎一個人參加。含飯店接送，穿著濕衣服上車也沒問題。',ko:'완전 전세라 주위를 신경 쓰지 않고 몇 번이든 도전할 수 있고, 그룹 수준에 맞춰 레슨 시간 배분도 조정합니다. 혼자 참가도 환영. 호텔 픽업이 포함되어 젖은 채로 타셔도 됩니다.'}}
+    ],
     turtle:[
       {
         photo:'https://images.unsplash.com/photo-1580603474920-aa3332b2c40f?auto=format&w=800&q=80',
@@ -10233,6 +10758,12 @@
         q:{ja:'ゴーグルで視力が不安です。',en:'I\'m worried about visibility with my glasses.',zh:'担心视力问题，戴眼镜怎么办？',ko:'시력이 나빠서 걱정됩니다.'},
         a:{ja:'度付きマスクのレンタルもご用意しています。事前にご相談いただければ、視力に合わせたマスクをご用意します。',en:'We offer prescription mask rentals. Let us know your prescription in advance and we\'ll have a suitable mask ready for you.',zh:'我们提供近视镜度数的潜水面镜租借服务。请提前告知我们您的度数，我们会为您准备合适的面镜。',ko:'도수 있는 마스크 렌탈도 준비되어 있습니다. 사전에 상담해 주시면 시력에 맞는 마스크를 준비해 드립니다.'}
       }
+    ],
+    spearfishing:[
+      {q:{ja:'魚突きは初めてですが大丈夫ですか？',en:'I have never done spearfishing. Is that OK?',zh:'第一次魚叉捕魚也可以嗎？',ko:'작살잡이가 처음인데 괜찮을까요?'},a:{ja:'はい。手銛の扱い方も潜り方も、ガイドがゼロから指導します。陸上と浅瀬で練習してから本番に進むので、素潜りが初めての方も参加されています。',en:'Yes. We teach both spear handling and diving from scratch, practising on land and in the shallows before the real thing. Many guests have never freedived before.',zh:'可以。手叉的使用方式與潛水方法，嚮導都會從零開始指導。先在陸上與淺灘練習再進入正式體驗，也有許多第一次素潛的客人參加。',ko:'네. 작살 다루는 법도 잠수법도 가이드가 처음부터 지도합니다. 육상과 얕은 곳에서 연습한 뒤 실전으로 가기 때문에 소잠수가 처음인 분도 참가하십니다.'}},
+      {q:{ja:'子どもも参加できますか？',en:'Can children join?',zh:'孩子可以參加嗎？',ko:'아이도 참가할 수 있나요?'},a:{ja:'手銛を使用するため、対象は中学生以上（12〜60歳）とさせていただいています。小学生以下のお子様は、保護者同伴でのシュノーケル見学のみ可能です。ご家族での海遊びをご希望の場合は、3歳から参加できるシュノーケルツアーもご検討ください。',en:'Because a hand spear is used, this tour is for ages 12 to 60 (junior high school and up). Younger children may come along only to watch and snorkel with a guardian. If you want a family day in the sea, consider our snorkeling tours, which take children from age 3.',zh:'由於使用手叉，對象為國中生以上（12〜60歲）。小學生以下的孩子僅可在監護人陪同下浮潛見學。若希望全家一起玩海，也可以考慮3歲起可參加的浮潛行程。',ko:'손작살을 사용하기 때문에 대상은 중학생 이상(12〜60세)입니다. 초등학생 이하 어린이는 보호자 동반 하에 스노클링 견학만 가능합니다. 가족과 함께 바다에서 놀고 싶으시다면 3세부터 참가 가능한 스노클링 투어도 검토해 보세요.'}},
+      {q:{ja:'泳ぎに自信がなくても参加できますか？',en:'Can I join if I am not a confident swimmer?',zh:'對游泳沒自信也能參加嗎？',ko:'수영에 자신이 없어도 참가할 수 있나요?'},a:{ja:'まずは浅瀬で練習してから進むので、泳ぎに自信がない方もご参加いただけます。ただし潜って魚を狙う体験のため、顔を水につけられることが目安になります。不安な点はご予約時にお知らせください。',en:'We start in the shallows, so you do not need to be a strong swimmer. That said, this is a diving activity, so being comfortable putting your face in the water is the baseline. Tell us any concerns when you book.',zh:'會先在淺灘練習再前進，對游泳沒自信的人也能參加。不過這是下潛瞄準魚的體驗，因此以能把臉埋進水裡為基準。若有任何顧慮，請在預約時告知。',ko:'먼저 얕은 곳에서 연습한 뒤 나아가므로 수영에 자신이 없으셔도 참가하실 수 있습니다. 다만 잠수해서 물고기를 노리는 체험이라 얼굴을 물에 담글 수 있는 것이 기준이 됩니다. 걱정되는 점은 예약 시 알려주세요.'}},
+      {q:{ja:'雨でも開催しますか？',en:'Does the tour run in the rain?',zh:'下雨天也會舉行嗎？',ko:'비가 와도 진행하나요?'},a:{ja:'雨でも開催します。中止を判断するのは雨ではなく、風や波の状況です。安全基準を超えると判断した場合は中止とし、日程の振替、難しい場合は全額返金で対応いたします。',en:'Yes, rain is not a problem. What decides a cancellation is wind and swell, not rain. If conditions exceed our safety limits we call it off and offer a new date, or a full refund if that does not work.',zh:'下雨也會舉行。決定是否停辦的是風浪狀況，而不是雨。若判斷超過安全標準則會停辦，並提供改期，若無法改期則全額退款。',ko:'비가 와도 진행합니다. 중지를 판단하는 것은 비가 아니라 바람과 파도 상태입니다. 안전 기준을 넘는다고 판단되면 중지하고, 일정 변경 또는 어려운 경우 전액 환불로 대응합니다.'}}
     ],
     bluecave:[
       {
@@ -10473,10 +11004,10 @@
 
     /* 初回ロード: ハッシュにビューIDがあればそのページを開く */
     var _initHash = location.hash.replace('#', '');
-    var _validViews = ['view-booking','view-snorkeling','view-skindiving','view-bluecave','view-turtle','view-blog-list',
+    var _validViews = ['view-booking','view-snorkeling','view-skindiving','view-spearfishing','view-bluecave','view-turtle','view-blog-list',
       'view-blog-1','view-blog-2','view-blog-3','view-blog-4','view-blog-5','view-blog-6'];
     if (_initHash && _validViews.indexOf(_initHash) !== -1) {
-      _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-bluecave','view-turtle'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
+      _curView = _initHash; _applyView(_initHash, function(){ if (_initHash.startsWith('view-blog-') && _initHash !== 'view-blog-list') { var n = parseInt(_initHash.replace('view-blog-','')); if (!isNaN(n)) showBlog(n); } else if (['view-snorkeling','view-skindiving','view-spearfishing','view-bluecave','view-turtle'].indexOf(_initHash) !== -1) { renderDetExtras(_initHash.replace('view-','')); showDetailBanners(); } });
     } else {
       _curView = 'view-main'; _applyView('view-main');  // 初回ロード：波紋なしで表示
     }
@@ -10498,7 +11029,7 @@
         if (targetView.startsWith('view-blog-') && targetView !== 'view-blog-list') {
           var n = parseInt(targetView.replace('view-blog-',''));
           if (!isNaN(n)) showBlog(n);
-        } else if (['view-snorkeling','view-skindiving','view-bluecave','view-turtle'].indexOf(targetView) !== -1) {
+        } else if (['view-snorkeling','view-skindiving','view-spearfishing','view-bluecave','view-turtle'].indexOf(targetView) !== -1) {
           renderDetExtras(targetView.replace('view-','')); showDetailBanners();
         }
       });
