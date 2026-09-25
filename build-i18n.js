@@ -28,12 +28,12 @@ const LANGS = [
     ogDesc: 'Dive into Okinawa\'s clear emerald sea. Fully private tours, free hotel transfer and free photos included. Serving Naha to Onna Village.'
   },
   {
-    code: 'zh', file: 'zh.html', htmlLang: 'zh-Hans', ogLocale: 'zh_CN', brand: '翡翠礁冲绳 Emerald Reef Okinawa',
-    title: '翡翠礁冲绳 Emerald Reef Okinawa | 包场浮潜・蓝洞・海龟体验',
-    desc: '翡翠礁冲绳（Emerald Reef Okinawa）在冲绳清澈的翡翠海域提供完全包场浮潜、蓝洞与海龟体验。含免费接送、免费赠送照片。那霸〜恩纳村对应。',
-    keywords: 'emerald reef okinawa, 冲绳浮潜, 蓝洞 冲绳, 冲绳海上活动, 自由潜水 冲绳, 包场浮潜 冲绳, 那霸浮潜, 海龟浮潜 冲绳',
-    ogTitle: '翡翠礁冲绳 Emerald Reef Okinawa | 包场浮潜・蓝洞体验',
-    ogDesc: '畅游冲绳清澈的翡翠海域。完全包场・免费接送・免费赠送照片。那霸〜恩纳村对应。'
+    code: 'zh', file: 'zh.html', htmlLang: 'zh-Hant', ogLocale: 'zh_TW', brand: '翡翠礁沖繩 Emerald Reef Okinawa',
+    title: '翡翠礁沖繩 Emerald Reef Okinawa | 包場浮潛・藍洞・海龜體驗',
+    desc: '翡翠礁沖繩（Emerald Reef Okinawa）在沖繩清澈的翡翠海域提供完全包場浮潛、藍洞與海龜體驗。含免費接送、免費贈送照片。那霸〜恩納村對應。',
+    keywords: 'emerald reef okinawa, 沖繩浮潛, 藍洞 沖繩, 沖繩海上活動, 自由潛水 沖繩, 包場浮潛 沖繩, 那霸浮潛, 海龜浮潛 沖繩',
+    ogTitle: '翡翠礁沖繩 Emerald Reef Okinawa | 包場浮潛・藍洞體驗',
+    ogDesc: '暢遊沖繩清澈的翡翠海域。完全包場・免費接送・免費贈送照片。那霸〜恩納村對應。'
   },
   {
     code: 'ko', file: 'ko.html', htmlLang: 'ko', ogLocale: 'ko_KR', brand: '에메랄드 리프 오키나와 Emerald Reef Okinawa',
