@@ -581,7 +581,9 @@ function processReminders() {
       const info = parseEventInfo_(ev);
       if (!info.email || info.email.indexOf('@') === -1) return; // 宛先なし
 
-      const ja = isJapanese_(info.name);
+      // 予約サイトが言語を教えてくれる場合はそれに従い、無ければ氏名から推定する
+      const hint = (getDescVal_(desc, 'リマインド言語') || '').toLowerCase();
+      const ja = hint ? /^(ja|日本)/.test(hint) : isJapanese_(info.name);
       const url = buildConfirmUrl_(ev, ja ? 'ja' : 'en');
       const mail = ja ? buildReminderJa_(info, url) : buildReminderEn_(info, url);
 
@@ -1644,6 +1646,10 @@ function parseGetYourGuideReservation_(message) {
   if (tourLang) remarks.push('ツアー言語: ' + tourLang);
   if (custLang) remarks.push('お客様の言語: ' + custLang);
 
+  // 前日リマインドの言語。お客様の言語が日本語以外なら英語で送る。
+  const remindLang = custLang ? (custLang.indexOf('日本') !== -1 ? 'ja' : 'en')
+                              : (isJapanese_(name) ? 'ja' : 'en');
+
   const description = [
     '【GetYourGuide予約】',
     'ご希望のツアー: ' + (plan || '（記載なし）'),
@@ -1660,6 +1666,7 @@ function parseGetYourGuideReservation_(message) {
     '────── 参考情報 ──────',
     '料金: ' + (price || '－') + ' / 支払い: GetYourGuide決済（事前決済・集金不要）',
     '予約番号: ' + (ref || '－'),
+    'リマインド言語: ' + remindLang,
     '',
     '※ GetYourGuide の予約通知メールから自動登録',
     '※ お客様への連絡は GetYourGuide 経由の転送アドレス宛に届きます',
