@@ -127,6 +127,11 @@ function processMailToCalendar() {
           Logger.log('日時を抽出できませんでした: ' + subject);
           return;
         }
+        if (isAlreadyBooked_(info)) {
+          Logger.log('登録済みのためスキップ: ' + info.title);
+          anyHandled = true;
+          return;
+        }
         calendar.createEvent(info.title, info.start, info.end, {
           description: info.description,
         });
@@ -1016,6 +1021,10 @@ function processAsoview_() {
       try {
         const info = parseAsoviewReservation_(message);
         if (!info) { Logger.log('アソビュー: 催行日を抽出できませんでした: ' + subject); return; }
+        if (isAlreadyBooked_(info)) {
+          Logger.log('登録済みのためスキップ: ' + info.title);
+          anyHandled = true; return;
+        }
         calendar.createEvent(info.title, info.start, info.end, { description: info.description });
         created++; anyHandled = true;
         Logger.log('アソビュー登録: ' + info.title + ' @ ' + info.start);
@@ -1198,6 +1207,10 @@ function processActivityJapan_() {
       try {
         const info = parseActivityJapanReservation_(body);
         if (!info) { Logger.log('AJ: 日時を抽出できませんでした: ' + subject); return; }
+        if (isAlreadyBooked_(info)) {
+          Logger.log('登録済みのためスキップ: ' + info.title);
+          anyHandled = true; return;
+        }
         calendar.createEvent(info.title, info.start, info.end, { description: info.description });
         created++; anyHandled = true;
         Logger.log('AJ登録: ' + info.title + ' @ ' + info.start);
@@ -1384,6 +1397,10 @@ function processJalan_() {
       try {
         const info = parseJalanReservation_(body);
         if (!info) { Logger.log('じゃらん: 日時を抽出できませんでした: ' + subject); return; }
+        if (isAlreadyBooked_(info)) {
+          Logger.log('登録済みのためスキップ: ' + info.title);
+          anyHandled = true; return;
+        }
         calendar.createEvent(info.title, info.start, info.end, { description: info.description });
         created++; anyHandled = true;
         Logger.log('じゃらん登録: ' + info.title + ' @ ' + info.start);
@@ -1553,6 +1570,10 @@ function processGetYourGuide_() {
       try {
         const info = parseGetYourGuideReservation_(message);
         if (!info) { Logger.log('GetYourGuide: 日付を抽出できませんでした: ' + subject); return; }
+        if (isAlreadyBooked_(info)) {
+          Logger.log('登録済みのためスキップ: ' + info.title);
+          anyHandled = true; return;
+        }
         calendar.createEvent(info.title, info.start, info.end, { description: info.description });
         created++; anyHandled = true;
         Logger.log('GetYourGuide登録: ' + info.title + ' @ ' + info.start);
@@ -1711,5 +1732,46 @@ function gygDedupe_(s) {
   const a = s.slice(0, half).trim(), b = s.slice(half).trim();
   if (a && a === b) return a;
   return s;
+}
+
+/**
+ * すでに同じ予約がカレンダーに入っているかを判定する。
+ * キャンセル分を「予約状況」からマイカレンダーへ移動し、題名の頭に「キャンセル」を
+ * 付けて管理している運用のため、両方のカレンダーを見る。題名は変わっていても
+ * 説明欄の予約番号は残るので、そこで同一予約かどうかを見分ける。
+ * 予約番号が無いフォーム予約は、お名前と開始時刻の一致で判定する。
+ */
+function isAlreadyBooked_(info) {
+  if (!info || !info.start) return false;
+
+  const desc = info.description || '';
+  let resNo = getDescVal_(desc, '予約番号');
+  if (/^[（(]?(なし|記載なし|-|－)[)）]?$/.test(resNo || '')) resNo = '';
+  const name = getDescVal_(desc, 'お名前');
+
+  // 前後36時間ぶんだけ見る（日付がずれて登録された場合も拾えるようにする）
+  const from = new Date(info.start.getTime() - 36 * 60 * 60 * 1000);
+  const to = new Date(info.start.getTime() + 36 * 60 * 60 * 1000);
+
+  const cals = CalendarApp.getCalendarsByName(CONFIG.CALENDAR_NAME);
+  try {
+    const mine = CalendarApp.getDefaultCalendar();   // キャンセル分の移動先
+    if (mine) cals.push(mine);
+  } catch (e) { /* 既定カレンダーが取れない場合は「予約状況」だけ見る */ }
+
+  for (let i = 0; i < cals.length; i++) {
+    let events;
+    try { events = cals[i].getEvents(from, to); } catch (e) { continue; }
+    for (let k = 0; k < events.length; k++) {
+      const ev = events[k];
+      if (resNo) {
+        if ((ev.getDescription() || '').indexOf(resNo) !== -1) return true;
+      } else if (name) {
+        const sameTime = Math.abs(ev.getStartTime().getTime() - info.start.getTime()) < 60 * 60 * 1000;
+        if (sameTime && (ev.getTitle() || '').indexOf(name) !== -1) return true;
+      }
+    }
+  }
+  return false;
 }
 
