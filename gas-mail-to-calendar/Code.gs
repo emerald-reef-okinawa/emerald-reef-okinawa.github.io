@@ -173,6 +173,13 @@ function processMailToCalendar() {
   } catch (je) {
     Logger.log('じゃらん処理エラー: ' + je);
   }
+
+  // GetYourGuide の予約通知メールも同じカレンダーに登録する
+  try {
+    processGetYourGuide_();
+  } catch (ge) {
+    Logger.log('GetYourGuide処理エラー: ' + ge);
+  }
 }
 
 // ============================================================
@@ -1514,3 +1521,188 @@ function jlAnswer_(lines, label) {
   }
   return '';
 }
+
+// ============================================================
+// ⑦ GetYourGuide の予約通知メール
+// ============================================================
+/**
+ * GetYourGuide の予約通知メールを読み、同じ「予約状況」カレンダーに登録する。
+ * 送信元 do-not-reply@notification.getyourguide.com からは案内メールも届くため、
+ * 件名に予約参照番号（GYG…）が含まれるものだけを予約として扱う。
+ */
+function processGetYourGuide_() {
+  const label = getOrCreateLabel_(CONFIG.PROCESSED_LABEL);
+  const calendars = CalendarApp.getCalendarsByName(CONFIG.CALENDAR_NAME);
+  if (calendars.length === 0) {
+    throw new Error('カレンダーが見つかりません: ' + CONFIG.CALENDAR_NAME);
+  }
+  const calendar = calendars[0];
+
+  const query = 'from:notification.getyourguide.com -label:' + CONFIG.PROCESSED_LABEL;
+  const threads = GmailApp.search(query, 0, CONFIG.MAX_THREADS);
+
+  let created = 0;
+  threads.forEach(function (thread) {
+    let anyHandled = false;
+    thread.getMessages().forEach(function (message) {
+      const subject = message.getSubject() || '';
+      // 件名に参照番号が無いもの（アカウント承認・商品公開などの案内）はスキップ
+      if (!/GYG[A-Z0-9]{6,}/.test(subject)) { anyHandled = true; return; }
+      try {
+        const info = parseGetYourGuideReservation_(message);
+        if (!info) { Logger.log('GetYourGuide: 日付を抽出できませんでした: ' + subject); return; }
+        calendar.createEvent(info.title, info.start, info.end, { description: info.description });
+        created++; anyHandled = true;
+        Logger.log('GetYourGuide登録: ' + info.title + ' @ ' + info.start);
+      } catch (e) {
+        Logger.log('GetYourGuideエラー (' + subject + '): ' + e);
+      }
+    });
+    if (anyHandled) thread.addLabel(label);
+  });
+
+  Logger.log('GetYourGuide完了: ' + created + ' 件の予定を登録しました');
+}
+
+/**
+ * GetYourGuide の予約通知メールから予約情報を抽出する。
+ * 本文は HTML の表なので、プレーンテキストに整形してからラベルで拾う。
+ * 日付が取れなければ null を返す。
+ */
+function parseGetYourGuideReservation_(message) {
+  const flat = gygFlat_(message);
+
+  // --- 日付（必須） ---
+  let y, mo, d, hh = CONFIG.DEFAULT_START_HOUR, mi = 0;
+  const dm = flat.match(/(?:日付|Date)\s*[:：]?\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日(?:\s*(\d{1,2})\s*[:：]\s*(\d{2}))?/);
+  if (dm) {
+    y = Number(dm[1]); mo = Number(dm[2]); d = Number(dm[3]);
+    if (dm[4]) { hh = Number(dm[4]); mi = Number(dm[5]); }
+  } else {
+    // 英語表記のフォールバック（2026-09-30 13:00 / 30/09/2026 13:00）
+    const dm2 = flat.match(/(?:Date)\s*[:：]?\s*(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?:\s+(\d{1,2})\s*[:：]\s*(\d{2}))?/);
+    if (!dm2) return null;
+    y = Number(dm2[1]); mo = Number(dm2[2]); d = Number(dm2[3]);
+    if (dm2[4]) { hh = Number(dm2[4]); mi = Number(dm2[5]); }
+  }
+  const start = jstDate_(y, mo, d, hh, mi);
+  const end = new Date(start.getTime() + CONFIG.DURATION_HOURS * 60 * 60 * 1000);
+
+  // --- 参照番号 ---
+  const ref = (flat.match(/(?:参照番号|Reference(?:\s+number)?)\s*[:：]?\s*([A-Z0-9]{8,})/) ||
+               (message.getSubject() || '').match(/GYG[A-Z0-9]{6,}/) || ['', ''])[1] ||
+              ((message.getSubject() || '').match(/GYG[A-Z0-9]{6,}/) || [''])[0] || '';
+
+  // --- プラン名（「予約が入りました：」と「参照番号」の間） ---
+  let plan = gygSeg_(flat, '(?:アクティビティの予約が入りました|You have a new booking for)', '(?:参照番号|Reference)');
+  plan = gygDedupe_(plan.replace(/^[:：]\s*/, ''));
+
+  // --- 参加人数（「2 x Adults」「1 x Children」…） ---
+  const partSeg = gygSeg_(flat, '(?:参加者の人数|Number of participants)', '(?:予約者|Customer|ツアー言語|Tour language|Pickup|料金|Price)');
+  let adult = 0, child = 0;
+  const parts = [];
+  const pre = /(\d+)\s*[xX×]\s*([A-Za-zぁ-んァ-ヶ一-龠ー]+)/g;
+  let pm;
+  while ((pm = pre.exec(partSeg)) !== null) {
+    const n = Number(pm[1]), cat = pm[2];
+    if (/child|children|kid|infant|youth|子供|こども|小人|幼児/i.test(cat)) { child += n; parts.push('子供' + n + '名'); }
+    else { adult += n; parts.push('大人' + n + '名'); }
+  }
+  const total = adult + child;
+  const peopleSummary = total > 0 ? ('計' + total + '名（' + parts.join('・') + '）') : '（記載なし）';
+  const childInfo = child > 0 ? ('あり（子供' + child + '名）') : 'なし';
+
+  // --- 予約者（氏名・メール・電話） ---
+  const custSeg = gygSeg_(flat, '(?:予約者|Customer)', '(?:ツアー言語|Tour language|Pickup|料金|Price)');
+  const email = (custSeg.match(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/) || [''])[0];
+  const tel = (custSeg.match(/(?:電話番号|Phone(?:\s+number)?|Tel)\s*[:：]*\s*([+\d][\d()\-\s]{5,})/) || ['', ''])[1].trim();
+  let name = custSeg;
+  if (email) name = name.split(email)[0];
+  name = name.replace(/(?:電話番号|Phone|Tel|言語|Language)[\s\S]*$/, '').replace(/[:：]/g, ' ').trim();
+
+  // --- その他 ---
+  const custLang = (custSeg.match(/(?:言語|Language)\s*[:：]\s*([^\s]+)/) || ['', ''])[1];
+  const tourLang = gygSeg_(flat, '(?:ツアー言語|Tour language)', '(?:Pickup|料金|Price)').trim();
+  const pickup = gygSeg_(flat, 'Pickup', '(?:Googleマップ|Open in Google|料金|Price)').trim();
+  const price = (flat.match(/(?:料金|Price)\s*[:：]?\s*([¥￥]\s*[\d,]+|[\d,]+\s*円)/) || ['', ''])[1].replace(/\s+/g, '');
+
+  // --- アクティビティ略称（タイトル用） ---
+  let activity = 'ご予約';
+  if (/スキンダイビング|素潜り|Skin\s*Diving|Freediving/i.test(plan)) activity = 'スキンダイビング';
+  else if (/魚突き|Spearfishing/i.test(plan)) activity = '魚突き体験';
+  else if (/ウミガメ|海亀|Sea\s*Turtle/i.test(plan)) activity = 'ウミガメシュノーケル';
+  else if (/青の洞窟|Blue\s*Cave/i.test(plan)) activity = '青の洞窟シュノーケル';
+  else if (/シュノーケル|シュノーケリング|Snorkel/i.test(plan)) activity = 'シュノーケリング';
+
+  const title = '【GetYourGuide】' + activity +
+    (name ? '（' + name + (total > 0 ? ' ' + total + '名' : '') + '）' : '');
+
+  const dateStr = y + '-' + ('0' + mo).slice(-2) + '-' + ('0' + d).slice(-2);
+  const timeStr = hh + ':' + ('0' + mi).slice(-2);
+
+  const remarks = [];
+  if (tourLang) remarks.push('ツアー言語: ' + tourLang);
+  if (custLang) remarks.push('お客様の言語: ' + custLang);
+
+  const description = [
+    '【GetYourGuide予約】',
+    'ご希望のツアー: ' + (plan || '（記載なし）'),
+    'お名前: ' + (name || '（記載なし）'),
+    'email: ' + (email || '（GetYourGuide経由・記載なし）'),
+    '電話番号: ' + (tel || '（記載なし）'),
+    'ご希望日: ' + dateStr,
+    'ご希望時間: ' + timeStr,
+    '参加人数: ' + peopleSummary,
+    'お子様の有無: ' + childInfo,
+    '宿泊先: ' + (pickup || '（記載なし）'),
+    '備考: ' + (remarks.length ? remarks.join(' / ') : '（なし）'),
+    '',
+    '────── 参考情報 ──────',
+    '料金: ' + (price || '－') + ' / 支払い: GetYourGuide決済（事前決済・集金不要）',
+    '予約番号: ' + (ref || '－'),
+    '',
+    '※ GetYourGuide の予約通知メールから自動登録',
+    '※ お客様への連絡は GetYourGuide 経由の転送アドレス宛に届きます',
+  ].join('\n');
+
+  return { title: title, start: start, end: end, description: description };
+}
+
+/**
+ * GetYourGuide のメール本文を、ラベル検索しやすい1行のテキストに整形する。
+ * プレーンテキストが表として潰れている場合は HTML から作り直す。
+ */
+function gygFlat_(message) {
+  let body = message.getPlainBody() || '';
+  if (body.indexOf('参照番号') === -1 && body.indexOf('Reference') === -1) {
+    try { body = htmlToLines_(message.getBody() || '').join('\n'); } catch (e) { /* そのまま使う */ }
+  }
+  return body
+    .replace(/\u00a0/g, ' ')
+    .replace(/\r/g, ' ')
+    .replace(/\[[^\]]*\]\([^)]*\)/g, ' ')   // [表示テキスト](URL) を除去
+    .replace(/https?:\/\/\S+/g, ' ')          // 裸のURLを除去
+    .replace(/[|｜]/g, ' ')                     // 表の区切り
+    .replace(/[#*]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** 開始ラベルと終了ラベルに挟まれた部分を取り出す。 */
+function gygSeg_(flat, startLabel, endLabel) {
+  const re = new RegExp(startLabel + '\\s*[:：]?\\s*([\\s\\S]*?)(?:' + endLabel + '|$)');
+  const m = flat.match(re);
+  return m ? m[1].trim() : '';
+}
+
+/** 「A A」のように同じ文字列が2回続くときは1つにまとめる。 */
+function gygDedupe_(s) {
+  s = (s || '').trim();
+  const m = s.match(/^(.+?)\s+\1$/);
+  if (m) return m[1].trim();
+  const half = Math.floor(s.length / 2);
+  const a = s.slice(0, half).trim(), b = s.slice(half).trim();
+  if (a && a === b) return a;
+  return s;
+}
+
