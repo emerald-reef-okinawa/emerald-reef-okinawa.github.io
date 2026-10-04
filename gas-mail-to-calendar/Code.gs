@@ -1617,7 +1617,10 @@ function parseGetYourGuideReservation_(message) {
               ((message.getSubject() || '').match(/GYG[A-Z0-9]{6,}/) || [''])[0] || '';
 
   // --- プラン名（「予約が入りました：」と「参照番号」の間） ---
-  let plan = gygSeg_(flat, '(?:アクティビティの予約が入りました|You have a new booking for)', '(?:参照番号|Reference)');
+  // 通常の予約／直前予約（緊急）で見出しの文言が変わるため、両方を拾う
+  let plan = gygSeg_(flat,
+    '(?:アクティビティの予約が入りました|直前予約が入りました|予約が入りました|You have a new last-minute booking for|You have a new booking for|New booking for)',
+    '(?:参照番号|Reference)');
   plan = gygDedupe_(plan.replace(/^[:：]\s*/, ''));
 
   // --- 参加人数（「2 x Adults」「1 x Children」…） ---
@@ -1708,6 +1711,7 @@ function gygFlat_(message) {
   return body
     .replace(/\u00a0/g, ' ')
     .replace(/\r/g, ' ')
+    .replace(/\[image:[^\]]*\]/gi, ' ')       // 本文変換で入る [image: …] を除去
     .replace(/\[[^\]]*\]\([^)]*\)/g, ' ')   // [表示テキスト](URL) を除去
     .replace(/https?:\/\/\S+/g, ' ')          // 裸のURLを除去
     .replace(/[|｜]/g, ' ')                     // 表の区切り
@@ -1726,6 +1730,8 @@ function gygSeg_(flat, startLabel, endLabel) {
 /** 「A A」のように同じ文字列が2回続くときは1つにまとめる。 */
 function gygDedupe_(s) {
   s = (s || '').trim();
+  const m3 = s.match(/^(.+?)\s+\1\s+\1$/);   // 3回繰り返し
+  if (m3) return m3[1].trim();
   const m = s.match(/^(.+?)\s+\1$/);
   if (m) return m[1].trim();
   const half = Math.floor(s.length / 2);
