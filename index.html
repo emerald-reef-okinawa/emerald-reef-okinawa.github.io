@@ -548,8 +548,9 @@
       .hero .scroll-hint { display: none; }
       /* 見出しが語の途中で折り返さないよう一段小さく */
       /* 幅の狭いスマホ（320px など）でも語の途中で折り返さないよう、画面幅に合わせて縮める */
-      .hero-h1 { font-size: min(1.68rem, 7.3vw); line-height: 1.95; letter-spacing: .06em; }
-      html[lang="en"] .hero-h1 { font-size: min(1.42rem, 6.2vw); }
+      /* 字を大きくする分、字間を詰め、左右の余白も少しだけ見出しに使う */
+      .hero-h1 { font-size: min(1.9rem, 8vw); line-height: 1.9; letter-spacing: .03em; margin-left: -6px; margin-right: -6px; }
+      html[lang="en"] .hero-h1 { font-size: min(1.55rem, 6.6vw); }
       .hero-brand { font-size: .62rem; letter-spacing: .28em; padding-left: .28em; margin-bottom: 42px; }
       .hero-desc { letter-spacing: .05em; line-height: 1.95; }
     }
