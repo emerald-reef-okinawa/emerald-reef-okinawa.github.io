@@ -388,10 +388,12 @@
        HERO
        ================================================================ */
     .hero {
-      position: relative; min-height: 100vh;
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;   /* スマホのアドレスバー込みの高さ。最初の画面に全部収める */
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 180px 24px 200px; overflow: hidden;
+      text-align: center; padding: 104px 24px 116px; overflow: hidden;
     }
     /* 背景写真。スクロール量（--hero-scale）に応じてゆっくり引いていく */
     .hero::before {
@@ -405,8 +407,8 @@
     .hero::after {
       content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
       background: linear-gradient(to bottom,
-        rgba(0,15,10,.62) 0%, rgba(0,20,14,.34) 28%,
-        rgba(0,20,14,.32) 55%, rgba(0,61,53,.80) 82%, rgba(0,61,53,1) 100%);
+        rgba(0,15,10,.56) 0%, rgba(0,20,14,.28) 30%,
+        rgba(0,24,19,.32) 62%, rgba(0,52,45,.58) 88%, rgba(0,61,53,.82) 100%);
     }
     /* スクロールすると晴れていく追加の暗幕（水中から水面へ上がる演出） */
     .hero-veil {
@@ -461,7 +463,10 @@
       text-shadow: 0 1px 16px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.35);
     }
     .hero-tagline { font-size: clamp(.9rem,2.2vw,1.1rem); color: rgba(255,255,255,.85); letter-spacing: .1em; margin-bottom: 20px; text-shadow: 0 1px 12px rgba(0,0,0,.55); }
-    .hero-desc { font-size: clamp(.95rem,2vw,1.1rem); color: #fff; margin-bottom: 40px; line-height: 1.9; font-weight:500; text-shadow: 0 1px 18px rgba(0,0,0,.65), 0 2px 6px rgba(0,0,0,.4); }
+    .hero-desc { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+      font-size: clamp(.88rem,1.7vw,1rem); color: rgba(255,255,255,.95); margin-bottom: 36px;
+      line-height: 2.05; font-weight: 400; letter-spacing: .09em;
+      text-shadow: 0 1px 4px rgba(0,0,0,.45), 0 2px 18px rgba(0,0,0,.6); }
     /* スマホでは説明文を少し小さくし、各文を1行に収める（「を。」が3行目に溢れるのを防止） */
     @media (max-width: 480px) {
       .hero-desc { font-size: .82rem; line-height: 1.8; }
@@ -476,40 +481,42 @@
       text-shadow: 0 1px 14px rgba(0,0,0,.6);
     }
     .hero-h1 {
-      font-size: clamp(1.8rem, 6vw, 3.5rem);
-      font-weight: 800; color: #fff;
-      letter-spacing: .01em; line-height: 1.35;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 28px rgba(0,0,0,.5), 0 1px 6px rgba(0,0,0,.38);
+      font-family: 'Zen Antique', 'Hiragino Mincho ProN', serif;
+      font-size: clamp(1.9rem, 6.2vw, 3.7rem);
+      font-weight: 400; color: #fff;
+      letter-spacing: .05em; line-height: 1.45;
+      margin-bottom: 24px;
+      text-shadow: 0 1px 4px rgba(0,0,0,.42), 0 2px 30px rgba(0,0,0,.55);
     }
-    .hero-h1 em { font-style: normal; color: #00C9A7; }
+    .hero-h1 em { font-style: normal; color: #4EE0C2; }
 
-    /* --- 案3：評価と特長を1本の細いラインにまとめる（箱は置かない） --- */
+    /* --- 評価と特長を1行にまとめる（箱は置かない。区切りはサイト共通の◆） --- */
     .hero-facts {
       display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-      row-gap: 9px; max-width: 780px; margin: 0 auto 38px;
+      row-gap: 10px; column-gap: 20px; max-width: 760px; margin: 34px auto 0;
     }
     .hfact {
-      font-size: .77rem; font-weight: 500; letter-spacing: .07em;
-      color: rgba(255,255,255,.88); line-height: 1.25;
-      padding: 0 15px; white-space: nowrap;
-      border-left: 1px solid rgba(255,255,255,.26);
-      text-shadow: 0 1px 12px rgba(0,0,0,.55);
+      font-size: .8rem; font-weight: 600; letter-spacing: .09em;
+      color: #fff; line-height: 1.3; white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(0,0,0,.5), 0 2px 16px rgba(0,0,0,.6);
     }
-    .hfact:first-child { border-left: none; }
-    .hfact-rate { display: inline-flex; align-items: baseline; gap: 4px; }
-    .hf-star { color: #F0C97A; font-style: normal; font-size: .88rem; }
-    .hfact-rate b { font-weight: 700; font-size: .92rem; letter-spacing: .02em; }
-    .hfact-rate small { font-size: .67rem; font-weight: 500; letter-spacing: .04em; color: rgba(255,255,255,.62); }
+    .hfact:not(.hfact-rate)::before { content: '◆'; color: var(--g-light);
+      font-size: .38rem; margin-right: 9px; vertical-align: middle; }
+    .hfact-rate { display: inline-flex; align-items: baseline; gap: 5px; }
+    .hf-star { color: #F3CE84; font-style: normal; font-size: .95rem; }
+    .hfact-rate b { font-weight: 700; font-size: 1rem; letter-spacing: .02em; }
+    .hfact-rate small { font-size: .72rem; font-weight: 500; letter-spacing: .06em; color: rgba(255,255,255,.8); }
     @media (max-width: 600px) {
-      /* 折り返すと行頭に区切り線が残るため、スマホでは線をやめて余白で分ける */
-      .hero-facts { max-width: 330px; row-gap: 9px; column-gap: 17px; margin-bottom: 30px; }
-      .hfact { font-size: .69rem; padding: 0; letter-spacing: .05em; border-left: none; }
-      .hf-star { font-size: .8rem; }
-      .hfact-rate b { font-size: .83rem; }
+      .hero-facts { max-width: 340px; row-gap: 9px; column-gap: 15px; margin-top: 28px; }
+      .hfact { font-size: .72rem; letter-spacing: .06em; }
+      .hfact:not(.hfact-rate)::before { margin-right: 7px; }
+      .hf-star { font-size: .86rem; }
+      .hfact-rate b { font-size: .9rem; }
+      .hfact-rate small { font-size: .68rem; }
       /* 見出しが語の途中で折り返さないよう一段小さく */
-      .hero-h1 { font-size: 1.52rem; line-height: 1.5; margin-bottom: 18px; }
+      .hero-h1 { font-size: 1.62rem; line-height: 1.6; margin-bottom: 20px; }
       .hero-brand { font-size: .62rem; letter-spacing: .28em; margin-bottom: 14px; }
+      .hero-desc { letter-spacing: .05em; line-height: 1.95; margin-bottom: 30px; }
     }
 
     .scroll-hint {
@@ -3165,33 +3172,34 @@
     @media(max-width:600px){
       #sticky-cta {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 398;
-        display: flex; align-items: center; gap: 9px;
-        padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-        background: rgba(0,24,21,.86); backdrop-filter: blur(16px) saturate(140%);
-        border-top: 1px solid rgba(255,255,255,.08);
+        display: flex; align-items: center; gap: 10px;
+        padding: 11px 14px; padding-bottom: calc(11px + env(safe-area-inset-bottom, 0px));
+        background: rgba(0,61,53,.93); backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(255,255,255,.1);
         transform: translateY(115%); pointer-events: none;
         transition: transform .34s cubic-bezier(.22,.8,.3,1);
       }
       body.sticky-on #sticky-cta { transform: none; pointer-events: auto; }
-      body.sticky-on { padding-bottom: 68px; }
+      body.sticky-on { padding-bottom: 72px; }
+      /* サイト共通のボタン（.btn-primary）と同じ字づかい・角丸 */
       .sc-book {
-        flex: 1 1 auto; border: none; cursor: pointer; font-family: inherit;
-        background: #fff; color: var(--navy);
-        font-size: .82rem; font-weight: 700; letter-spacing: .12em;
-        height: 46px; border-radius: 4px;
+        flex: 1 1 auto; height: 48px; border: none; cursor: pointer;
+        font-family: 'Cinzel', serif; font-size: .72rem; font-weight: 700;
+        letter-spacing: .2em; text-transform: uppercase;
+        background: #fff; color: var(--g-dark); border-radius: 4px;
         -webkit-tap-highlight-color: transparent;
-        transition: opacity .18s;
+        transition: background .2s, color .2s;
       }
-      .sc-book:active { opacity: .82; }
+      .sc-book:active { background: var(--g-dark); color: #fff; }
+      /* 同じく .btn-outline と同じ輪郭 */
       .sc-ico {
-        width: 46px; height: 46px; border-radius: 4px; flex-shrink: 0;
+        width: 48px; height: 48px; border-radius: 4px; flex-shrink: 0;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(255,255,255,.07);
-        border: 1px solid rgba(255,255,255,.17);
-        transition: background .18s;
+        background: transparent; border: 1px solid rgba(255,255,255,.75);
+        transition: background .2s;
       }
-      .sc-ico:active { background: rgba(255,255,255,.14); }
-      .sc-ico svg { width: 22px; height: 22px; opacity: .92; }
+      .sc-ico:active { background: rgba(255,255,255,.12); }
+      .sc-ico svg { width: 23px; height: 23px; }
       /* バーが出ている間は同じ役割の右下の丸ボタンを隠す（CTAの重複を避ける） */
       body.sticky-on #mob-ct-float { display: none; }
       body.sticky-on .float-contact { bottom: 80px; }
@@ -3739,16 +3747,16 @@
       <p class="hero-brand">EMERALD REEF OKINAWA</p>
       <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメも、青の洞窟も、<br><em>完全貸切</em>で。</h1>
       <p class="hero-desc" data-i18n-html="hero_desc">那覇〜恩納エリアはホテル送迎つき。<br>器材レンタルも無料、手ぶらでどうぞ。</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="track('cta_book',{location:'hero'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
+        <a class="btn btn-outline" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
+      </div>
       <div class="hero-facts">
         <span class="hfact hfact-rate"><i class="hf-star">★</i><b class="hs-cnt">5.0</b><small data-i18n="hf1_c">29件のレビュー</small></span>
         <span class="hfact" data-i18n="hf2">1日1組の完全貸切</span>
         <span class="hfact" data-i18n="hf3">送迎・写真 無料</span>
         <span class="hfact" data-i18n="hf4">3歳から</span>
         <span class="hfact" data-i18n="hf5">当日予約OK</span>
-      </div>
-      <div class="cta-row">
-        <button class="btn btn-primary" onclick="track('cta_book',{location:'hero'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
-        <a class="btn btn-outline" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
       </div>
     </div>
     <div class="scroll-hint">
