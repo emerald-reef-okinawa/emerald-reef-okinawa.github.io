@@ -395,7 +395,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; overflow: hidden;
-      padding: clamp(104px, 16vh, 168px) 24px 96px;
+      padding: clamp(120px, 19vh, 210px) 24px 96px;
       /* ボタン類はツールバーが出ている時の画面（svh）の中に収める */
       padding-bottom: calc(100lvh - 100svh + 96px);
     }
@@ -491,7 +491,7 @@
     }
     .hero-h1 {
       font-family: 'Zen Antique', 'Hiragino Mincho ProN', serif;
-      font-size: clamp(1.9rem, 6.2vw, 3.7rem);
+      font-size: clamp(1.9rem, 4.6vw, 2.9rem);
       font-weight: 400; color: #fff;
       letter-spacing: .05em; line-height: 1.45;
       margin-bottom: 24px;
@@ -524,12 +524,14 @@
       .hf-star { font-size: .86rem; }
       .hfact-rate b { font-size: .9rem; }
       .hfact-rate small { font-size: .68rem; }
-      .hero { padding-top: 112px; padding-left: 20px; padding-right: 20px; }
+      .hero { padding-top: 140px; padding-left: 20px; padding-right: 20px; }
+      .hero { padding-top: max(140px, 20svh); }
       .hero { padding-bottom: 40px; padding-bottom: calc(100lvh - 100svh + 40px); }
       .hero-content { gap: 28px; }
       .hero .scroll-hint { display: none; }
       /* 見出しが語の途中で折り返さないよう一段小さく */
       .hero-h1 { font-size: 1.62rem; line-height: 1.6; margin-bottom: 20px; }
+      html[lang="en"] .hero-h1 { font-size: 1.42rem; }
       .hero-brand { font-size: .62rem; letter-spacing: .28em; margin-bottom: 14px; }
       .hero-desc { letter-spacing: .05em; line-height: 1.95; }
     }
@@ -3216,10 +3218,10 @@
       }
       .sc-ico:active { background: rgba(255,255,255,.12); }
       .sc-ico svg { width: 23px; height: 23px; }
-      .sc-line { width: auto; padding: 0 13px 0 11px; gap: 7px; text-decoration: none; }
-      .sc-line svg { width: 24px; height: 24px; }
-      .sc-line span { font-family: 'Cinzel', serif; font-size: .7rem; font-weight: 700;
-        letter-spacing: .16em; color: #fff; }
+      /* LINE / WhatsApp：ブランド色のアイコンの下に名前（何のボタンか一目で分かるように） */
+      .sc-app { width: 62px; flex-direction: column; gap: 4px; text-decoration: none; }
+      .sc-app svg { width: 24px; height: 24px; }
+      .sc-app span { font-size: .56rem; font-weight: 700; letter-spacing: .03em; color: #fff; line-height: 1; }
       /* バーが出ている間は同じ役割の右下の丸ボタンを隠す（CTAの重複を避ける） */
       body.sticky-on #mob-ct-float,
       body.on-main #mob-ct-float { display: none; }   /* トップはヒーローと追従バーで足りる */
@@ -3767,8 +3769,8 @@
     <div class="hero-content fi vis">
       <div class="hero-top">
       <p class="hero-brand">EMERALD REEF OKINAWA</p>
-      <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメも、青の洞窟も、<br><em>完全貸切</em>で。</h1>
-      <p class="hero-desc" data-i18n-html="hero_desc">那覇〜恩納エリアはホテル送迎つき。<br>器材レンタルも無料、手ぶらでどうぞ。</p>
+      <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメ、青の洞窟、<br>カラフルな熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。</h1>
+      <p class="hero-desc" data-i18n-html="hero_desc">那覇〜恩納エリアはホテル送迎つき。<br>撮影した写真データも無料でお渡しします。</p>
       </div>
       <div class="hero-bottom">
       <div class="cta-row">
@@ -3778,7 +3780,7 @@
       <div class="hero-facts">
         <span class="hfact hfact-rate"><i class="hf-star">★</i><b class="hs-cnt">5.0</b><small data-i18n="hf1_c">29件のレビュー</small></span>
         <span class="hfact" data-i18n="hf2">1日1組の完全貸切</span>
-        <span class="hfact" data-i18n="hf3">送迎・写真 無料</span>
+        <span class="hfact" data-i18n="hf3">餌付け体験つき</span>
         <span class="hfact" data-i18n="hf4">3歳から</span>
         <span class="hfact" data-i18n="hf5">当日予約OK</span>
       </div>
@@ -7461,7 +7463,7 @@
       nav_sv:'体験メニュー', nav_faq:'よくある質問', nav_blog:'ブログ', nav_ct:'お問い合わせ',
       /* HERO */
       hero_tag:'Marine Guide  /  Okinawa',
-      hero_desc:'那覇〜恩納エリアはホテル送迎つき。<br>器材レンタルも無料、手ぶらでどうぞ。', hf1_c:'29件のレビュー', hf2:'1日1組の完全貸切', hf3:'送迎・写真 無料', hf4:'3歳から', hf5:'当日予約OK', hero_h1:'ウミガメも、青の洞窟も、<br><em>完全貸切</em>で。', cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
+      hero_desc:'那覇〜恩納エリアはホテル送迎つき。<br>撮影した写真データも無料でお渡しします。', hf1_c:'29件のレビュー', hf2:'1日1組の完全貸切', hf3:'餌付け体験つき', hf4:'3歳から', hf5:'当日予約OK', hero_h1:'ウミガメ、青の洞窟、<br>カラフルな熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。', cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
       cta_book:'今すぐ予約', cta_line:'LINEで相談',
       nav_book:'ご予約',
       page_title:'エメラルドリーフ沖縄 | 沖縄シュノーケル・青の洞窟・スキンダイビング体験', site_name:'エメラルドリーフ沖縄',
@@ -7760,7 +7762,7 @@
     en: {
       nav_sv:'Experience Menu', nav_faq:'FAQ', nav_blog:'Blog', nav_ct:'Contact',
       hero_tag:'Marine Guide  /  Okinawa',
-      hero_desc:'Free hotel pickup from Naha to Onna,<br>and all gear included — just bring yourself.', hf1_c:'29 reviews', hf2:'One group a day', hf3:'Transfer &amp; photos free', hf4:'From age 3', hf5:'Same-day booking', hero_h1:'Blue Cave &amp; sea turtles,<br><em>privately yours</em>.', cta_sv:'View Services', cta_ct:'Contact Us',
+      hero_desc:'Free hotel pickup from Naha to Onna,<br>and all the photos we take, free.', hf1_c:'29 reviews', hf2:'One group a day', hf3:'Fish feeding', hf4:'From age 3', hf5:'Same-day booking', hero_h1:'Sea turtles, the Blue Cave,<br>colorful reef fish —<br><em>just your group</em>.', cta_sv:'View Services', cta_ct:'Contact Us',
       cta_book:'Book Now', cta_line:'Chat on LINE',
       nav_book:'Book',
       page_title:'EMERALD REEF OKINAWA | Okinawa Snorkeling, Blue Cave & Skin Diving', site_name:'EMERALD REEF OKINAWA',
@@ -8045,7 +8047,7 @@
     zh: {
       nav_sv:'體驗方案', nav_faq:'常見問題', nav_blog:'部落格', nav_ct:'聯絡我們',
       hero_tag:'海洋嚮導  /  沖繩',
-      hero_desc:'那霸〜恩納地區含飯店接送，<br>器材免費租借，空手即可前來。', hf1_c:'29則評價', hf2:'1天1組包場', hf3:'接送・照片免費', hf4:'3歲起', hf5:'當日預約OK', hero_h1:'海龜、藍洞，<br>全程<em>包場</em>只為你們。', cta_sv:'檢視服務', cta_ct:'聯絡我們',
+      hero_desc:'那霸〜恩納地區含飯店接送，<br>拍攝的照片也免費贈送。', hf1_c:'29則評價', hf2:'1天1組包場', hf3:'含餵魚體驗', hf4:'3歲起', hf5:'當日預約OK', hero_h1:'海龜、藍洞、<br>繽紛的熱帶魚。<br>沖繩的海，<em>全程包場</em>。', cta_sv:'檢視服務', cta_ct:'聯絡我們',
       cta_book:'立即預約', cta_line:'LINE諮詢',
       nav_book:'預約',
       page_title:'EMERALD REEF OKINAWA | 沖繩浮潛・藍洞・自由潛水體驗', site_name:'EMERALD REEF OKINAWA',
@@ -8326,7 +8328,7 @@
     ko: {
       nav_sv:'체험 메뉴', nav_faq:'자주 묻는 질문', nav_blog:'블로그', nav_ct:'문의하기',
       hero_tag:'마린 가이드  /  오키나와',
-      hero_desc:'나하〜온나 지역 호텔 픽업 포함,<br>장비 렌털도 무료. 빈손으로 오세요.', hf1_c:'리뷰 29건', hf2:'1일 1팀 전세', hf3:'픽업・사진 무료', hf4:'3세부터', hf5:'당일 예약OK', hero_h1:'바다거북도 블루케이브도<br><em>완전 전세</em>로.', cta_sv:'서비스 보기', cta_ct:'문의하기',
+      hero_desc:'나하〜온나 지역 호텔 픽업 포함,<br>촬영한 사진 데이터도 무료로 드려요.', hf1_c:'리뷰 29건', hf2:'1일 1팀 전세', hf3:'먹이 주기 체험', hf4:'3세부터', hf5:'당일 예약OK', hero_h1:'바다거북, 블루케이브,<br>알록달록 열대어까지.<br><em>완전 전세</em>로 즐기세요.', cta_sv:'서비스 보기', cta_ct:'문의하기',
       cta_book:'지금 예약', cta_line:'LINE 상담',
       nav_book:'예약',
       page_title:'EMERALD REEF OKINAWA | 오키나와 스노클링・블루케이브 체험', site_name:'EMERALD REEF OKINAWA',
@@ -11744,8 +11746,8 @@
 <!-- モバイル追従CTAバー（トップページを少しスクロールすると出る） -->
 <div id="sticky-cta">
   <button class="sc-book" onclick="track('cta_book',{location:'sticky_bar'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
-  <a class="sc-ico sc-line" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="46" height="46" rx="11" fill="#06C755"/><path d="M24 9.5c-9.1 0-16.5 6-16.5 13.4 0 6.6 5.9 12.2 13.8 13.2.54.12 1.27.36 1.46.82.17.42.11 1.07.05 1.5l-.23 1.42c-.07.42-.33 1.64 1.44.9 1.77-.75 9.55-5.62 13.03-9.62 2.4-2.63 3.55-5.3 3.55-8.22C40.5 15.5 33.1 9.5 24 9.5z" fill="#fff"/><g fill="#06C755"><rect x="13.2" y="18.6" width="1.9" height="8.4" rx=".5"/><rect x="13.2" y="25.1" width="5" height="1.9" rx=".5"/><rect x="19.8" y="18.6" width="1.9" height="8.4" rx=".5"/><path d="M23.6 18.6h1.6l3.9 5.3v-5.3H31v8.4h-1.6l-3.9-5.3v5.3h-1.9z"/><rect x="32.9" y="18.6" width="1.9" height="8.4" rx=".5"/><rect x="32.9" y="18.6" width="5" height="1.9" rx=".5"/><rect x="32.9" y="21.85" width="4.6" height="1.9" rx=".5"/><rect x="32.9" y="25.1" width="5" height="1.9" rx=".5"/></g></svg><span>LINE</span></a>
-  <a class="sc-ico" href="https://wa.me/817085168826?text=EMERALD%20REEF%20OKINAWA%20の体験について問い合わせしたいです" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.605.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.199.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
+  <a class="sc-ico sc-app" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="46" height="46" rx="11" fill="#06C755"/><path d="M24 9.5c-9.1 0-16.5 6-16.5 13.4 0 6.6 5.9 12.2 13.8 13.2.54.12 1.27.36 1.46.82.17.42.11 1.07.05 1.5l-.23 1.42c-.07.42-.33 1.64 1.44.9 1.77-.75 9.55-5.62 13.03-9.62 2.4-2.63 3.55-5.3 3.55-8.22C40.5 15.5 33.1 9.5 24 9.5z" fill="#fff"/><g fill="#06C755"><rect x="13.2" y="18.6" width="1.9" height="8.4" rx=".5"/><rect x="13.2" y="25.1" width="5" height="1.9" rx=".5"/><rect x="19.8" y="18.6" width="1.9" height="8.4" rx=".5"/><path d="M23.6 18.6h1.6l3.9 5.3v-5.3H31v8.4h-1.6l-3.9-5.3v5.3h-1.9z"/><rect x="32.9" y="18.6" width="1.9" height="8.4" rx=".5"/><rect x="32.9" y="18.6" width="5" height="1.9" rx=".5"/><rect x="32.9" y="21.85" width="4.6" height="1.9" rx=".5"/><rect x="32.9" y="25.1" width="5" height="1.9" rx=".5"/></g></svg><span>LINE</span></a>
+  <a class="sc-ico sc-app" href="https://wa.me/817085168826?text=EMERALD%20REEF%20OKINAWA%20の体験について問い合わせしたいです" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><g transform="translate(4.3 4.3) scale(.64)"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.605.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.199.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" fill="#fff"/></g></svg><span>WhatsApp</span></a>
 </div>
 
 </body>
