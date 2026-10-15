@@ -396,7 +396,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; overflow: hidden;
-      padding: clamp(130px, 23vh, 260px) 24px 96px;
+      padding: clamp(112px, 19vh, 230px) 24px 96px;
       /* ボタン類はツールバーが出ている時の画面（svh）の中に収める */
       padding-bottom: calc(100lvh - 100svh + 96px);
     }
@@ -487,18 +487,21 @@
       font-family: 'Cinzel', serif;
       font-size: clamp(.68rem, 2.3vw, .88rem);
       font-weight: 700; letter-spacing: .34em;
-      color: rgba(255,255,255,.82); margin-bottom: 30px;
+      /* 字間は最後の文字の後ろにも付くので、その分を左に足して中央をそろえる */
+      padding-left: .34em;
+      color: rgba(255,255,255,.82); margin-bottom: 52px;
       text-shadow: 0 1px 14px rgba(0,0,0,.6);
     }
     .hero-h1 {
       font-family: 'Zen Antique', 'Hiragino Mincho ProN', serif;
-      font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+      font-size: clamp(1.9rem, min(4.8vw, 7.4vh), 3.5rem);
       font-weight: 400; color: #fff;
       letter-spacing: .08em; line-height: 1.7;
       margin-bottom: 0;
       text-shadow: 0 1px 4px rgba(0,0,0,.42), 0 2px 30px rgba(0,0,0,.55);
     }
     .hero-h1 em { font-style: normal; color: #4EE0C2; }
+    html[lang="ja"] .hero-h1, html[lang="zh-Hant"] .hero-h1 { position: relative; left: .28em; }
     /* 「カラフル」は熱帯魚の色（コーラル→黄→エメラルド→青）のグラデーションで。
        文字を透明にして塗るため、影は text-shadow ではなく filter で付ける */
     .hero-h1 .hl-color {
@@ -540,7 +543,7 @@
       html[lang="en"] .hero-facts { column-gap: 12px; }
       html[lang="en"] .hfact { font-size: .66rem; letter-spacing: .03em; }
       .hero { padding-top: 140px; padding-left: 20px; padding-right: 20px; }
-      .hero { padding-top: max(150px, 33svh); }
+      .hero { padding-top: max(128px, calc(33svh - 18px)); }
       .hero { padding-bottom: 40px; padding-bottom: calc(100lvh - 100svh + 40px); }
       .hero-content { gap: 28px; }
       .hero .scroll-hint { display: none; }
@@ -548,7 +551,7 @@
       /* 幅の狭いスマホ（320px など）でも語の途中で折り返さないよう、画面幅に合わせて縮める */
       .hero-h1 { font-size: min(1.68rem, 7.3vw); line-height: 1.95; letter-spacing: .06em; }
       html[lang="en"] .hero-h1 { font-size: min(1.42rem, 6.2vw); }
-      .hero-brand { font-size: .62rem; letter-spacing: .28em; margin-bottom: 24px; }
+      .hero-brand { font-size: .62rem; letter-spacing: .28em; padding-left: .28em; margin-bottom: 42px; }
       .hero-desc { letter-spacing: .05em; line-height: 1.95; }
     }
 
