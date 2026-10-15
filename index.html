@@ -498,6 +498,15 @@
       text-shadow: 0 1px 4px rgba(0,0,0,.42), 0 2px 30px rgba(0,0,0,.55);
     }
     .hero-h1 em { font-style: normal; color: #4EE0C2; }
+    /* 「カラフル」は熱帯魚の色（コーラル→黄→エメラルド→青）のグラデーションで。
+       文字を透明にして塗るため、影は text-shadow ではなく filter で付ける */
+    .hero-h1 .hl-color {
+      background: linear-gradient(100deg, #FF8E7E 0%, #FFBA6E 26%, #FFE58A 46%, #9DF2DE 68%, #B8AEFF 100%);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+      text-shadow: none;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.4)) drop-shadow(0 2px 12px rgba(0,0,0,.35));
+    }
 
     /* --- 評価と特長を1行にまとめる（箱は置かない。区切りはサイト共通の◆） --- */
     .hero-facts {
@@ -530,13 +539,13 @@
       html[lang="en"] .hero-facts { column-gap: 12px; }
       html[lang="en"] .hfact { font-size: .66rem; letter-spacing: .03em; }
       .hero { padding-top: 140px; padding-left: 20px; padding-right: 20px; }
-      .hero { padding-top: max(150px, 26svh); }
+      .hero { padding-top: max(150px, 33svh); }
       .hero { padding-bottom: 40px; padding-bottom: calc(100lvh - 100svh + 40px); }
       .hero-content { gap: 28px; }
       .hero .scroll-hint { display: none; }
       /* 見出しが語の途中で折り返さないよう一段小さく */
       /* 幅の狭いスマホ（320px など）でも語の途中で折り返さないよう、画面幅に合わせて縮める */
-      .hero-h1 { font-size: min(1.68rem, 7.3vw); line-height: 1.8; letter-spacing: .06em; }
+      .hero-h1 { font-size: min(1.68rem, 7.3vw); line-height: 1.95; letter-spacing: .06em; }
       html[lang="en"] .hero-h1 { font-size: min(1.42rem, 6.2vw); }
       .hero-brand { font-size: .62rem; letter-spacing: .28em; margin-bottom: 24px; }
       .hero-desc { letter-spacing: .05em; line-height: 1.95; }
@@ -3775,7 +3784,7 @@
     <div class="hero-content fi vis">
       <div class="hero-top">
       <p class="hero-brand">EMERALD REEF OKINAWA</p>
-      <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメ、青の洞窟、<br>カラフルな熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。</h1>
+      <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメ、青の洞窟、<br><span class="hl-color">カラフル</span>な熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。</h1>
       </div>
       <div class="hero-bottom">
       <div class="cta-row">
@@ -7470,7 +7479,7 @@
       nav_sv:'体験メニュー', nav_faq:'よくある質問', nav_blog:'ブログ', nav_ct:'お問い合わせ',
       /* HERO */
       hero_tag:'Marine Guide  /  Okinawa',
-      hf1_c:'29件のレビュー', hf2:'1日1組限定', hf3:'餌付け体験つき', hf4:'3歳から', hf5:'当日予約OK', hf6:'送迎つき', hf7:'写真・動画 無料', hero_h1:'ウミガメ、青の洞窟、<br>カラフルな熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。', cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
+      hf1_c:'29件のレビュー', hf2:'1日1組限定', hf3:'餌付け体験つき', hf4:'3歳から', hf5:'当日予約OK', hf6:'送迎つき', hf7:'写真・動画 無料', hero_h1:'ウミガメ、青の洞窟、<br><span class="hl-color">カラフル</span>な熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。', cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
       cta_book:'今すぐ予約', cta_line:'LINEで相談',
       nav_book:'ご予約',
       page_title:'エメラルドリーフ沖縄 | 沖縄シュノーケル・青の洞窟・スキンダイビング体験', site_name:'エメラルドリーフ沖縄',
@@ -7769,7 +7778,7 @@
     en: {
       nav_sv:'Experience Menu', nav_faq:'FAQ', nav_blog:'Blog', nav_ct:'Contact',
       hero_tag:'Marine Guide  /  Okinawa',
-      hf1_c:'29 reviews', hf2:'One group a day', hf3:'Fish feeding', hf4:'Ages 3+', hf5:'Same-day OK', hf6:'Hotel pickup', hf7:'Free photos &amp; video', hero_h1:'Sea turtles, the Blue Cave,<br>colorful reef fish —<br><em>just your group</em>.', cta_sv:'View Services', cta_ct:'Contact Us',
+      hf1_c:'29 reviews', hf2:'One group a day', hf3:'Fish feeding', hf4:'Ages 3+', hf5:'Same-day OK', hf6:'Hotel pickup', hf7:'Free photos &amp; video', hero_h1:'Sea turtles, the Blue Cave,<br><span class="hl-color">colorful</span> reef fish —<br><em>just your group</em>.', cta_sv:'View Services', cta_ct:'Contact Us',
       cta_book:'Book Now', cta_line:'Chat on LINE',
       nav_book:'Book',
       page_title:'EMERALD REEF OKINAWA | Okinawa Snorkeling, Blue Cave & Skin Diving', site_name:'EMERALD REEF OKINAWA',
@@ -8054,7 +8063,7 @@
     zh: {
       nav_sv:'體驗方案', nav_faq:'常見問題', nav_blog:'部落格', nav_ct:'聯絡我們',
       hero_tag:'海洋嚮導  /  沖繩',
-      hf1_c:'29則評價', hf2:'1天1組限定', hf3:'含餵魚體驗', hf4:'3歲起', hf5:'當日預約OK', hf6:'含接送', hf7:'照片・影片免費', hero_h1:'海龜、藍洞、<br>繽紛的熱帶魚。<br>沖繩的海，<em>全程包場</em>。', cta_sv:'檢視服務', cta_ct:'聯絡我們',
+      hf1_c:'29則評價', hf2:'1天1組限定', hf3:'含餵魚體驗', hf4:'3歲起', hf5:'當日預約OK', hf6:'含接送', hf7:'照片・影片免費', hero_h1:'海龜、藍洞、<br><span class="hl-color">繽紛</span>的熱帶魚。<br>沖繩的海，<em>全程包場</em>。', cta_sv:'檢視服務', cta_ct:'聯絡我們',
       cta_book:'立即預約', cta_line:'LINE諮詢',
       nav_book:'預約',
       page_title:'EMERALD REEF OKINAWA | 沖繩浮潛・藍洞・自由潛水體驗', site_name:'EMERALD REEF OKINAWA',
@@ -8335,7 +8344,7 @@
     ko: {
       nav_sv:'체험 메뉴', nav_faq:'자주 묻는 질문', nav_blog:'블로그', nav_ct:'문의하기',
       hero_tag:'마린 가이드  /  오키나와',
-      hf1_c:'리뷰 29건', hf2:'1일 1팀 한정', hf3:'먹이 주기 체험', hf4:'3세부터', hf5:'당일 예약OK', hf6:'픽업 포함', hf7:'사진・영상 무료', hero_h1:'바다거북, 블루케이브,<br>알록달록 열대어까지.<br><em>완전 전세</em>로 즐기세요.', cta_sv:'서비스 보기', cta_ct:'문의하기',
+      hf1_c:'리뷰 29건', hf2:'1일 1팀 한정', hf3:'먹이 주기 체험', hf4:'3세부터', hf5:'당일 예약OK', hf6:'픽업 포함', hf7:'사진・영상 무료', hero_h1:'바다거북, 블루케이브,<br><span class="hl-color">알록달록</span> 열대어까지.<br><em>완전 전세</em>로 즐기세요.', cta_sv:'서비스 보기', cta_ct:'문의하기',
       cta_book:'지금 예약', cta_line:'LINE 상담',
       nav_book:'예약',
       page_title:'EMERALD REEF OKINAWA | 오키나와 스노클링・블루케이브 체험', site_name:'EMERALD REEF OKINAWA',
