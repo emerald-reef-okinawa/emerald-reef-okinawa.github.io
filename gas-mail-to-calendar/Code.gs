@@ -49,9 +49,13 @@ const CONFIG = {
   // 「確認済み」ボタンのURL改ざん防止用シークレット（必ず推測されにくい文字列に変更）
   CONFIRM_SECRET: 'er-okinawa-Q3xNDmrtdn4eRiYQpcnicRl',
 
-  // 公開したウェブアプリの本番URL(/exec)。手動実行時も確実にこのURLを使う。
-  // （空にすると getUrl() で自動取得するが、エディタ手動実行では開発用URLになるため固定を推奨）
-  WEBAPP_URL: 'https://script.google.com/macros/s/AKfycbyrEZsNiPyeRnykSwLPgqyIDLVwMtAIPdkIsMaSYwBHsbwKJZFJW4aefcLioxPFsor4/exec',
+  // お客様に送る「参加を確認する」ボタンの行き先（自社サイトの確認ページ）。
+  // このページが裏でウェブアプリ(/exec)を呼ぶ。ウェブアプリのURLはサイトの confirm.html に書く。
+  // → Apps Script を新しくデプロイしてURLが変わっても、メールのボタンは壊れない。
+  CONFIRM_PAGE_URL: 'https://emerald-reef-okinawa.com/confirm.html',
+
+  // ウェブアプリの本番URL(/exec)。CONFIRM_PAGE_URL を空にした時だけメールに直接使う（予備）。
+  WEBAPP_URL: '',
 };
 
 // ============================================================
@@ -620,16 +624,30 @@ function doGet(e) {
   const token = p.t || '';
   const lang = (p.l === 'en') ? 'en' : 'ja';
 
+  // サイトの確認ページ（confirm.html）から呼ばれた時は、画面ではなく結果だけを JSON で返す
+  if (p.format === 'json') {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: confirmEvent_(id, token) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  return confirmPage_(lang, confirmEvent_(id, token));
+}
+
+/**
+ * 予定IDとトークンを検証し、正しければカレンダー予定を「確認済み」にする。
+ * 戻り値: 'ok'（今回確認した）/ 'already'（確認済みだった）/ 'error'（無効なリンク等）
+ */
+function confirmEvent_(id, token) {
   // トークン検証（URLの改ざん防止）
   if (!id || token !== makeToken_(id)) {
-    return confirmPage_(lang, 'error');
+    return 'error';
   }
 
   try {
     const calendars = CalendarApp.getCalendarsByName(CONFIG.CALENDAR_NAME);
     const calendar = calendars[0];
     const ev = calendar.getEventById(id);
-    if (!ev) return confirmPage_(lang, 'error');
+    if (!ev) return 'error';
 
     const title = ev.getTitle();
     if (title.indexOf('✅') === -1) {
@@ -637,20 +655,20 @@ function doGet(e) {
       const stamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm');
       ev.setDescription((ev.getDescription() || '') + '\n----\nお客様確認済み: ' + stamp);
       try { ev.setColor(CalendarApp.EventColor.GREEN); } catch (_) {}
-      return confirmPage_(lang, 'ok');
+      return 'ok';
     }
     // すでに確認済み
-    return confirmPage_(lang, 'already');
+    return 'already';
   } catch (err) {
-    Logger.log('doGet エラー: ' + err);
-    return confirmPage_(lang, 'error');
+    Logger.log('確認処理エラー: ' + err);
+    return 'error';
   }
 }
 
-/** 確認ボタンのURL（ウェブアプリURL＋予定ID＋トークン＋言語）を作る */
+/** 確認ボタンのURL（確認ページ＋予定ID＋トークン＋言語）を作る */
 function buildConfirmUrl_(ev, lang) {
-  // 本番URLを優先（未設定なら getUrl で自動取得）
-  const base = CONFIG.WEBAPP_URL || ScriptApp.getService().getUrl();
+  // 自社サイトの確認ページを優先（予備としてウェブアプリURL → getUrl の順）
+  const base = CONFIG.CONFIRM_PAGE_URL || CONFIG.WEBAPP_URL || ScriptApp.getService().getUrl();
   const id = ev.getId();
   return base + '?id=' + encodeURIComponent(id) + '&t=' + makeToken_(id) + '&l=' + lang;
 }
@@ -885,7 +903,7 @@ function meetBoxJa_(info) {
       '<div style="font-size:12px;color:#00756a;">' + esc_(info.dateStr) + '（明日）</div>' +
     '</td></tr>' +
     '<tr><td style="padding:10px 18px 15px;border-top:1px dashed rgba(0,168,150,.45);">' +
-      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">📍 集合場所（お迎え先）</div>' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">&#128205; 集合場所（お迎え先）</div>' +
       placeHtml +
     '</td></tr>' +
     '</table>';
@@ -903,7 +921,7 @@ function meetBoxEn_(info) {
       '<div style="font-size:12px;color:#00756a;">' + esc_(info.dateStr) + ' (tomorrow)</div>' +
     '</td></tr>' +
     '<tr><td style="padding:10px 18px 15px;border-top:1px dashed rgba(0,168,150,.45);">' +
-      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">📍 PICKUP LOCATION</div>' +
+      '<div style="font-size:11px;font-weight:bold;color:#00756a;letter-spacing:.1em;">&#128205; PICKUP LOCATION</div>' +
       placeHtml +
     '</td></tr>' +
     '</table>';
