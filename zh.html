@@ -544,7 +544,12 @@
       html[lang="en"] .hfact { font-size: .66rem; letter-spacing: .03em; }
       .hero { padding-top: 140px; padding-left: 20px; padding-right: 20px; }
       .hero { padding-top: max(128px, calc(33svh - 18px)); }
-      .hero { padding-bottom: 40px; padding-bottom: calc(100lvh - 100svh + 40px); }
+      /* 最新のスマホのブラウザは、画面下の半透明のアドレスバーの裏までページを描くため、
+         ブラウザが申告する画面の高さ（vh / lvh）より実際に見える範囲のほうが長いことがある。
+         その差で下のシーズン告知が覗かないよう、写真部分を画面より 140px 長くしておく。
+         ボタン類の位置はこれまでどおり「ツールバーが出ている時の画面（svh）」の下から 40px。 */
+      .hero { min-height: calc(100vh + 140px); min-height: calc(100lvh + 140px); }
+      .hero { padding-bottom: 180px; padding-bottom: calc(100lvh - 100svh + 180px); }
       .hero-content { gap: 28px; }
       .hero .scroll-hint { display: none; }
       /* 見出しが語の途中で折り返さないよう一段小さく */
