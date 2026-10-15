@@ -392,14 +392,31 @@
       align-items: center; justify-content: center;
       text-align: center; padding: 180px 24px 200px; overflow: hidden;
     }
+    /* 背景写真。スクロール量（--hero-scale）に応じてゆっくり引いていく */
     .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(0,15,10,.62) 0%, rgba(0,20,14,.34) 28%,
-          rgba(0,20,14,.32) 55%, rgba(0,61,53,.80) 82%, rgba(0,61,53,1) 100%),
-        url('https://images.unsplash.com/photo-1720699339159-f9f04bed4e87?auto=format&w=1600&q=80') center/cover no-repeat;
-      z-index: 0;
+      content: ''; position: absolute; inset: 0; z-index: 0;
+      background: url('https://images.unsplash.com/photo-1720699339159-f9f04bed4e87?auto=format&w=1600&q=80') center/cover no-repeat;
+      transform: scale(var(--hero-scale, 1));
+      transform-origin: 50% 45%;
+      will-change: transform;
+    }
+    /* 暗幕（下端は次セクションと同色で閉じる）。写真と違い拡大しない */
+    .hero::after {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(0,15,10,.62) 0%, rgba(0,20,14,.34) 28%,
+        rgba(0,20,14,.32) 55%, rgba(0,61,53,.80) 82%, rgba(0,61,53,1) 100%);
+    }
+    /* スクロールすると晴れていく追加の暗幕（水中から水面へ上がる演出） */
+    .hero-veil {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(0,12,9,.40) 0%, rgba(0,16,12,.22) 45%, rgba(0,20,16,0) 74%);
+      opacity: var(--hero-veil, 0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero::before { transform: none !important; animation: none !important; }
+      .hero-veil { opacity: 0 !important; }
     }
     .hero-bub { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
     .bub {
@@ -467,6 +484,52 @@
       content: '◆'; color: #48CAE4;
       font-size: .42rem; margin-right: 8px; vertical-align: middle;
     }
+    /* --- 案2：店名は小さく、体験価値を主役に --- */
+    .hero-brand {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.68rem, 2.3vw, .88rem);
+      font-weight: 700; letter-spacing: .34em;
+      color: rgba(255,255,255,.82); margin-bottom: 16px;
+      text-shadow: 0 1px 14px rgba(0,0,0,.6);
+    }
+    .hero-h1 {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      font-weight: 800; color: #fff;
+      letter-spacing: .01em; line-height: 1.35;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 28px rgba(0,0,0,.5), 0 1px 6px rgba(0,0,0,.38);
+    }
+    .hero-h1 em { font-style: normal; color: #00C9A7; }
+
+    /* --- 案3：ヒーロー直下の数字 --- */
+    .hero-stats {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      max-width: 600px; margin: 0 auto 30px;
+      background: rgba(0,8,6,.3); backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 16px; padding: 14px 6px;
+    }
+    .hstat {
+      flex: 1 1 0; min-width: 104px; padding: 0 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      border-right: 1px solid rgba(255,255,255,.16);
+    }
+    .hstat:last-child { border-right: none; }
+    .hstat-num {
+      font-size: clamp(1.05rem, 3.4vw, 1.45rem);
+      font-weight: 800; color: #fff; line-height: 1;
+      letter-spacing: .01em; white-space: nowrap;
+    }
+    .hstat-lbl {
+      font-size: .66rem; font-weight: 600; letter-spacing: .03em;
+      color: rgba(255,255,255,.8); line-height: 1.4;
+    }
+    @media (max-width: 520px) {
+      .hero-stats { max-width: 330px; padding: 12px 4px; row-gap: 12px; }
+      .hstat { flex: 1 1 44%; min-width: 0; }
+      .hstat:nth-child(2n) { border-right: none; }
+    }
+
     .scroll-hint {
       position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 6;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -3111,6 +3174,42 @@
       .mob-cf-btn svg { width:26px; height:26px; }
     }
 
+    /* ===== 案6：モバイル追従CTAバー ===== */
+    #sticky-cta { display: none; }
+    @media(max-width:600px){
+      #sticky-cta {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 398;
+        display: flex; align-items: center; gap: 8px;
+        padding: 9px 12px; padding-bottom: calc(9px + env(safe-area-inset-bottom, 0px));
+        background: rgba(0,38,33,.94); backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(255,255,255,.12);
+        box-shadow: 0 -4px 18px rgba(0,0,0,.28);
+        transform: translateY(115%); pointer-events: none;
+        transition: transform .3s ease;
+      }
+      body.sticky-on #sticky-cta { transform: none; pointer-events: auto; }
+      body.sticky-on { padding-bottom: 64px; }
+      .sc-book {
+        flex: 1 1 auto; border: none; cursor: pointer; font-family: inherit;
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        color: #fff; font-size: .9rem; font-weight: 800; letter-spacing: .02em;
+        padding: 13px 10px; border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(201,169,97,.5);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .sc-book:active { transform: scale(.97); }
+      .sc-ico {
+        width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .sc-ico svg { width: 26px; height: 26px; }
+      .sc-line { background: #06C755; }
+      .sc-wa   { background: #25D366; }
+      /* バーが出ている間は同じ役割の右下の丸ボタンを隠す（CTAの重複を避ける） */
+      body.sticky-on #mob-ct-float { display: none; }
+      body.sticky-on .float-contact { bottom: 80px; }
+    }
+
     #bk-pulse-btn {
       position:fixed; right:24px; bottom:24px; width:72px; height:72px; z-index:400;
       background:linear-gradient(135deg, #FF5722, #FF8C00);
@@ -3172,10 +3271,11 @@
        HERO ENHANCEMENTS
        ================================================================ */
     /* 背景スロームーブ */
-    .hero::before { animation: hero-zoom 30s ease-in-out infinite alternate; transform-origin: center; }
+    /* ゆっくりした常時ズーム。スクロール量（--hero-scale）を掛けて引いていく */
+    .hero::before { animation: hero-zoom 30s ease-in-out infinite alternate; transform-origin: 50% 45%; }
     @keyframes hero-zoom {
-      0%   { transform: scale(1); }
-      100% { transform: scale(1.08); }
+      0%   { transform: scale(var(--hero-scale, 1)); }
+      100% { transform: scale(calc(var(--hero-scale, 1) * 1.08)); }
     }
     /* 既存泡に縦ドリフト追加 */
     @keyframes flt {
@@ -3639,6 +3739,7 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-caustic"></div>
+    <div class="hero-veil"></div>
     <div class="hero-particles">
       <div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div>
       <div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div><div class="hp"></div>
@@ -3648,13 +3749,15 @@
       <div class="bub"></div><div class="bub"></div>
     </div>
     <div class="hero-content fi vis">
-      <div class="hero-title-fb">
-        <h1>EMERALD REEF<br><span style="color:#00C9A7;">OKINAWA</span><span class="hero-sub-name">Marine Guide &amp; Tours</span></h1>
+      <p class="hero-brand">EMERALD REEF OKINAWA</p>
+      <h1 class="hero-h1" data-i18n-html="hero_h1">ウミガメも、青の洞窟も、<br><em>完全貸切</em>で。</h1>
+      <p class="hero-desc" data-i18n-html="hero_desc">那覇〜恩納エリアはホテル送迎つき。器材レンタルも無料で、<br>手ぶらで沖縄のエメラルドグリーンの海へ。</p>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-num hs-cnt" data-i18n="hs1_n">★5.0</span><span class="hstat-lbl" data-i18n="hs1_l">29件のレビュー</span></div>
+        <div class="hstat"><span class="hstat-num" data-i18n="hs2_n">1日1組</span><span class="hstat-lbl" data-i18n="hs2_l">完全貸切</span></div>
+        <div class="hstat"><span class="hstat-num" data-i18n="hs4_n">無料</span><span class="hstat-lbl" data-i18n="hs4_l">送迎・写真データ</span></div>
+        <div class="hstat"><span class="hstat-num hs-cnt" data-i18n="hs3_n">3歳〜</span><span class="hstat-lbl" data-i18n="hs3_l">お子さまOK</span></div>
       </div>
-      <p class="hero-desc" data-i18n-html="hero_desc">
-        沖縄の透き通ったエメラルドグリーンの海へ。<br>
-        完全貸切・完全送迎で、忘れられない海の体験を。
-      </p>
       <div class="cta-row">
         <button class="btn btn-primary" onclick="track('cta_book',{location:'hero'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
         <a class="btn btn-outline" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" data-i18n="cta_line">LINEで相談</a>
@@ -3662,9 +3765,6 @@
       <div class="hero-badges">
         <span class="hero-badge" data-i18n="hb_sameday">当日予約OK</span>
         <span class="hero-badge" data-i18n="hb_feed">餌付け体験付き</span>
-        <span class="hero-badge" data-i18n="hb_charter">完全貸切</span>
-        <span class="hero-badge" data-i18n="hb_transfer">送迎込み</span>
-        <span class="hero-badge" data-i18n="hb_photo">写真無料</span>
       </div>
     </div>
     <div class="scroll-hint">
@@ -7343,7 +7443,7 @@
       nav_sv:'体験メニュー', nav_faq:'よくある質問', nav_blog:'ブログ', nav_ct:'お問い合わせ',
       /* HERO */
       hero_tag:'Marine Guide  /  Okinawa',
-      hero_desc:'沖縄の透き通ったエメラルドグリーンの海へ。<br>完全貸切・完全送迎で、忘れられない海の体験を。',
+      hero_desc:'那覇〜恩納エリアはホテル送迎つき。器材レンタルも無料で、<br>手ぶらで沖縄のエメラルドグリーンの海へ。', hero_h1:'ウミガメも、青の洞窟も、<br><em>完全貸切</em>で。', hs1_n:'★5.0', hs1_l:'29件のレビュー', hs2_n:'1日1組', hs2_l:'完全貸切', hs3_n:'3歳〜', hs3_l:'お子さまOK', hs4_n:'無料', hs4_l:'送迎・写真データ',
       cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
       cta_book:'今すぐ予約', cta_line:'LINEで相談',
       nav_book:'ご予約',
@@ -7644,7 +7744,7 @@
     en: {
       nav_sv:'Experience Menu', nav_faq:'FAQ', nav_blog:'Blog', nav_ct:'Contact',
       hero_tag:'Marine Guide  /  Okinawa',
-      hero_desc:'Discover the crystal-clear emerald waters of Okinawa.<br>Private, fully-guided tours with hotel transfers included.',
+      hero_desc:'Free hotel pickup from Naha to Onna and all gear included —<br>just bring yourself to Okinawa\'s emerald water.', hero_h1:'Sea turtles, the Blue Cave —<br><em>all to your group alone</em>.', hs1_n:'★5.0', hs1_l:'29 reviews', hs2_n:'1 group/day', hs2_l:'Private charter', hs3_n:'Age 3+', hs3_l:'Kids welcome', hs4_n:'Free', hs4_l:'Transfer & photos',
       cta_sv:'View Services', cta_ct:'Contact Us',
       cta_book:'Book Now', cta_line:'Chat on LINE',
       nav_book:'Book',
@@ -7931,7 +8031,7 @@
     zh: {
       nav_sv:'體驗方案', nav_faq:'常見問題', nav_blog:'部落格', nav_ct:'聯絡我們',
       hero_tag:'海洋嚮導  /  沖繩',
-      hero_desc:'探索沖繩清澈見底的翡翠綠海洋。<br>全程包車・全程接送，留下難忘的海洋體驗。',
+      hero_desc:'那霸〜恩納地區含飯店接送，器材免費租借，<br>空手就能暢遊沖繩的翡翠綠海域。', hero_h1:'海龜、藍洞，<br>全程<em>包場</em>只為你們。', hs1_n:'★5.0', hs1_l:'29則評價', hs2_n:'1天1組', hs2_l:'全程包場', hs3_n:'3歲〜', hs3_l:'兒童OK', hs4_n:'免費', hs4_l:'接送・照片',
       cta_sv:'檢視服務', cta_ct:'聯絡我們',
       cta_book:'立即預約', cta_line:'LINE諮詢',
       nav_book:'預約',
@@ -8214,7 +8314,7 @@
     ko: {
       nav_sv:'체험 메뉴', nav_faq:'자주 묻는 질문', nav_blog:'블로그', nav_ct:'문의하기',
       hero_tag:'마린 가이드  /  오키나와',
-      hero_desc:'오키나와의 투명한 에메랄드 바다로.<br>완전 전세・완전 픽업으로 잊지 못할 바다 체험을.',
+      hero_desc:'나하〜온나 지역 호텔 픽업 포함, 장비 렌털도 무료.<br>빈손으로 오키나와 에메랄드빛 바다로.', hero_h1:'바다거북도 블루케이브도<br><em>완전 전세</em>로.', hs1_n:'★5.0', hs1_l:'리뷰 29건', hs2_n:'1일 1팀', hs2_l:'완전 전세', hs3_n:'3세〜', hs3_l:'어린이 OK', hs4_n:'무료', hs4_l:'픽업・사진',
       cta_sv:'서비스 보기', cta_ct:'문의하기',
       cta_book:'지금 예약', cta_line:'LINE 상담',
       nav_book:'예약',
@@ -8588,6 +8688,7 @@
     const nav = document.getElementById('main-nav');
     if (nav) nav.style.display = id === 'view-admin' ? 'none' : '';
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (window.syncStickyCta) window.syncStickyCta();
     setTimeout(initFade, 80);
     if (afterCb) setTimeout(afterCb, 80);
   }
@@ -11258,6 +11359,73 @@
     // Initialize Google Calendar widget
     initCalendar();
   });
+
+  /* ================================================================
+     ヒーローのスクロール演出（案4）＋ モバイル追従CTAバー（案6）
+     ================================================================ */
+  (function heroScrollFx(){
+    var hero = document.querySelector('.hero');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var raf = 0;
+
+    /* トップページを少しスクロールしたらバーを出す。
+       詳細・予約ページには専用の予約ボタンがあるので出さない。 */
+    function syncSticky(){
+      var onMain = (typeof _curView === 'undefined') || _curView === 'view-main';
+      var show = onMain
+        && (window.pageYOffset || 0) > 460
+        && !document.body.classList.contains('blog-modal-open');
+      document.body.classList.toggle('sticky-on', show);
+    }
+    window.syncStickyCta = syncSticky;
+
+    function apply(){
+      raf = 0;
+      syncSticky();
+      if (!hero || reduce) return;
+      var hh = hero.offsetHeight || 1;
+      var p = Math.min(1, Math.max(0, (window.pageYOffset || 0) / hh));
+      hero.style.setProperty('--hero-scale', (1.14 - 0.14 * p).toFixed(4));
+      hero.style.setProperty('--hero-veil', (1 - p).toFixed(3));
+    }
+    function onScroll(){ if (!raf) raf = requestAnimationFrame(apply); }
+    apply();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+  })();
+
+  /* 数字のカウントアップ（案3）。文字列中の最初の数値だけを 0 から動かす */
+  (function heroCountUp(){
+    var els = document.querySelectorAll('.hs-cnt');
+    if (!els.length) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    function run(el){
+      if (el.dataset.counted) return;
+      var full = el.textContent;
+      var m = full.match(/(\d+(?:\.\d+)?)/);
+      if (!m) return;
+      el.dataset.counted = '1';
+      var target = parseFloat(m[1]);
+      var dec = (m[1].split('.')[1] || '').length;
+      var pre = full.slice(0, m.index), post = full.slice(m.index + m[1].length);
+      var t0 = 0;
+      function step(ts){
+        if (!t0) t0 = ts;
+        var k = Math.min(1, (ts - t0) / 900);
+        var e = 1 - Math.pow(1 - k, 3);
+        el.textContent = pre + (target * e).toFixed(dec) + post;
+        if (k < 1) requestAnimationFrame(step); else el.textContent = full;
+      }
+      requestAnimationFrame(step);
+      /* タブが裏に回ると requestAnimationFrame が止まるため、最終値を必ず書き戻す */
+      setTimeout(function(){ el.textContent = full; }, 1600);
+    }
+    if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, {threshold:.6});
+    els.forEach(function(el){ io.observe(el); });
+  })();
 </script>
 
 <!-- ================================================================
@@ -11560,6 +11728,13 @@
   <a id="mob-book-float" onclick="track('cta_book',{location:'mobile_float'}); showView('view-booking')" role="button" tabindex="0" aria-label="ご予約">
     <span class="mbf-ico">📅</span><span class="mbf-txt" data-i18n="nav_book">ご予約</span>
   </a>
+</div>
+
+<!-- モバイル追従CTAバー（トップページを少しスクロールすると出る） -->
+<div id="sticky-cta">
+  <button class="sc-book" onclick="track('cta_book',{location:'sticky_bar'}); showView('view-booking')" data-i18n="cta_book">今すぐ予約</button>
+  <a class="sc-ico sc-line" href="https://lin.ee/Utszl3P" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6C13.51 6 5 13.49 5 22.63c0 6.35 4.01 11.9 10.04 15.11-.43 1.59-1.38 5.43-1.58 6.27-.25 1.04.38 1.03.8.75l7.87-5.26c.91.13 1.84.2 2.78.2C35.5 39.7 43 32.21 43 23.07 43 13.49 34.49 6 24 6z" fill="white"/><text x="24" y="29" text-anchor="middle" fill="#06C755" font-size="14" font-weight="bold" font-family="Arial,sans-serif">LINE</text></svg></a>
+  <a class="sc-ico sc-wa" href="https://wa.me/817085168826?text=EMERALD%20REEF%20OKINAWA%20の体験について問い合わせしたいです" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.867-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.605.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.199.05-.371-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
 </div>
 
 </body>
