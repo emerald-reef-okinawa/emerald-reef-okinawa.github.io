@@ -189,6 +189,14 @@ function processMailToCalendar() {
   } catch (ge) {
     Logger.log('GetYourGuide処理エラー: ' + ge);
   }
+
+  // 各予約サイトの「日時変更」「キャンセル」のメールをカレンダーに反映する
+  // （予約の登録より後に実行。同じ回に予約とキャンセルが届いても順番どおりに処理される）
+  try {
+    processChangesAndCancels_();
+  } catch (ce) {
+    Logger.log('変更・キャンセル処理エラー: ' + ce);
+  }
 }
 
 // ============================================================
@@ -1598,6 +1606,8 @@ function processGetYourGuide_() {
       const subject = message.getSubject() || '';
       // 件名に参照番号が無いもの（アカウント承認・商品公開などの案内）はスキップ
       if (!/GYG[A-Z0-9]{6,}/.test(subject)) { anyHandled = true; return; }
+      // キャンセル・変更の通知は processChangesAndCancels_ で扱う（ここでは予約として登録しない）
+      if (isGygChangeOrCancel_(subject)) return;
       try {
         const info = parseGetYourGuideReservation_(message);
         if (!info) { Logger.log('GetYourGuide: 日付を抽出できませんでした: ' + subject); return; }
@@ -1812,3 +1822,223 @@ function isAlreadyBooked_(info) {
   return false;
 }
 
+// ============================================================
+// ⑨ 予約サイトの「日時変更」「キャンセル」をカレンダーに反映
+// ============================================================
+/**
+ * 予約サイトから届く日時変更・キャンセルのメールを読み、カレンダーに反映する。
+ *  ・キャンセル: 予定を「予約状況」から外し、マイカレンダー（既定のカレンダー）へ移す。
+ *               題名の先頭に「キャンセル」、色は濃いグレー。
+ *               → サイトの空き状況は「予約状況」を見ているので、その枠が空く。
+ *  ・日時変更  : 予定を新しい日時へ動かし、説明欄に変更の記録を残す。
+ *               前日メールは新しい日付であらためて送る。
+ * 対応しているメール（実際のメールで形式を確認したもの）
+ *  GetYourGuide         「ご予約がキャンセル済みです - … - GYG…」「予約詳細の変更: - … - GYG…」
+ *  アクティビティジャパン 「確定予約キャンセル依頼」「無料キャンセル通知（…ユーザー）」「予約内容変更のお知らせ」
+ *  じゃらん              「予約キャンセル通知」
+ * 体験日が過ぎた予約は動かさない（メールに処理済みラベルを付けるだけ）。
+ */
+function processChangesAndCancels_() {
+  const label = getOrCreateLabel_(CONFIG.PROCESSED_LABEL);
+  const queries = [
+    'from:notification.getyourguide.com (subject:キャンセル OR subject:変更 OR subject:cancel OR subject:cancelled OR subject:changed)',
+    'from:activityjapan.com (subject:キャンセル OR subject:予約内容変更)',
+    'from:activityboard.jp subject:キャンセル',
+  ];
+
+  let done = 0;
+  queries.forEach(function (q) {
+    const threads = GmailApp.search(q + ' newer_than:60d -label:' + CONFIG.PROCESSED_LABEL, 0, CONFIG.MAX_THREADS);
+    threads.forEach(function (thread) {
+      let ok = true;
+      thread.getMessages().forEach(function (message) {
+        try {
+          const ch = parseChangeMail_(message.getSubject() || '', message.getPlainBody() || '', message);
+          if (!ch) return;                 // 変更・キャンセル以外のメール
+          if (applyChange_(ch)) done++;
+        } catch (e) {
+          ok = false;                      // 失敗したメールは次回もう一度試す
+          Logger.log('変更・キャンセル処理エラー (' + message.getSubject() + '): ' + e);
+        }
+      });
+      if (ok) thread.addLabel(label);
+    });
+  });
+
+  Logger.log('変更・キャンセル完了: ' + done + ' 件をカレンダーに反映しました');
+}
+
+/** GetYourGuide の件名が「キャンセル」「変更」の通知か（予約の登録処理では読まないため） */
+function isGygChangeOrCancel_(subject) {
+  return /キャンセル|変更|cancel|change/i.test(subject || '');
+}
+
+/**
+ * 変更・キャンセルのメールから必要な情報を取り出す。対象外なら null。
+ * 戻り値: { site, type:'cancel'|'change', resNo, start（キャンセル: その予約の日時 / 変更: 新しい日時）,
+ *           oldStart（分かる場合のみ）, timeKnown, name, extra（説明欄に添える一言） }
+ */
+function parseChangeMail_(subject, body, message) {
+  // ---------------- GetYourGuide ----------------
+  const gyg = (subject.match(/GYG[A-Z0-9]{6,}/) || [])[0];
+  if (gyg && isGygChangeOrCancel_(subject)) {
+    const flat = message ? gygFlat_(message) : body.replace(/[|｜#*]/g, ' ').replace(/\s+/g, ' ');
+    const dt = '(\\d{4})\\s*年\\s*(\\d{1,2})\\s*月\\s*(\\d{1,2})\\s*日\\s*(\\d{1,2})\\s*[:：]\\s*(\\d{2})';
+    const toDate = function (m, i) {
+      return jstDate_(Number(m[i]), Number(m[i + 1]), Number(m[i + 2]), Number(m[i + 3]), Number(m[i + 4]));
+    };
+
+    if (/キャンセル|cancel/i.test(subject)) {
+      const m = flat.match(new RegExp('(?:日付|Date)\\s*[:：]?\\s*' + dt));
+      const nm = flat.match(/名前\s*[:：]\s*(.+?)\s+日付/);
+      return { site: 'GetYourGuide', type: 'cancel', resNo: gyg,
+               start: m ? toDate(m, 1) : null, timeKnown: !!m, name: nm ? nm[1].trim() : '', extra: '' };
+    }
+    // 変更: 「日付 新着 <新しい日時> <元の日時>」。日付以外（お迎え場所など）の変更なら対象外
+    const m = flat.match(new RegExp('(?:日付|Date)\\s*[:：]?\\s*(?:新着|New)\\s*' + dt + '(?:\\s*' + dt + ')?'));
+    if (!m) return null;
+    return { site: 'GetYourGuide', type: 'change', resNo: gyg,
+             start: toDate(m, 1), oldStart: m[6] ? toDate(m, 6) : null, timeKnown: true, name: '', extra: '' };
+  }
+
+  // ---------------- アクティビティジャパン ----------------
+  if (/アクティビティジャパン/.test(subject) && /キャンセル|予約内容変更/.test(subject)) {
+    const lines = body.split('\n').map(function (s) {
+      return s.replace(/^\s*>+\s?/, '').replace(/　/g, ' ').trim();
+    });
+    const find = function (re) {
+      for (let i = 0; i < lines.length; i++) { const m = lines[i].match(re); if (m) return m; }
+      return null;
+    };
+    const rn = find(/予約番号】?\s*[:：]\s*([0-9A-Za-z]+)/);
+    const dm = find(/アクティビティ実施日時\s*[:：]\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+    if (!rn || !dm) return null;
+    const tm = find(/コース名\s*[:：]\s*(\d{1,2})\s*[:：]\s*(\d{2})/);
+    const nm = find(/代表者名\s*[:：]\s*(.+?)\s*様/);
+    const start = jstDate_(Number(dm[1]), Number(dm[2]), Number(dm[3]),
+                           tm ? Number(tm[1]) : CONFIG.DEFAULT_START_HOUR, tm ? Number(tm[2]) : 0);
+
+    // 申込数（変更後の人数）を一行にまとめて説明欄に添える
+    let pax = [];
+    const pi = lines.findIndex(function (l) { return /^(申込数|申し込み数)\s*[:：]/.test(l); });
+    if (pi !== -1) {
+      for (let i = pi + 1; i < lines.length && lines[i] && !/^合計料金/.test(lines[i]); i++) pax.push(lines[i]);
+    }
+
+    if (/キャンセル/.test(subject)) {
+      const extra = /依頼/.test(subject)
+        ? '※アクティビティジャパンの管理画面でキャンセル処理（有料／無料）をお願いします。'
+        : '';
+      return { site: 'アクティビティジャパン', type: 'cancel', resNo: rn[1], start: start, timeKnown: !!tm,
+               name: nm ? nm[1].trim() : '', extra: extra };
+    }
+    return { site: 'アクティビティジャパン', type: 'change', resNo: rn[1], start: start, oldStart: null,
+             timeKnown: !!tm, name: nm ? nm[1].trim() : '',
+             extra: pax.length ? '変更後の申込数: ' + pax.join(' / ') : '' };
+  }
+
+  // ---------------- じゃらん ----------------
+  if (/キャンセル/.test(subject) && /じゃらん|activityboard|ACTIVITY BOARD/.test(subject + body)) {
+    const lines = body.split('\n').map(function (s) {
+      return s.replace(/^\s*>+\s?/, '').replace(/　/g, ' ').replace(/\s+$/, '');
+    });
+    const resNo = jlField_(lines, '予約番号');
+    const dm = jlField_(lines, '利用日時').match(/(\d{4})\s*[\/年]\s*(\d{1,2})\s*[\/月]\s*(\d{1,2})\s*日?[^\d]*?(\d{1,2})\s*[:：]\s*(\d{2})/);
+    if (!resNo || !dm) return null;
+    const name = jlField_(lines, '体験者氏名').replace(/\s*様\s*$/, '').replace(/\s*[(（][^)）]*[)）]\s*$/, '').trim();
+    return { site: 'じゃらん', type: 'cancel', resNo: resNo,
+             start: jstDate_(Number(dm[1]), Number(dm[2]), Number(dm[3]), Number(dm[4]), Number(dm[5])),
+             timeKnown: true, name: name, extra: '' };
+  }
+
+  return null;
+}
+
+/** 変更・キャンセルをカレンダーに反映する。反映したら true。 */
+function applyChange_(ch) {
+  // 体験日が過ぎた予約は動かさない（変更の場合は新しい日付で判定）
+  const t = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd').split('-').map(Number);
+  const todayStart = jstDate_(t[0], t[1], t[2], 0, 0);
+  if (ch.start && ch.start.getTime() < todayStart.getTime()) {
+    Logger.log('体験日が過ぎているため反映しません: ' + ch.resNo);
+    return false;
+  }
+
+  const booking = CalendarApp.getCalendarsByName(CONFIG.CALENDAR_NAME)[0];
+  if (!booking) throw new Error('カレンダーが見つかりません: ' + CONFIG.CALENDAR_NAME);
+  const ev = findEventByResNo_(booking, ch.resNo);
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm');
+
+  if (ch.type === 'cancel') return moveToCancelled_(ev, ch, stamp);
+
+  // ---- 日時変更 ----
+  if (!ev) { Logger.log('変更する予定が見つかりません: ' + ch.resNo); return false; }
+  const oldStart = ev.getStartTime();
+  const dur = ev.getEndTime().getTime() - oldStart.getTime();
+  let newStart = ch.start;
+  if (!ch.timeKnown) {   // 時刻が書かれていなければ、元の時刻のまま日付だけ動かす
+    const hm = Utilities.formatDate(oldStart, 'Asia/Tokyo', 'H:m').split(':').map(Number);
+    const ymd = Utilities.formatDate(ch.start, 'Asia/Tokyo', 'yyyy-M-d').split('-').map(Number);
+    newStart = jstDate_(ymd[0], ymd[1], ymd[2], hm[0], hm[1]);
+  }
+
+  let desc = ev.getDescription() || '';
+  const fmt = function (d, f) { return Utilities.formatDate(d, 'Asia/Tokyo', f); };
+  if (newStart.getTime() !== oldStart.getTime()) {
+    ev.setTime(newStart, new Date(newStart.getTime() + dur));
+    desc = desc
+      .replace(/(ご希望日:\s*)[^\n]*/, '$1' + fmt(newStart, 'yyyy-MM-dd'))
+      .replace(/(ご希望時間:\s*)[^\n]*/, '$1' + fmt(newStart, 'H:mm'))
+      // 前日メールは新しい日付であらためて送る
+      .split('\n').filter(function (l) { return l.indexOf(CONFIG.REMINDED_MARK) === -1; }).join('\n');
+    desc += '\n----\n日時変更: ' + fmt(oldStart, 'yyyy-MM-dd HH:mm') + ' → ' + fmt(newStart, 'yyyy-MM-dd HH:mm') +
+            '（' + stamp + '、' + ch.site + 'の変更通知メールから自動で反映）';
+    Logger.log('日時変更を反映: ' + ev.getTitle() + ' → ' + newStart);
+  } else {
+    desc += '\n----\n予約内容の変更通知（日時は変わらず）: ' + stamp;
+  }
+  if (ch.extra) desc += '\n' + ch.extra;
+  ev.setDescription(desc);
+  return true;
+}
+
+/**
+ * キャンセルされた予約を「予約状況」からマイカレンダーへ移す。
+ * 題名の先頭に「キャンセル」、色は濃いグレー。
+ */
+function moveToCancelled_(ev, ch, stamp) {
+  const mine = CalendarApp.getDefaultCalendar();
+  const note = '\n----\nキャンセル: ' + stamp + '（' + ch.site + 'のキャンセル通知メールから自動で移動）' +
+               (ch.extra ? '\n' + ch.extra : '');
+
+  if (!ev) {
+    // すでに移動済み、または手作業で削除済み
+    Logger.log('予約状況にキャンセル対象の予定がありません（移動済み・削除済み）: ' + ch.resNo);
+    return false;
+  }
+
+  // 前回の処理が途中で止まっていた場合に備え、移動先に同じ予約が既にあれば元の予定を消すだけにする
+  if (!findEventByResNo_(mine, ch.resNo)) {
+    let title = (ev.getTitle() || '').replace(/^\s*✅\s*/, '');
+    if (!/^\s*キャンセル/.test(title)) title = 'キャンセル ' + title;
+    const copy = mine.createEvent(title, ev.getStartTime(), ev.getEndTime(), {
+      description: (ev.getDescription() || '') + note,
+      location: ev.getLocation() || '',
+    });
+    copy.setColor(CalendarApp.EventColor.GRAY);   // 濃いグレー
+  }
+  ev.deleteEvent();
+  Logger.log('キャンセルを反映（マイカレンダーへ移動）: ' + ch.resNo);
+  return true;
+}
+
+/** 予約番号が説明欄に書かれた予定を探す（45日前〜400日先）。無ければ null。 */
+function findEventByResNo_(calendar, resNo) {
+  if (!calendar || !resNo) return null;
+  const now = Date.now();
+  const events = calendar.getEvents(new Date(now - 45 * 864e5), new Date(now + 400 * 864e5));
+  for (let i = 0; i < events.length; i++) {
+    if ((events[i].getDescription() || '').indexOf(resNo) !== -1) return events[i];
+  }
+  return null;
+}
