@@ -1265,9 +1265,9 @@ function parseActivityJapanReservation_(body) {
   if (!dm) return null;
   const y = Number(dm[1]), mo = Number(dm[2]), d = Number(dm[3]);
 
-  // --- 時刻：プラン名末尾の「（HH:MM）」 ---
+  // --- 時刻：プラン名末尾の「（HH:MM）」。提携サイト経由は「（HH:MM:SS）」と秒付きで届く ---
   let startHour = CONFIG.DEFAULT_START_HOUR, startMin = 0, timeFound = false;
-  const times = plan.match(/[（(]\s*\d{1,2}\s*[:：]\s*\d{2}\s*[)）]/g);
+  const times = plan.match(/[（(]\s*\d{1,2}\s*[:：]\s*\d{2}(?:\s*[:：]\s*\d{2})?\s*[)）]/g);
   if (times && times.length) {
     const t = times[times.length - 1].match(/(\d{1,2})\s*[:：]\s*(\d{2})/);
     startHour = Number(t[1]); startMin = Number(t[2]); timeFound = true;
@@ -1465,17 +1465,30 @@ function parseJalanReservation_(body) {
   const start = jstDate_(y, mo, d, startHour, startMin);
   const end = new Date(start.getTime() + CONFIG.DURATION_HOURS * 60 * 60 * 1000);
 
-  // --- 人数：「1名 (大人:1名, 子供:1名)」等の内訳を集計 ---
+  // --- 人数：内訳を集計 ---
+  // 例1「1名 (大人:1名, 子供:1名)」
+  // 例2「6名 (子供1人あたり:0名、大人（３名以上参加）1人あたり:6名、大人（2名以上参加）1人あたり:0名)」
+  //   → 0名の区分は省き、「1人あたり」「（３名以上参加）」を外して同じ区分は合算 →「大人6名」
   let adult = 0, child = 0;
   const parts = [];
-  const bd = paxRaw.match(/([^\s:：,、()（）]+)\s*[:：]\s*(\d+)\s*名/g);
-  if (bd) {
-    bd.forEach(function (seg) {
-      const m = seg.match(/([^\s:：,、()（）]+)\s*[:：]\s*(\d+)\s*名/);
-      const cat = m[1], n = Number(m[2]);
-      parts.push(cat + n + '名');
-      if (/子供|子ども|こども|小人|幼児|未就学/.test(cat)) child += n; else adult += n;
-    });
+  const cats = {}, order = [];
+  const outer = paxRaw.match(/[(（](.*)[)）]\s*$/);   // 合計の後ろの括弧の中身
+  (outer ? outer[1] : '').split(/[、,，]/).forEach(function (seg) {
+    const m = seg.match(/^(.*?)[:：]\s*(\d+)\s*名/);
+    if (!m) return;
+    const n = Number(m[2]);
+    if (!n) return;
+    const cat = m[1]
+      .replace(/[（(][^）)]*[）)]/g, '')          // （３名以上参加） などを外す
+      .replace(/\d+\s*[人名]\s*あたり/g, '')     // 1人あたり を外す
+      .replace(/[\s　]/g, '') || '参加者';
+    if (!(cat in cats)) { cats[cat] = 0; order.push(cat); }
+    cats[cat] += n;
+    if (/子供|子ども|こども|小人|幼児|未就学/.test(cat)) child += n; else adult += n;
+  });
+  order.forEach(function (c) { parts.push(c + cats[c] + '名'); });
+  if (parts.length) {
+    // 内訳から集計済み
   } else {
     const tm = paxRaw.match(/(\d+)\s*名/);
     if (tm) { adult = Number(tm[1]); parts.push('大人' + adult + '名'); }
