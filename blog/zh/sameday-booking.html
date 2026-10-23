@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <!-- ⚠ このファイルは build-blog.js が index.html から自動生成します。手で編集しないこと。 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅 | 翡翠礁沖繩 Emerald Reef Okinawa</title>
+  <meta name="description" content="「天氣這麼好，今天就想下海」「明天的行程空出來了」——在沖繩旅行時，常會臨時想去玩海。翡翠礁歡迎當天、前一天預約。整理了正因為完全包場才能做到的臨時預約機制，以及找到空位的訣竅。">
+  <link rel="canonical" href="https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html">
+  <link rel="alternate" hreflang="ja" href="https://emerald-reef-okinawa.com/blog/sameday-booking.html">
+  <link rel="alternate" hreflang="en" href="https://emerald-reef-okinawa.com/blog/en/sameday-booking.html">
+  <link rel="alternate" hreflang="zh-Hant" href="https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html">
+  <link rel="alternate" hreflang="ko" href="https://emerald-reef-okinawa.com/blog/ko/sameday-booking.html">
+  <link rel="alternate" hreflang="x-default" href="https://emerald-reef-okinawa.com/blog/sameday-booking.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅 | 翡翠礁沖繩 Emerald Reef Okinawa">
+  <meta property="og:description" content="「天氣這麼好，今天就想下海」「明天的行程空出來了」——在沖繩旅行時，常會臨時想去玩海。翡翠礁歡迎當天、前一天預約。整理了正因為完全包場才能做到的臨時預約機制，以及找到空位的訣竅。">
+  <meta property="og:url" content="https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1778576719538-20560bee53a3?auto=format&amp;w=1200&amp;q=80">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap">
+  <style>
+:root{--g-main:#007A6E;--g-dark:#005F52;--g-light:#48CAE4;--text:#1a3530;--sub:#56716b;--bg:#f6fbfa;--card:#fff;--mark:#d7f3ee;--line:#e1ece9}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Noto Sans JP','Hiragino Sans',system-ui,sans-serif;line-height:1.9;font-size:16px}
+a{color:var(--g-main)}
+.top{background:var(--g-dark);padding:14px 16px}.top a{color:#fff;text-decoration:none;font-family:Cinzel,serif;font-weight:700;letter-spacing:.12em;font-size:.95rem}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+.crumb{font-size:.8rem;color:var(--sub);margin-bottom:18px}.crumb a{color:var(--sub)}
+h1{font-size:clamp(1.4rem,4.6vw,2rem);line-height:1.5;margin:0 0 10px}
+.meta{font-size:.82rem;color:var(--sub);margin-bottom:22px}
+.langs{font-size:.8rem;margin:-10px 0 22px}.langs a{margin-right:12px}
+.hero{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block;margin-bottom:24px}
+.lead{font-size:1.02rem;background:var(--card);border-left:4px solid var(--g-main);padding:14px 18px;border-radius:0 10px 10px 0}
+h2{font-size:1.2rem;line-height:1.6;margin:40px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.blk img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin:6px 0 14px;display:block}
+mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit}
+.cta{margin:48px 0 0;background:var(--g-dark);color:#fff;border-radius:14px;padding:26px 22px;text-align:center}
+.cta h2{border:0;margin:0 0 8px;padding:0;color:#fff}.cta p{margin:0 0 18px;font-size:.92rem;opacity:.92}
+.btn{display:inline-block;margin:4px 6px;padding:12px 22px;border-radius:4px;text-decoration:none;font-weight:700;font-size:.92rem}
+.btn-w{background:#fff;color:var(--g-dark)}.btn-l{background:#06C755;color:#fff}
+.rel{margin-top:44px}.rel ul,.list{list-style:none;padding:0;margin:0}
+.rel li{border-bottom:1px solid var(--line)}.rel li a{display:block;padding:11px 2px;text-decoration:none;color:var(--text)}
+.list li{background:var(--card);border-radius:12px;margin-bottom:14px;overflow:hidden;border:1px solid var(--line)}
+.list a{display:block;padding:16px 18px;text-decoration:none;color:var(--text)}
+.list b{display:block;font-size:1.02rem;line-height:1.6;margin-bottom:4px}.list small{color:var(--sub);font-size:.84rem;line-height:1.7;display:block}
+footer{text-align:center;font-size:.78rem;color:var(--sub);padding:28px 16px 40px}
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅","description":"「天氣這麼好，今天就想下海」「明天的行程空出來了」——在沖繩旅行時，常會臨時想去玩海。翡翠礁歡迎當天、前一天預約。整理了正因為完全包場才能做到的臨時預約機制，以及找到空位的訣竅。","datePublished":"2026-09-22","dateModified":"2026-09-22","inLanguage":"zh-Hant","image":"https://images.unsplash.com/photo-1778576719538-20560bee53a3?auto=format&w=1200&q=80","url":"https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html","mainEntityOfPage":"https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html","author":{"@type":"LocalBusiness","@id":"https://emerald-reef-okinawa.com/#business","name":"エメラルドリーフ沖縄","alternateName":"EMERALD REEF OKINAWA","url":"https://emerald-reef-okinawa.com/"},"publisher":{"@type":"LocalBusiness","@id":"https://emerald-reef-okinawa.com/#business","name":"エメラルドリーフ沖縄","alternateName":"EMERALD REEF OKINAWA","url":"https://emerald-reef-okinawa.com/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"翡翠礁沖繩 Emerald Reef Okinawa","item":"https://emerald-reef-okinawa.com/zh.html"},{"@type":"ListItem","position":2,"name":"部落格","item":"https://emerald-reef-okinawa.com/blog/zh/"},{"@type":"ListItem","position":3,"name":"沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅","item":"https://emerald-reef-okinawa.com/blog/zh/sameday-booking.html"}]}]}</script>
+</head>
+<body>
+<header class="top"><a href="/zh.html">EMERALD REEF OKINAWA</a></header>
+<main class="wrap">
+<nav class="crumb"><a href="/zh.html">翡翠礁沖繩 Emerald Reef Okinawa</a> › <a href="/blog/zh/">部落格</a></nav>
+<article>
+<h1>沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅</h1>
+<div class="meta">發布日：<time datetime="2026-09-22">2026.09.22</time></div>
+<div class="langs"><a href="/blog/sameday-booking.html" hreflang="ja">日本語</a><a href="/blog/en/sameday-booking.html" hreflang="en">English</a><a href="/blog/ko/sameday-booking.html" hreflang="ko">한국어</a></div>
+<img class="hero" src="https://images.unsplash.com/photo-1778576719538-20560bee53a3?auto=format&amp;w=1200&amp;q=80" alt="沖繩浮潛可以當天預約嗎？實現「今天就想去」的預約流程與找到空位的訣竅" width="1200" height="675">
+<p class="lead">「天氣這麼好，今天就想下海」「明天的行程空出來了」——在沖繩旅行時，常會臨時想去玩海。翡翠礁歡迎當天、前一天預約。整理了正因為完全包場才能做到的臨時預約機制，以及找到空位的訣竅。</p>
+
+<section class="blk">
+<h2>結論：當天、前一天都能預約</h2>
+<img src="https://images.unsplash.com/photo-1779174879861-5c3551bd65ec?auto=format&amp;w=900&amp;q=80" alt="結論：當天、前一天都能預約" loading="lazy" width="1200" height="675">
+<p>先講結論：<mark>翡翠礁歡迎當天、前一天預約</mark>。今年9月也有客人留下這樣的評價：「明明是當天才預約，還是幫我們安排，真的很感謝。」之所以能接受臨時預約，是因為<mark>完全包場</mark>。把好幾組預約併在一起的合團行程，有時要等人數湊滿才能確定出團。包場的話，<mark>只要嚮導有空檔，當下就能確定出發</mark>。不論是一個人還是全家，都不必等其他客人。</p>
+</section>
+<section class="blk">
+<h2>當天預約流程｜用LINE或表單聯絡就好</h2>
+<img src="https://images.unsplash.com/photo-1690123153402-3b081d5151dd?auto=format&amp;w=900&amp;q=80" alt="當天預約流程｜用LINE或表單聯絡就好" loading="lazy" width="1200" height="675">
+<p>當天預約<mark>只要透過LINE或表單聯絡</mark>即可。附上<mark>①人數（孩子請附年齡）②住宿飯店 ③希望時段 ④會不會游泳</mark>，我們就能馬上回覆空位與接送時間。只要帶<mark>泳衣和毛巾</mark>，面鏡、蛙鞋、救生衣免費出借，空手來也沒問題。我們會到<mark>飯店接送</mark>，也不必另外安排租車。</p>
+</section>
+<section class="blk">
+<h2>找空位的訣竅｜時段和方案保持彈性</h2>
+<img src="https://images.unsplash.com/photo-1724050168273-2132fff8f110?auto=format&amp;w=900&amp;q=80" alt="找空位的訣竅｜時段和方案保持彈性" loading="lazy" width="1200" height="675">
+<p>臨時預約時，要更容易找到空位有三個訣竅。①<mark>時段保留彈性</mark>——告訴我們「上午下午都可以」，能安排的梯次會一下子變多。②<mark>選擇符合住宿地點的方案</mark>——住那霸選<mark>那霸近海海龜浮潛</mark>，住恩納村、北谷等中部選<mark>浮潛（恩納村）或青之洞窟</mark>，符合接送範圍。③<mark>盡量早點聯絡</mark>——越早聯絡，能選的梯次越多。另外<mark>10月10日、11日（三連休）</mark>國內外連假重疊、會比較擁擠，這兩天建議提早預約。</p>
+</section>
+<section class="blk">
+<h2>費用，以及臨時預約也安心的理由</h2>
+<img src="https://images.unsplash.com/photo-1602088113235-229c19758e9f?auto=format&amp;w=900&amp;q=80" alt="費用，以及臨時預約也安心的理由" loading="lazy" width="1200" height="675">
+<p>大人每人費用：<mark>浮潛（恩納村）2人¥7,000、3人以上¥6,000</mark>；<mark>青之洞窟2人¥8,000、3人以上¥7,000</mark>；<mark>那霸近海海龜浮潛2人¥12,000、3人以上¥10,000</mark>。<mark>小學生以下（3〜12歲）一律</mark>¥4,000〜¥5,000。全部<mark>含接送、裝備、照片資料</mark>（影片也限時免費）。當天海況超過安全標準時不會勉強出海，提供<mark>改期，若無法改期則全額退款</mark>。想著「今天能下海嗎？」的時候，歡迎隨時傳訊息給我們。</p>
+</section>
+</article>
+<aside class="cta">
+<h2>完全包場，暢遊沖繩的海</h2>
+<p>含飯店接送、免費贈送照片。3歲起即可參加。有空位時也歡迎當天、前一天預約。</p>
+<a class="btn btn-w" href="/zh.html#view-booking">查看行程與價格</a><a class="btn btn-l" href="https://lin.ee/Utszl3P" rel="noopener">用LINE詢問</a>
+</aside>
+<nav class="rel"><h2>其他文章</h2><ul>
+<li><a href="/blog/zh/price-guide.html">沖繩浮潛的行情是多少？｜¥3,000和¥7,000差在哪，從內容明細來比</a></li>
+<li><a href="/blog/zh/morning-or-afternoon.html">沖繩浮潛要選上午還是下午？｜海最平穩的時段、照片最漂亮的時段</a></li>
+<li><a href="/blog/zh/turtle-not-guaranteed.html">如果沒遇到海龜怎麼辦？｜關於野生動物行程的誠實說明</a></li>
+<li><a href="/blog/zh/naha-turtle-no-car.html">沒租車也能和海龜一起游泳｜那霸出發・含接送的半日浮潛</a></li>
+<li><a href="/blog/zh/spearfishing-guide.html">在沖繩體驗魚叉捕魚（spearfishing）｜新手也能玩嗎？對象年齡、規則與費用解說</a></li>
+<li><a href="/blog/zh/how-to-choose.html">沖繩浮潛行程怎麼選？新手不踩雷的7個檢查重點【當地嚮導解說】</a></li>
+</ul><p><a href="/blog/zh/">所有文章 →</a></p></nav>
+</main>
+<footer>© EMERALD REEF OKINAWA ・ <a href="/zh.html">翡翠礁沖繩 Emerald Reef Okinawa</a></footer>
+</body>
+</html>

@@ -67,23 +67,19 @@
         "@id": "https://emerald-reef-okinawa.com/#business",
         "name": "에메랄드 리프 오키나와 Emerald Reef Okinawa",
         "alternateName": "EMERALD REEF OKINAWA",
-        "description": "沖縄の透き通ったエメラルドグリーンの海で完全貸切シュノーケル・青の洞窟・スキンダイビング体験。完全送迎・写真データ無料プレゼント付き。",
+        "description": "沖縄の完全貸切シュノーケルツアー。恩納村の青の洞窟、那覇近海のウミガメ、熱帯魚の餌付け、スキンダイビング・魚突き。ホテル送迎・写真データ無料。",
         "url": "https://emerald-reef-okinawa.com",
         "email": "emeraldreefokinawa@gmail.com",
-        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&w=1200&q=80",
+        "image": "https://emerald-reef-okinawa.com/sv-snorkel.webp",
         "priceRange": "¥6,000〜",
+        "areaServed": ["恩納村", "読谷村", "北谷町", "沖縄市", "那覇市"],
         "currenciesAccepted": "JPY",
         "paymentAccepted": "Cash, Credit Card",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "那覇市",
+          "addressLocality": "恩納村",
           "addressRegion": "沖縄県",
           "addressCountry": "JP"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 26.2124,
-          "longitude": 127.6809
         },
         "openingHoursSpecification": {
           "@type": "OpeningHoursSpecification",
@@ -109,12 +105,12 @@
         "alternateName": "EMERALD REEF OKINAWA",
         "description": "沖縄の透き通ったエメラルドグリーンの海で楽しむ完全貸切マリンアクティビティ体験",
         "url": "https://emerald-reef-okinawa.com",
-        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&w=1200&q=80",
+        "image": "https://emerald-reef-okinawa.com/sv-snorkel.webp",
         "touristType": ["Family", "Couple", "Solo", "Group"],
         "availableLanguage": ["Japanese", "English"],
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "那覇市",
+          "addressLocality": "恩納村",
           "addressRegion": "沖縄県",
           "addressCountry": "JP"
         },
@@ -159,8 +155,8 @@
         "@type": "WebPage",
         "@id": "https://emerald-reef-okinawa.com/#webpage",
         "url": "https://emerald-reef-okinawa.com/",
-        "name": "에메랄드 리프 오키나와 Emerald Reef Okinawa | 沖縄シュノーケル・青の洞窟・スキンダイビング体験",
-        "description": "沖縄の透き通ったエメラルドグリーンの海で完全貸切シュノーケル・青の洞窟・スキンダイビング体験。完全送迎付き・写真データ無料プレゼント。那覇〜恩納村対応。",
+        "name": "에메랄드 리프 오키나와 Emerald Reef Okinawa | 完全貸切シュノーケル・青の洞窟・ウミガメ・スキンダイビング",
+        "description": "沖縄の完全貸切シュノーケルツアー。恩納村の青の洞窟、那覇近海のウミガメ、熱帯魚の餌付け、スキンダイビング・魚突き。ホテル送迎・写真データ無料、3歳から参加OK。那覇〜恩納村対応。",
         "speakable": {
           "@type": "SpeakableSpecification",
           "cssSelector": [".hero-h1", ".faq-a-in", ".pom-card p", ".s-sub"]
@@ -3744,7 +3740,7 @@
     <ul class="nav-links" id="nav-links">
       <li class="nav-book-li"><a onclick="track('cta_book',{location:'nav'}); showView('view-booking')" data-i18n="nav_book" class="nav-book-link">ご予約</a></li>
       <li><a onclick="goHomeJump('services')" data-i18n="nav_sv" class="nav-exp">体験メニュー</a></li>
-      <li><a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a></li>
+      <li><a href="/blog/ko/" onclick="showView('view-blog-list');return false;" data-i18n="nav_blog">ブログ</a></li>
       <li><a onclick="goHomeJump('faq')" data-i18n="nav_faq">よくある質問</a></li>
       <li><a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a></li>
     </ul>
@@ -4651,7 +4647,7 @@
     </div>
     <div class="ft-links">
       <a onclick="jumpTo('services')" data-i18n="nav_sv">サービス</a>
-      <a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a>
+      <a href="/blog/ko/" onclick="showView('view-blog-list');return false;" data-i18n="nav_blog">ブログ</a>
       <a onclick="jumpTo('faq')" data-i18n="nav_faq">よくある質問</a>
       <a onclick="jumpTo('contact')" data-i18n="nav_ct">お問い合わせ</a>
     </div>
@@ -4953,7 +4949,7 @@
     </div>
     <div class="ft-links">
       <a onclick="goHomeJump('services')" data-i18n="nav_sv">サービス</a>
-      <a onclick="showView('view-blog-list')" data-i18n="nav_blog">ブログ</a>
+      <a href="/blog/ko/" onclick="showView('view-blog-list');return false;" data-i18n="nav_blog">ブログ</a>
       <a onclick="showView('view-booking')" data-i18n="nav_book">ご予約</a>
       <a onclick="goHomeJump('contact')" data-i18n="nav_ct">お問い合わせ</a>
     </div>
@@ -7498,7 +7494,7 @@
       hf1_c:'34件のレビュー', hf2:'1日1組限定', hf3:'餌付け体験つき', hf4:'3歳から', hf5:'当日予約OK', hf6:'送迎つき', hf7:'写真・動画 無料', hero_h1:'ウミガメ、青の洞窟、<br><span class="hl-color">カラフル</span>な熱帯魚。<br>沖縄の海を<em>完全貸切</em>で。', cta_sv:'サービスを見る', cta_ct:'お問い合わせ',
       cta_book:'今すぐ予約', cta_line:'LINEで相談',
       nav_book:'ご予約',
-      page_title:'에메랄드 리프 오키나와 Emerald Reef Okinawa | 沖縄シュノーケル・青の洞窟・スキンダイビング体験', site_name:'에메랄드 리프 오키나와 Emerald Reef Okinawa',
+      page_title:'에메랄드 리프 오키나와 Emerald Reef Okinawa | 完全貸切シュノーケル・青の洞窟・ウミガメ・スキンダイビング', site_name:'에메랄드 리프 오키나와 Emerald Reef Okinawa',
       bkp_lbl:'BOOKING', bkp_ttl:'ご予約', bkp_sale:'開店記念セール ｜ 全プラン最大42%OFF',
       bkp_sub:'まずはツアーをお選びください。当日・前日のご予約も大歓迎です。',
       bkp_popular:'人気No.1', bkp_level:'難易度', bkp_duration:'所要時間', bkp_rec_lbl:'こんな方に',
@@ -7797,7 +7793,7 @@
       hf1_c:'34 reviews', hf2:'One group a day', hf3:'Fish feeding', hf4:'Ages 3+', hf5:'Same-day OK', hf6:'Hotel pickup', hf7:'Free photos &amp; video', hero_h1:'Sea turtles, the Blue Cave,<br><span class="hl-color">colorful</span> reef fish —<br><em>just your group</em>.', cta_sv:'View Services', cta_ct:'Contact Us',
       cta_book:'Book Now', cta_line:'Chat on LINE',
       nav_book:'Book',
-      page_title:'EMERALD REEF OKINAWA | Okinawa Snorkeling, Blue Cave & Skin Diving', site_name:'EMERALD REEF OKINAWA',
+      page_title:'EMERALD REEF OKINAWA | Private Snorkeling, Blue Cave & Sea Turtle Tours in Okinawa', site_name:'EMERALD REEF OKINAWA',
       bkp_lbl:'BOOKING', bkp_ttl:'Book Now', bkp_sale:'Grand Opening Sale ｜ Up to 42% OFF',
       bkp_sub:'Pick your tour first. Same-day and next-day bookings are welcome too.',
       bkp_popular:'Most Popular', bkp_level:'Level', bkp_duration:'Duration', bkp_rec_lbl:'Best for',
@@ -8082,7 +8078,7 @@
       hf1_c:'34則評價', hf2:'1天1組限定', hf3:'含餵魚體驗', hf4:'3歲起', hf5:'當日預約OK', hf6:'含接送', hf7:'照片・影片免費', hero_h1:'海龜、藍洞、<br><span class="hl-color">繽紛</span>的熱帶魚。<br>沖繩的海，<em>全程包場</em>。', cta_sv:'檢視服務', cta_ct:'聯絡我們',
       cta_book:'立即預約', cta_line:'LINE諮詢',
       nav_book:'預約',
-      page_title:'EMERALD REEF OKINAWA | 沖繩浮潛・藍洞・自由潛水體驗', site_name:'EMERALD REEF OKINAWA',
+      page_title:'EMERALD REEF OKINAWA | 沖繩包場浮潛・藍洞・海龜・自由潛水體驗', site_name:'EMERALD REEF OKINAWA',
       bkp_lbl:'BOOKING', bkp_ttl:'線上預約', bkp_sale:'開業紀念特賣 ｜ 全部套餐最高42%OFF',
       bkp_sub:'請先選擇您的體驗方案。當天・前一天預約也非常歡迎。',
       bkp_popular:'人氣No.1', bkp_level:'難度', bkp_duration:'所需時間', bkp_rec_lbl:'推薦對象',
@@ -8363,7 +8359,7 @@
       hf1_c:'리뷰 34건', hf2:'1일 1팀 한정', hf3:'먹이 주기 체험', hf4:'3세부터', hf5:'당일 예약OK', hf6:'픽업 포함', hf7:'사진・영상 무료', hero_h1:'바다거북, 블루케이브,<br><span class="hl-color">알록달록</span> 열대어까지.<br><em>완전 전세</em>로 즐기세요.', cta_sv:'서비스 보기', cta_ct:'문의하기',
       cta_book:'지금 예약', cta_line:'LINE 상담',
       nav_book:'예약',
-      page_title:'EMERALD REEF OKINAWA | 오키나와 스노클링・블루케이브 체험', site_name:'EMERALD REEF OKINAWA',
+      page_title:'EMERALD REEF OKINAWA | 오키나와 전세 스노클링・블루케이브・바다거북 체험', site_name:'EMERALD REEF OKINAWA',
       bkp_lbl:'BOOKING', bkp_ttl:'예약하기', bkp_sale:'개점 기념 세일 ｜ 전 플랜 최대 42%OFF',
       bkp_sub:'먼저 투어를 선택해 주세요. 당일・전날 예약도 대환영입니다.',
       bkp_popular:'인기No.1', bkp_level:'난이도', bkp_duration:'소요시간', bkp_rec_lbl:'이런 분께',

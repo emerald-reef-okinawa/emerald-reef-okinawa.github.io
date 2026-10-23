@@ -71,15 +71,15 @@ for (const L of LANGS) {
   let html = src;
   const edits = [
     ['<html lang="ja">', `<html lang="${L.htmlLang}">`],
-    ['<title>エメラルドリーフ沖縄 | 沖縄シュノーケル・青の洞窟・スキンダイビング体験</title>',
+    ['<title>エメラルドリーフ沖縄 | 完全貸切シュノーケル・青の洞窟・ウミガメ・スキンダイビング</title>',
       `<title>${L.title}</title>`],
-    ['<meta name="description" content="沖縄の透き通ったエメラルドグリーンの海で完全貸切シュノーケル・青の洞窟・スキンダイビング体験。完全送迎付き・写真データ無料プレゼント。那覇〜恩納村対応。" />',
+    ['<meta name="description" content="沖縄の完全貸切シュノーケルツアー。恩納村の青の洞窟、那覇近海のウミガメ、熱帯魚の餌付け、スキンダイビング・魚突き。ホテル送迎・写真データ無料、3歳から参加OK。那覇〜恩納村対応。" />',
       `<meta name="description" content="${L.desc}" />`],
     ['<meta name="keywords" content="沖縄 シュノーケル, 青の洞窟 シュノーケル, 沖縄 マリンアクティビティ, スキンダイビング 沖縄, 完全貸切 ツアー, 沖縄 体験 観光, okinawa snorkeling, blue cave okinawa" />',
       `<meta name="keywords" content="${L.keywords}" />`],
     ['<link rel="canonical" href="https://emerald-reef-okinawa.com/" />',
       `<link rel="canonical" href="${BASE}/${L.file}" />`],
-    ['<meta property="og:title" content="エメラルドリーフ沖縄 | 沖縄シュノーケル・青の洞窟体験" />',
+    ['<meta property="og:title" content="エメラルドリーフ沖縄 | 完全貸切シュノーケル・青の洞窟・ウミガメ" />',
       `<meta property="og:title" content="${L.ogTitle}" />`],
     ['<meta property="og:description" content="沖縄の透き通ったエメラルドグリーンの海へ。完全貸切・完全送迎・写真データ無料プレゼント付き。那覇〜恩納村対応。" />',
       `<meta property="og:description" content="${L.ogDesc}" />`],
@@ -90,11 +90,13 @@ for (const L of LANGS) {
     // 自言語の alternate を ja_JP に入れ替え（自言語が primary、日本語が alternate に）
     [`<meta property="og:locale:alternate" content="${L.ogLocale}" />`,
       '<meta property="og:locale:alternate" content="ja_JP" />'],
-    ['<meta name="twitter:title" content="エメラルドリーフ沖縄 | 沖縄シュノーケル・青の洞窟体験" />',
+    ['<meta name="twitter:title" content="エメラルドリーフ沖縄 | 完全貸切シュノーケル・青の洞窟・ウミガメ" />',
       `<meta name="twitter:title" content="${L.ogTitle}" />`],
     ['<meta name="twitter:description" content="沖縄の透き通ったエメラルドグリーンの海へ。完全貸切・完全送迎・写真データ無料プレゼント付き。" />',
       `<meta name="twitter:description" content="${L.ogDesc}" />`],
     ['"inLanguage": "ja"', '"inLanguage": "' + L.htmlLang + '"', { all: true }],
+    // ナビ・フッターの「ブログ」はその言語の記事一覧へ
+    ['href="/blog/"', `href="/blog/${L.code}/"`, { all: true }],
     ["let curLang = localStorage.getItem('lang') || 'ja';",
       `let curLang = '${L.code}';  /* ${L.file} は常にこの言語で初期表示（build-i18n.js が設定） */`],
     /* 最後に実行: 残りのブランド表記（og:site_name / application-name / 構造化データの name 等）を
@@ -114,3 +116,6 @@ for (const L of LANGS) {
 }
 
 console.log('[build-i18n] 完了。');
+
+/* ブログ記事の静的ページと sitemap.xml も作り直す */
+require('./build-blog.js');
