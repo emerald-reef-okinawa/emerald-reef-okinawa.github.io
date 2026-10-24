@@ -2230,6 +2230,84 @@
     }
 
     /* ================================================================
+       TIMELINE — スクロールで場面が切り替わる（.tls）
+       JS が .on を付けたときだけ画面に固定。付かないときは縦に並べる
+       ================================================================ */
+    .tls-head { text-align: center; }
+    .tls-head .tl-duration { margin: 0 auto; }
+    .tls-route { display: none; }
+    .tls-hint { display: none; }
+    .tls-scene { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 36px; align-items: center; margin: 40px auto 0; max-width: 940px; }
+    .tls-fig { margin: 0; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 48px rgba(0,61,53,.12); aspect-ratio: 5/4; }
+    .tls-fig img { width: 100%; height: 100%; object-fit: cover; display: block; image-rendering: pixelated; }
+    .tls-step { display: block; font-family: 'Cinzel', serif; font-size: .74rem; letter-spacing: .22em; color: var(--g-main); margin-bottom: 14px; }
+    .tls-step b { font-size: 1.05rem; }
+    .tls-num {
+      width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: .95rem; color: #fff;
+      border: 3px solid rgba(255,255,255,.9); margin-bottom: 16px;
+    }
+    .tls-cap h4 { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 700; color: var(--navy); line-height: 1.4; margin-bottom: 10px; letter-spacing: .04em; }
+    .tls-cap p { font-size: clamp(.95rem, 1.4vw, 1.1rem); color: var(--text-soft); line-height: 1.8; }
+
+    /* ---- 画面に固定してスクロールで切り替える ---- */
+    .tls.on { height: calc(100vh + 5 * 70vh); height: calc(100svh + 5 * 70svh); }
+    .tls.on .tls-stick { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+    .tls.on .tls-inner { height: 100%; display: flex; flex-direction: column; padding-top: 84px; padding-bottom: 32px; }
+    .tls.on .tls-route { display: block; position: relative; flex: 0 0 auto; width: 100%; max-width: 780px; height: 64px; margin: 18px auto 0; }
+    .tls-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .tls-track { fill: none; stroke: var(--g-mid); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 9; opacity: .55; }
+    .tls-done  { fill: none; stroke: var(--g-mid); stroke-width: 4; stroke-linecap: round; }
+    .tls-stop {
+      position: absolute; top: 50%; left: calc(22px + var(--i) * (100% - 44px) / 5);
+      width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+      border: 2px solid rgba(0,168,150,.35); background: #fff; color: var(--g-main);
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: .62rem; cursor: pointer; padding: 0;
+      transition: transform .35s, background .35s, color .35s, border-color .35s; z-index: 1;
+    }
+    .tls-stop.reached { background: var(--g-main); border-color: #fff; color: #fff; }
+    .tls-stop.cur { transform: scale(1.3); box-shadow: 0 4px 14px rgba(0,122,110,.35); }
+    .tls-turtle {
+      position: absolute; left: 0; top: 0; width: 44px; height: 44px; z-index: 2; pointer-events: none;
+    }
+    .tls.on .tls-hint {
+      display: block; text-align: center; font-size: .78rem; color: var(--text-soft); letter-spacing: .08em;
+      margin: 8px 0 0; height: 1.4em; transition: opacity .4s;
+    }
+    .tls-hint::after { content: ' ↓'; }
+    .tls-hint.gone { opacity: 0; }
+    .tls.on .tls-scenes { position: relative; flex: 1 1 auto; min-height: 0; width: 100%; max-width: 980px; margin: 14px auto 0; }
+    .tls.on .tls-scene {
+      position: absolute; inset: 0; margin: 0; max-width: none;
+      grid-template-rows: minmax(0, 1fr);
+      opacity: 0; transform: translateX(48px); pointer-events: none;
+      transition: opacity .55s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+    .tls.on .tls-scene.past { transform: translateX(-48px); }
+    .tls.on .tls-scene.cur { opacity: 1; transform: none; pointer-events: auto; }
+    .tls.on .tls-fig { height: 100%; max-height: 460px; width: auto; max-width: 100%; justify-self: center; align-self: center; }
+    .tls.on .tls-fig img { transform: scale(1.08); transition: transform 1.6s cubic-bezier(.2,.7,.2,1); }
+    .tls.on .tls-scene.cur .tls-fig img { transform: scale(1); }
+    .tls.on .tls-cap > * { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+    .tls.on .tls-scene.cur .tls-cap > * { opacity: 1; transform: none; }
+    .tls.on .tls-scene.cur .tls-cap > :nth-child(2) { transition-delay: .08s; }
+    .tls.on .tls-scene.cur .tls-cap > :nth-child(3) { transition-delay: .16s; }
+    .tls.on .tls-scene.cur .tls-cap > :nth-child(4) { transition-delay: .24s; }
+
+    @media (max-width: 900px) {
+      .tls-scene { grid-template-columns: 1fr; gap: 18px; text-align: center; max-width: 520px; }
+      .tls-num { margin: 0 auto 12px; }
+      .tls.on .tls-scene { grid-template-rows: auto auto; align-content: center; gap: 16px; }
+      .tls.on .tls-inner { padding-top: 78px; padding-bottom: 96px; }
+      .tls.on .tls-route { height: 52px; margin-top: 10px; }
+      .tls.on .tls-fig { height: auto; width: 100%; max-height: none; }
+      .tls-step { margin-bottom: 6px; }
+      .tls.on .tls-num { display: none; }
+      .tls-cap h4 { margin-bottom: 4px; }
+      .tls-turtle { width: 34px; height: 34px; }
+    }
+
+    /* ================================================================
        REVIEWS — お客様の声 (Coming Soon overlay)
        ================================================================ */
     #reviews { background:linear-gradient(180deg,#ffffff 0%,var(--g-pale) 100%); }
@@ -3525,6 +3603,8 @@
       #features .s-sub,
       #timeline .s-sub,
       #timeline .sq-cell p,
+      #timeline .tls-cap p,
+      #timeline .tls-hint,
       #peace-of-mind .pom-hero-text .s-sub,
       #peace-of-mind .pom-list li
       { color: #35564e !important; }
@@ -4186,68 +4266,88 @@
 
   <!-- Timeline -->
   <section id="timeline">
-    
-    <div class="container">
-      <p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
-      <h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
-      <p class="s-sub fi" data-i18n="tl_sub">初めての方でも安心。スタッフが最初から最後まで全力サポート！</p>
-      <div class="tl-duration fi" data-i18n="tl_duration">⏱ 所要時間：約3〜4時間程度</div>
-      <div class="sq-board fi">
-
-        <!-- 波状曲線（装飾 SVG） odd=上(y41) even=下(y251) — 制御点を大きくオーバーシュート -->
-        <svg class="sq-path-svg" viewBox="0 0 600 500" preserveAspectRatio="none" aria-hidden="true">
-          <path class="sq-track"
-            d="M50,41
-               C100,-30  100,310 150,251
-               C200,310 200,-30  250,41
-               C300,-30 300,310 350,251
-               C400,310 400,-30  450,41
-               C500,-30 500,310 550,251"/>
-        </svg>
-
-        <!-- 横一列・斜め配置 01→02→03→04→05→06 -->
-        <div class="sq-row">
-          <div class="sq-cell">
-            <div class="sq-num sq-c1">01</div>
-            <img class="sq-img" src="tl-pickup.webp" width="800" height="640" alt="ホテルまでお迎え無料送迎" loading="lazy">
-            <h4 data-i18n="tl1_h">集合</h4>
-            <p data-i18n="tl1_p">ホテルまでお迎えに伺います</p>
-          </div>
-          <div class="sq-cell">
-            <div class="sq-num sq-c2">02</div>
-            <img class="sq-img" src="tl-beach.webp" width="800" height="640" alt="沖縄シュノーケルビーチへ到着" loading="lazy">
-            <h4 data-i18n="tl2_h">ビーチ</h4>
-            <p data-i18n="tl2_p">送迎車でスポットへ出発</p>
-          </div>
-          <div class="sq-cell">
-            <div class="sq-num sq-c3">03</div>
-            <img class="sq-img" src="tl-lecture.webp" width="800" height="640" alt="シュノーケル機材の使い方説明" loading="lazy">
-            <h4 data-i18n="tl3_h">説明</h4>
-            <p data-i18n="tl3_p">機材の使い方を丁寧にご説明</p>
-          </div>
-          <div class="sq-cell">
-            <div class="sq-num sq-c4">04</div>
-            <img class="sq-img" src="tl-swim.webp" width="800" height="640" alt="ガイドと一緒に沖縄の海でシュノーケル体験" loading="lazy">
-            <h4 data-i18n="tl4_h">体験</h4>
-            <p data-i18n="tl4_p">ガイドが隣で常にサポート！</p>
-          </div>
-          <div class="sq-cell">
-            <div class="sq-num sq-c5">05</div>
-            <img class="sq-img" src="tl-photo.webp" width="800" height="640" alt="Insta360で水中撮影・思い出を記録" loading="lazy">
-            <h4 data-i18n="tl5_h">撮影</h4>
-            <p data-i18n="tl5_p">Insta360で思い出を記録</p>
-          </div>
-          <div class="sq-cell">
-            <div class="sq-num sq-c6">06</div>
-            <img class="sq-img" src="tl-goal.webp" width="800" height="640" alt="ツアー終了・宿泊先までお送り" loading="lazy">
-            <h4 data-i18n="tl6_h">解散・お送り</h4>
-            <p data-i18n="tl6_p">宿泊先までお送りします</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
+<div class="container">
+<div class="tls-head">
+<p class="s-label fi" data-i18n="tl_lbl">SCHEDULE</p>
+<h2 class="s-title fi" data-i18n="tl_ttl">当日の流れ</h2>
+<p class="s-sub fi" data-i18n="tl_sub">初めての方でも安心。スタッフが最初から最後まで全力サポート！</p>
+<div class="tl-duration fi" data-i18n="tl_duration">⏱ 所要時間：約3〜4時間程度</div>
+</div>
+</div>
+<div class="tls" id="tls">
+<div class="tls-stick">
+<div class="container tls-inner">
+<div class="tls-route" aria-hidden="false">
+<svg class="tls-svg" aria-hidden="true"><path class="tls-track"/><path class="tls-done"/></svg>
+<button type="button" class="tls-stop" style="--i:0" aria-label="STEP 01">01</button>
+<button type="button" class="tls-stop" style="--i:1" aria-label="STEP 02">02</button>
+<button type="button" class="tls-stop" style="--i:2" aria-label="STEP 03">03</button>
+<button type="button" class="tls-stop" style="--i:3" aria-label="STEP 04">04</button>
+<button type="button" class="tls-stop" style="--i:4" aria-label="STEP 05">05</button>
+<button type="button" class="tls-stop" style="--i:5" aria-label="STEP 06">06</button>
+<img class="tls-turtle" src="creature-turtle.webp" width="160" height="160" alt="" aria-hidden="true">
+</div>
+<p class="tls-hint" data-i18n="tl_hint">スクロールで次の場面へ</p>
+<div class="tls-scenes">
+<div class="tls-scene cur">
+<figure class="tls-fig"><img src="tl-pickup.webp" width="800" height="640" alt="ホテルまでお迎え無料送迎" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>01</b> / 06</span>
+<span class="tls-num sq-c1">01</span>
+<h4 data-i18n="tl1_h">集合</h4>
+<p data-i18n="tl1_p">ホテルまでお迎えに伺います</p>
+</div>
+</div>
+<div class="tls-scene">
+<figure class="tls-fig"><img src="tl-beach.webp" width="800" height="640" alt="沖縄シュノーケルビーチへ到着" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>02</b> / 06</span>
+<span class="tls-num sq-c2">02</span>
+<h4 data-i18n="tl2_h">ビーチ</h4>
+<p data-i18n="tl2_p">送迎車でスポットへ出発</p>
+</div>
+</div>
+<div class="tls-scene">
+<figure class="tls-fig"><img src="tl-lecture.webp" width="800" height="640" alt="シュノーケル機材の使い方説明" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>03</b> / 06</span>
+<span class="tls-num sq-c3">03</span>
+<h4 data-i18n="tl3_h">説明</h4>
+<p data-i18n="tl3_p">機材の使い方を丁寧にご説明</p>
+</div>
+</div>
+<div class="tls-scene">
+<figure class="tls-fig"><img src="tl-swim.webp" width="800" height="640" alt="ガイドと一緒に沖縄の海でシュノーケル体験" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>04</b> / 06</span>
+<span class="tls-num sq-c4">04</span>
+<h4 data-i18n="tl4_h">体験</h4>
+<p data-i18n="tl4_p">ガイドが隣で常にサポート！</p>
+</div>
+</div>
+<div class="tls-scene">
+<figure class="tls-fig"><img src="tl-photo.webp" width="800" height="640" alt="Insta360で水中撮影・思い出を記録" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>05</b> / 06</span>
+<span class="tls-num sq-c5">05</span>
+<h4 data-i18n="tl5_h">撮影</h4>
+<p data-i18n="tl5_p">Insta360で思い出を記録</p>
+</div>
+</div>
+<div class="tls-scene">
+<figure class="tls-fig"><img src="tl-goal.webp" width="800" height="640" alt="ツアー終了・宿泊先までお送り" loading="lazy"></figure>
+<div class="tls-cap">
+<span class="tls-step">STEP <b>06</b> / 06</span>
+<span class="tls-num sq-c6">06</span>
+<h4 data-i18n="tl6_h">解散・お送り</h4>
+<p data-i18n="tl6_p">宿泊先までお送りします</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 
 
   <!-- Peace of Mind -->
@@ -7563,7 +7663,7 @@
       tl3_h:'説明', tl3_p:'機材の使い方を丁寧にご説明',
       tl4_h:'体験', tl4_p:'ガイドが隣で常にサポート！',
       tl5_h:'撮影', tl5_p:'ガイドとお客様の2台で撮影',
-      tl6_h:'解散・お送り', tl6_p:'宿泊先までお送りします',
+      tl6_h:'解散・お送り', tl6_p:'宿泊先までお送りします', tl_hint:'スクロールで次の場面へ',
       /* REVIEWS */
       rev_lbl:'REVIEWS', rev_ttl:'お客様の声', rev_sub:'実際にご参加いただいたお客様のリアルな声をご紹介します。',
     gal_lbl:'GALLERY', gal_ttl:'ツアーギャラリー', gal_sub:'実際のツアーで撮影した一枚をご紹介します。',
@@ -7861,7 +7961,7 @@
       tl3_h:'Briefing', tl3_p:'We teach everything from scratch',
       tl4_h:'Experience', tl4_p:'Guide by your side always!',
       tl5_h:'Shooting', tl5_p:'Two cameras — guide\'s and yours',
-      tl6_h:'Return &amp; Drop-Off', tl6_p:'Back to your accommodation',
+      tl6_h:'Return &amp; Drop-Off', tl6_p:'Back to your accommodation', tl_hint:'Scroll to see the next step',
       rev_lbl:'REVIEWS', rev_ttl:'Guest Reviews', rev_sub:'Honest words from guests who joined our tours.',
     gal_lbl:'GALLERY', gal_ttl:'Tour Gallery', gal_sub:'Real moments captured on our tours.',
     vid_lbl:'MOVIE', vid_ttl:'Tour Videos', vid_sub:'🎁 For a limited time, get your footage professionally edited and gifted free! See real tour moments below.', vid_cap_bc:'Blue Cave Snorkeling', vid_cap_tc:'Sea Turtle Snorkeling', vid_cap_sn:'Snorkeling', vid_cap_sk:'Skin Diving',
@@ -8142,7 +8242,7 @@
       tl3_h:'講解', tl3_p:'耐心講解裝備使用方法',
       tl4_h:'體験', tl4_p:'嚮導全程陪伴在身邊！',
       tl5_h:'拍攝', tl5_p:'嚮導與客人雙機位拍攝',
-      tl6_h:'返回&送客', tl6_p:'送您回到住宿地',
+      tl6_h:'返回&送客', tl6_p:'送您回到住宿地', tl_hint:'向下捲動，看下一個步驟',
       rev_lbl:'使用者評價', rev_ttl:'客戶好評', rev_sub:'來自真實參加者的心聲。',
     gal_lbl:'GALLERY', gal_ttl:'行程照片集', gal_sub:'為您分享實際行程中拍下的精彩瞬間。',
     vid_lbl:'MOVIE', vid_ttl:'體驗影片', vid_sub:'🎁 現在限時免費贈送專業剪輯的影片！也來看看實際行程的精彩瞬間。', vid_cap_bc:'青之洞窟浮潛', vid_cap_tc:'海龜浮潛', vid_cap_sn:'浮潛', vid_cap_sk:'自由潛水',
@@ -8423,7 +8523,7 @@
       tl3_h:'설명', tl3_p:'장비 사용법을 친절히 설명',
       tl4_h:'체험', tl4_p:'가이드가 항상 옆에서 지원!',
       tl5_h:'촬영', tl5_p:'가이드와 고객님 2대로 촬영',
-      tl6_h:'해산・귀환', tl6_p:'숙소까지 데려다 드립니다',
+      tl6_h:'해산・귀환', tl6_p:'숙소까지 데려다 드립니다', tl_hint:'스크롤하면 다음 장면으로',
       rev_lbl:'고객 후기', rev_ttl:'참가자 후기', rev_sub:'실제로 참가하신 고객님들의 생생한 목소리를 소개합니다.',
     gal_lbl:'GALLERY', gal_ttl:'투어 갤러리', gal_sub:'실제 투어에서 촬영한 한 장면을 소개합니다.',
     vid_lbl:'MOVIE', vid_ttl:'체험 영상', vid_sub:'🎁 지금이라면 촬영한 영상을 편집해 무료로 증정 중! 실제 투어의 모습도 영상으로 확인하세요.', vid_cap_bc:'블루케이브 스노클링', vid_cap_tc:'바다거북 스노클링', vid_cap_sn:'스노클링', vid_cap_sk:'스킨다이빙',
@@ -11592,6 +11692,89 @@
       es.forEach(function(e){ if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
     }, {threshold:.6});
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ===== 当日の流れ：スクロールに合わせて場面を切り替え、ウミガメが道をたどる ===== */
+  (function tlScenes(){
+    var root = document.getElementById('tls');
+    if (!root) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var scenes = [].slice.call(root.querySelectorAll('.tls-scene'));
+    var stops = [].slice.call(root.querySelectorAll('.tls-stop'));
+    var route = root.querySelector('.tls-route'), svg = route.querySelector('svg');
+    var track = svg.querySelector('.tls-track'), done = svg.querySelector('.tls-done');
+    var turtle = root.querySelector('.tls-turtle'), hint = root.querySelector('.tls-hint');
+    var n = scenes.length, cur = -1, len = 0, W = 0, PAD = 22;
+    root.classList.add('on');
+
+    /* 道（波線）を今の幅で描き直す。番号の位置（CSS）と同じ間隔 */
+    function build(){
+      var w = route.clientWidth, hh = route.clientHeight;
+      if (!w || w === W) { update(true); return; }
+      W = w;
+      var step = (w - PAD * 2) / (n - 1), mid = hh / 2, amp = hh * 0.3 * 4 / 3, d = 'M' + PAD + ',' + mid;
+      for (var i = 0; i < n - 1; i++) {
+        var x0 = PAD + step * i, x1 = x0 + step, y = mid + (i % 2 ? amp : -amp);
+        d += ' C' + (x0 + step / 3) + ',' + y + ' ' + (x1 - step / 3) + ',' + y + ' ' + x1 + ',' + mid;
+      }
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + hh);
+      track.setAttribute('d', d); done.setAttribute('d', d);
+      len = done.getTotalLength();
+      done.style.strokeDasharray = len + ' ' + len;
+      update(true);
+    }
+    function progress(){
+      var D = root.offsetHeight - window.innerHeight;
+      if (D <= 0) return 0;
+      return Math.min(1, Math.max(0, -root.getBoundingClientRect().top / D));
+    }
+    function update(force){
+      var f = progress();
+      if (len) {
+        var at = len * f;
+        done.style.strokeDashoffset = len - at;
+        var p = done.getPointAtLength(at),
+            p0 = done.getPointAtLength(Math.max(0, at - 2)),
+            p1 = done.getPointAtLength(Math.min(len, at + 2));
+        var ang = Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+        /* 画像は左向きなので左右反転して進行方向へ向ける。番号に重ならないよう道の少し上を進む */
+        turtle.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translateY(-62%) translate(-50%,-50%) rotate(' + ang + 'deg) scaleX(-1)';
+      }
+      var i = Math.round(f * (n - 1));
+      if (i !== cur || force) {
+        cur = i;
+        scenes.forEach(function(s, k){
+          s.classList.toggle('cur', k === i);
+          s.classList.toggle('past', k < i);
+          s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        });
+        stops.forEach(function(s, k){
+          s.classList.toggle('reached', k <= i);
+          s.classList.toggle('cur', k === i);
+        });
+      }
+      if (hint) hint.classList.toggle('gone', f > 0.04);
+    }
+    /* 番号を押すとその場面までスクロール */
+    stops.forEach(function(s, k){
+      s.addEventListener('click', function(){
+        var D = root.offsetHeight - window.innerHeight;
+        var top = root.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: top + D * k / (n - 1) + 1, behavior: 'smooth' });
+      });
+    });
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){ ticking = false; update(); });
+    }, { passive: true });
+    window.addEventListener('resize', build);
+    /* 別ページ表示中は幅が0なので、見えたときに描き直す */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){ if (es[0].isIntersecting) build(); }).observe(root);
+    }
+    build();
   })();
 </script>
 
